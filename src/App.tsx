@@ -175,18 +175,9 @@ function MainLayout() {
 
       {/* Main Container Content */}
       <main className="flex-grow">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={location.pathname}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-            className="w-full"
-          >
-            <Outlet />
-          </motion.div>
-        </AnimatePresence>
+        <div className="w-full">
+          <Outlet />
+        </div>
       </main>
 
       {/* Footer */}
@@ -265,7 +256,7 @@ function HomeRoute() {
     navigate(`/${newLang}/home`);
   };
 
-  return <Home currentLang={currentLang} onChangeLanguage={changeLanguage} />;
+  return <Home currentLang={currentLang} onChangeLanguage={changeLanguage} onNavigate={(path) => navigate(path)} />;
 }
 
 // Wrapper to set HTML lang and dir attributes based on the route
