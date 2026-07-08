@@ -1,4 +1,4 @@
-/**
+new_content = """/**
  * @license
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -309,3 +309,7 @@ export default function App() {
     </div>
   );
 }
+"""
+
+with open("src/App.tsx", "w") as f:
+    f.write(new_content)
