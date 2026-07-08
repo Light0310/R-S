@@ -4,6 +4,7 @@
  */
 
 import { useState, useEffect, useMemo } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { Globe, ChevronDown, CheckCircle2 } from 'lucide-react';
 
@@ -18,14 +19,14 @@ import BlogPostComponent from './components/BlogPost';
 import SecretSeoAdmin from './pages/SecretSeoAdmin';
 
 export default function App() {
-  // Hash Routing State
+  // Browser Routing State
   const [route, setRoute] = useState<Route>({ lang: 'en', view: 'home' });
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
 
   // Parse hash URL to resolve Route
-  const parseHash = (hash: string): Route => {
-    const cleanHash = hash.replace(/^#\/?/, '');
-    const parts = cleanHash.split('/').filter(Boolean);
+  const parsePath = (pathname: string): Route => {
+    const cleanPath = pathname.replace(/^\/?/, '');
+    const parts = cleanPath.split('/').filter(Boolean);
 
     const validLanguages: Language[] = ['en', 'ar', 'es', 'nl', 'fr', 'ru', 'de'];
     const validViews: View[] = ['home', 'blog', 'post', 'about', 'secret-seo-admin'];
@@ -34,7 +35,7 @@ export default function App() {
     let view: View = 'home';
     let slug: string | undefined = undefined;
 
-    // Detect browser language if no hash exists
+    // Detect browser language if no path exists
     if (parts.length === 0) {
       const browserLang = navigator.language.split('-')[0];
       if (validLanguages.includes(browserLang as Language)) {
@@ -56,33 +57,32 @@ export default function App() {
     return { lang, view, slug };
   };
 
-  // Enforce structured hash URLs on hash change or mount
+  // Enforce structured path URLs on location change or mount
+  const location = useLocation();
+  const routerNavigate = useNavigate();
+
   useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash;
+    const pathname = location.pathname;
+    const hash = location.hash;
+    
+    // If it is a local anchor link on the landing page (e.g., #features, #pricing)
+    // let the landing page component handle smooth scrolling naturally
+    if (hash && hash.startsWith('#') && pathname === '/') {
+       // but we still need a default lang
+    }
 
-      // If it is a local anchor link on the landing page (e.g., #features, #pricing),
-      // let the landing page component handle smooth scrolling naturally without resetting the hash
-      if (hash && hash.startsWith('#') && !hash.startsWith('#/')) {
-        return;
-      }
-
-      const parsed = parseHash(hash);
-      const targetHash = parsed.view === 'post'
-        ? `#/${parsed.lang}/blog/${parsed.slug}`
-        : `#/${parsed.lang}/${parsed.view}`;
-
-      if (window.location.hash !== targetHash) {
-        window.location.hash = targetHash;
-      }
-
-      setRoute(parsed);
-    };
-
-    handleHashChange();
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
-  }, []);
+    const parsed = parsePath(pathname);
+    
+    const targetPath = parsed.view === 'post'
+      ? `/${parsed.lang}/blog/${parsed.slug}`
+      : `/${parsed.lang}/${parsed.view}`;
+      
+    if (pathname !== targetPath) {
+      routerNavigate(targetPath, { replace: true });
+    }
+    
+    setRoute(parsed);
+  }, [location.pathname, location.hash, routerNavigate]);
 
   // Update HTML direction (RTL/LTR) & lang attribute
   useEffect(() => {
@@ -105,24 +105,23 @@ export default function App() {
     return currentLangPosts.find((p) => p.slug === route.slug);
   }, [route.view, route.slug, currentLangPosts]);
 
-  // Navigate helper that preserves language and format hashes safely
+  // Navigate helper that preserves language and format paths safely
   const navigate = (view: View, slug?: string) => {
     if (view === 'post' && slug) {
-      window.location.hash = `#/${route.lang}/blog/${slug}`;
+      routerNavigate(`/${route.lang}/blog/${slug}`);
     } else {
-      window.location.hash = `#/${route.lang}/${view}`;
+      routerNavigate(`/${route.lang}/${view}`);
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Change language helper, updates Hash path smoothly, retaining current page view and slug!
+  // Change language helper, updates path smoothly, retaining current page view and slug!
   const changeLanguage = (newLang: Language) => {
     setLangDropdownOpen(false);
     if (route.view === 'post' && route.slug) {
-      // Direct translation mapping of same post slug in different languages
-      window.location.hash = `#/${newLang}/blog/${route.slug}`;
+      routerNavigate(`/${newLang}/blog/${route.slug}`);
     } else {
-      window.location.hash = `#/${newLang}/${route.view}`;
+      routerNavigate(`/${newLang}/${route.view}`);
     }
   };
 
