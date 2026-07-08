@@ -5,7 +5,7 @@
 
 export type Language = 'en' | 'ar' | 'es' | 'nl' | 'fr' | 'ru' | 'de';
 
-export type View = 'home' | 'blog' | 'post' | 'about';
+export type View = 'home' | 'blog' | 'post' | 'about' | 'secret-seo-admin';
 
 export interface Route {
   lang: Language;

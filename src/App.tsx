@@ -15,6 +15,7 @@ import { translations } from './translations';
 import Home from './components/Home';
 import BlogList from './components/BlogList';
 import BlogPostComponent from './components/BlogPost';
+import SecretSeoAdmin from './pages/SecretSeoAdmin';
 
 export default function App() {
   // Hash Routing State
@@ -27,7 +28,7 @@ export default function App() {
     const parts = cleanHash.split('/').filter(Boolean);
 
     const validLanguages: Language[] = ['en', 'ar', 'es', 'nl', 'fr', 'ru', 'de'];
-    const validViews: View[] = ['home', 'blog', 'post', 'about'];
+    const validViews: View[] = ['home', 'blog', 'post', 'about', 'secret-seo-admin'];
 
     let lang: Language = 'en';
     let view: View = 'home';
@@ -275,6 +276,9 @@ export default function App() {
                 transition={{ duration: 0.2 }}
                 className="w-full"
               >
+                {route.view === 'secret-seo-admin' && (
+                  <SecretSeoAdmin />
+                )}
                 {route.view === 'blog' && (
                   <BlogList 
                     posts={currentLangPosts}
