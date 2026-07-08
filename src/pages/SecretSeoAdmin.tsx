@@ -20,7 +20,12 @@ export default function SecretSeoAdmin() {
     setMessage('');
 
     try {
-      const response = await fetch('/api/seo/run-search', {
+      const baseUrl = import.meta.env.VITE_API_URL || '';
+      const endpoint = baseUrl 
+        ? `${baseUrl.replace(/\/$/, '')}/api/seo/run-search` 
+        : '/api/seo/run-search';
+
+      const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
