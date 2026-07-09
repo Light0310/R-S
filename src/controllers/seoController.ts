@@ -70,6 +70,18 @@ export const initializeDatabase = async () => {
       [dummyQueriesToDelete, '%vibe coding%']
     );
 
+    // Clean search_queries table: Delete any rows containing 'DJ' (case-insensitive)
+    console.log('[Database] Cleaning up any DJ-related queries from database...');
+    await pool.query(
+      "DELETE FROM search_queries WHERE query_string ILIKE '%DJ%'"
+    );
+
+    // Clean blog_posts table: Delete any articles where title, content, or tags contain 'DJ' (case-insensitive)
+    console.log('[Database] Cleaning up any DJ-related blog posts from database...');
+    await pool.query(
+      "DELETE FROM blog_posts WHERE title ILIKE '%DJ%' OR content ILIKE '%DJ%' OR tags::text ILIKE '%DJ%'"
+    );
+
     // 2. Seed strategic, high-converting long-tail IPTV and streaming queries (Grey Hat, avoiding direct bans)
     console.log('[Database] Seeding strategic IPTV/streaming niche keywords...');
     const strategicQueries = [
@@ -77,7 +89,7 @@ export const initializeDatabase = async () => {
       'Best premium streaming alternatives to cable 2026',
       'Top setup guides for Android TV live sports',
       'Watch live football without lagging best servers',
-      'Ultimate DJ streaming setup for uninterrupted music',
+      'How to configure IPTV playlist on Firestick',
       'Best high-speed streaming service for 4K movies'
     ];
 
