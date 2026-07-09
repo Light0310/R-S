@@ -4,7 +4,7 @@ import axios from 'axios';
 
 // Initialize PostgreSQL connection pool
 // In a production architecture, this pool is typically exported from a dedicated /db/config.ts file
-const pool = new Pool({
+export const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
 

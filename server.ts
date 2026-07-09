@@ -4,10 +4,14 @@ import path from 'path';
 import { createServer as createViteServer } from 'vite';
 import seoRoutes from './src/routes/seoRoutes';
 import { initializeDatabase } from './src/controllers/seoController';
+import { initCronScheduler } from './src/utils/cronScheduler';
 
 async function startServer() {
   // Initialize database tables on server startup
   await initializeDatabase();
+
+  // Initialize background cron scheduler
+  initCronScheduler();
 
   const app = express();
   const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 5000;
