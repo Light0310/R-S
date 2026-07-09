@@ -9,6 +9,68 @@ const pool = new Pool({
 });
 
 /**
+ * Automatically initializes database tables and seeds sample data if empty.
+ */
+export const initializeDatabase = async () => {
+  if (!process.env.DATABASE_URL) {
+    console.warn('[Database] DATABASE_URL is missing. Database tables will not be automatically initialized.');
+    return;
+  }
+
+  try {
+    console.log('[Database] Initializing PostgreSQL tables...');
+    
+    // Create search_queries table
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS search_queries (
+        id SERIAL PRIMARY KEY,
+        query_string TEXT NOT NULL,
+        status VARCHAR(50) DEFAULT 'pending' NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
+
+    // Create link_targets table with a UNIQUE constraint on url
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS link_targets (
+        id SERIAL PRIMARY KEY,
+        url TEXT UNIQUE NOT NULL,
+        title TEXT,
+        snippet TEXT,
+        source_query_id INT REFERENCES search_queries(id) ON DELETE CASCADE,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
+
+    // Check if search_queries is empty, if so, seed some sample queries
+    const checkRes = await pool.query('SELECT COUNT(*) FROM search_queries');
+    const count = parseInt(checkRes.rows[0].count, 10);
+    
+    if (count === 0) {
+      console.log('[Database] Seeding sample search queries into search_queries...');
+      const sampleQueries = [
+        'vibe coding seo mastermind',
+        'programmatic seo best practices',
+        'render node.js fast deployments',
+        'google search indexing optimization'
+      ];
+      
+      for (const query of sampleQueries) {
+        await pool.query(
+          'INSERT INTO search_queries (query_string, status) VALUES ($1, $2)',
+          [query, 'pending']
+        );
+      }
+      console.log(`[Database] Seeded ${sampleQueries.length} sample search queries.`);
+    }
+
+    console.log('[Database] Initialization completed successfully.');
+  } catch (error: any) {
+    console.error('[Database] Error initializing database tables:', error.message);
+  }
+};
+
+/**
  * Controller to fetch a pending SEO query, execute a SerpApi search, 
  * and store the organic results efficiently in PostgreSQL.
  */

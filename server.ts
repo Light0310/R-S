@@ -3,8 +3,12 @@ import cors from 'cors';
 import path from 'path';
 import { createServer as createViteServer } from 'vite';
 import seoRoutes from './src/routes/seoRoutes';
+import { initializeDatabase } from './src/controllers/seoController';
 
 async function startServer() {
+  // Initialize database tables on server startup
+  await initializeDatabase();
+
   const app = express();
   const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 5000;
 
