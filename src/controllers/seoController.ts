@@ -42,26 +42,50 @@ export const initializeDatabase = async () => {
       );
     `);
 
-    // Check if search_queries is empty, if so, seed some sample queries
-    const checkRes = await pool.query('SELECT COUNT(*) FROM search_queries');
-    const count = parseInt(checkRes.rows[0].count, 10);
+    // 1. Clear/delete any existing dummy queries (like 'vibe coding') from the table on startup
+    console.log('[Database] Cleaning up old dummy search queries...');
+    const dummyQueriesToDelete = [
+      'vibe coding seo mastermind',
+      'programmatic seo best practices',
+      'render node.js fast deployments',
+      'google search indexing optimization'
+    ];
     
-    if (count === 0) {
-      console.log('[Database] Seeding sample search queries into search_queries...');
-      const sampleQueries = [
-        'vibe coding seo mastermind',
-        'programmatic seo best practices',
-        'render node.js fast deployments',
-        'google search indexing optimization'
-      ];
-      
-      for (const query of sampleQueries) {
+    await pool.query(
+      'DELETE FROM search_queries WHERE query_string = ANY($1) OR query_string ILIKE $2',
+      [dummyQueriesToDelete, '%vibe coding%']
+    );
+
+    // 2. Seed strategic, high-converting long-tail IPTV and streaming queries (Grey Hat, avoiding direct bans)
+    console.log('[Database] Seeding strategic IPTV/streaming niche keywords...');
+    const strategicQueries = [
+      'How to fix buffering on Smart TV streaming apps',
+      'Best premium streaming alternatives to cable 2026',
+      'Top setup guides for Android TV live sports',
+      'Watch live football without lagging best servers',
+      'Ultimate DJ streaming setup for uninterrupted music',
+      'Best high-speed streaming service for 4K movies'
+    ];
+
+    let seededCount = 0;
+    for (const query of strategicQueries) {
+      const existCheck = await pool.query(
+        'SELECT id FROM search_queries WHERE query_string = $1',
+        [query]
+      );
+      if (existCheck.rows.length === 0) {
         await pool.query(
           'INSERT INTO search_queries (query_string, status) VALUES ($1, $2)',
           [query, 'pending']
         );
+        seededCount++;
       }
-      console.log(`[Database] Seeded ${sampleQueries.length} sample search queries.`);
+    }
+
+    if (seededCount > 0) {
+      console.log(`[Database] Successfully seeded ${seededCount} new strategic streaming keywords.`);
+    } else {
+      console.log('[Database] Strategic streaming keywords are already fully seeded.');
     }
 
     console.log('[Database] Initialization completed successfully.');
