@@ -114,6 +114,54 @@ export const initializeDatabase = async () => {
       console.log('[Database] Strategic streaming keywords are already fully seeded.');
     }
 
+    // 3. Seed a default high-quality blog post into blog_posts table if empty
+    console.log('[Database] Checking if default blog posts need seeding...');
+    const blogCountCheck = await pool.query('SELECT count(*) FROM blog_posts');
+    const blogCount = parseInt(blogCountCheck.rows[0].count, 10);
+    if (blogCount === 0) {
+      console.log('[Database] Seeding high-quality default IPTV/streaming blog post...');
+      await pool.query(`
+        INSERT INTO blog_posts (title, content, slug, status, description, tags)
+        VALUES ($1, $2, $3, $4, $5, $6)
+      `, [
+        'How to Setup IPTV on Firestick: The Ultimate 2026 Guide',
+        `## Stream Like a Pro in 2026: Setup IPTV on Your Firestick
+
+If you're tired of skyrocketing cable bills and limited channel options, configuring IPTV on an Amazon Fire TV Stick is your ticket to home entertainment freedom. 
+
+In this comprehensive guide, we'll walk you through the exact steps to unlock over 20,000 live premium channels with pristine, lag-free performance.
+
+### Step 1: Prepare Your Firestick Settings
+To allow installation of external IPTV players, we need to enable Developer Options:
+1. Go to **Settings** > **My Fire TV** > **About**.
+2. Click on your device name (e.g., **Fire TV Stick 4K**) exactly **7 times** until you see the message "No need, you are already a developer."
+3. Press Back, and you will see a new menu: **Developer Options**.
+4. Turn ON **Install unknown apps** for the Downloader app.
+
+### Step 2: Install Downloader and Your IPTV Player
+The industry-standard app players are *TiviMate* and *IPTV Smarters Pro*:
+1. Search for **Downloader** on the Firestick home screen and install it.
+2. Open Downloader, and type in the direct download code or URL for **IPTV Smarters Pro** or **TiviMate**.
+3. Install and launch the application.
+
+---
+
+### Tired of Constant Buffering & Low-Quality Streams?
+
+For maximum speed, flawless 4K quality, and zero buffering, pair your IPTV player with **RedStream IPTV**. Get access to:
+* Over **20,000 Live Global Channels** + extensive VOD library.
+* Advanced anti-freezing streaming technology.
+* 24/7 client setup support.
+
+👉 [Claim Your 24h Free Trial Stream on WhatsApp](https://wa.me/212694843943?text=Hello%20RedStream,%20I%20read%20your%20Firestick%20setup%20guide%20and%20want%20to%20claim%20my%20free%20trial.) and get activated in under 5 minutes!`,
+        'how-to-setup-iptv-on-firestick-ultimate-2026-guide',
+        'published',
+        'Learn how to easily install and configure IPTV on your Amazon Firestick in 2026. Get over 20k channels, smooth 4K streaming, and unlock a free trial.',
+        ['iptv', 'firestick', 'setup guide', 'streaming']
+      ]);
+      console.log('[Database] Default blog post seeded successfully.');
+    }
+
     console.log('[Database] Initialization completed successfully.');
   } catch (error: any) {
     console.error('[Database] Error initializing database tables:', error.message);

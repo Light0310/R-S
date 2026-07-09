@@ -40,6 +40,13 @@ async function startServer() {
       const languages = ['en', 'es', 'fr', 'de', 'nl', 'ar', 'ru'];
       const urls: { loc: string; lastmod?: string; changefreq: string; priority: string }[] = [];
 
+      // Add the absolute root homepage URL
+      urls.push({
+        loc: `${baseUrl}/`,
+        changefreq: 'daily',
+        priority: '1.0',
+      });
+
       // 1. Core structural home and blog index URLs for all SEO languages
       languages.forEach((lang) => {
         urls.push({
