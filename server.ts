@@ -129,7 +129,7 @@ async function startServer() {
 
       xml += '</urlset>';
 
-      res.header('Content-Type', 'application/xml');
+      res.type('application/xml');
       res.send(xml);
     } catch (error: any) {
       console.error('[Sitemap] Critical generation failure:', error.message);
@@ -148,7 +148,7 @@ Allow: /
 
 Sitemap: ${baseUrl}/sitemap.xml
 `;
-    res.header('Content-Type', 'text/plain');
+    res.type('text/plain');
     res.send(content);
   });
 
