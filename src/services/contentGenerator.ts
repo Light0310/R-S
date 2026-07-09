@@ -43,21 +43,21 @@ export async function generateArticle(
         .map((s, i) => `Source ${i + 1}: ${s.title || 'No Title'} (${s.url})\nSnippet: ${s.snippet || 'No Content'}`)
         .join('\n\n');
 
-      const prompt = `You are an elite SEO copywriter and expert in IPTV, cord-cutting, and home streaming setups. 
-Your task is to write a highly engaging, fully optimized, and long-form blog post addressing the search query: "${queryString}".
+      const prompt = `Act as an Expert SEO Content Writer and IPTV Technology Specialist.
+Your task is to write a highly engaging, SEO-optimized blog post targeting the exact search query: "${queryString}".
+Follow these strict guidelines to ensure high ranking and user engagement:
+Structure: Start with a catchy, click-worthy H1 title. Use clear, logically ordered H2 and H3 subheadings.
+Introduction: Hook the reader in the first sentence. Acknowledge their problem or intent right away.
+Value First: Provide accurate, step-by-step information related to the query (e.g., app setup, troubleshooting). Use bullet points and bold text to make it easy to skim.
+Natural CTA: Seamlessly integrate a recommendation for RedStream IPTV as the ultimate, premium solution for stable, 4K streaming. Do not sound aggressive or spammy; weave it in as a helpful, expert tip within the context of the article.
+Conclusion: Summarize the main takeaway briefly.
+Formatting: Output the entire response in clean Markdown format without any conversational filler.
 
+Additional Context for generation:
 We have gathered some top search results for this query to serve as factual context:
 ${snippetsContext}
 
-Instructions:
-1. Write a comprehensive, deeply informative article that directly solves the search intent of "${queryString}". Use clear headers (##, ### in markdown).
-2. Incorporate a compelling, natural, and persuasive Call-to-Action (CTA) for our premium service, "RedStream IPTV". 
-   - Highlight: over 20,000 live premium global channels, pristine 4K streaming, and zero buffering.
-   - Example CTA phrasing: "Tired of buffering or overpriced cables? Get our seamless premium 24h free trial stream today at RedStream IPTV!"
-3. Generate an eye-catching, high-CTR headline (title).
-4. Create a clean, hyphenated lowercase URL-friendly slug (e.g. how-to-fix-buffering-tv).
-5. Compose a high-converting meta description of exactly 140 to 160 characters.
-6. Provide 3-5 relevant, trending SEO tags.`;
+Please provide your response strictly conforming to the requested JSON schema.`;
 
       const response = await ai.models.generateContent({
         model: 'gemini-3.5-flash',
