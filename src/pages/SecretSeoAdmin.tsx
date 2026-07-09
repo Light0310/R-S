@@ -63,7 +63,12 @@ export default function SecretSeoAdmin() {
     setDataLoading(true);
     setDataError('');
     try {
-      const baseUrl = import.meta.env.VITE_API_URL || '';
+      const isLocalOrPreview = window.location.hostname.includes('localhost') || 
+                               window.location.hostname.includes('run.app') || 
+                               window.location.hostname.includes('gitpod') || 
+                               window.location.hostname.includes('webcontainer');
+      
+      const baseUrl = isLocalOrPreview ? '' : (import.meta.env.VITE_API_URL || '');
       const endpoint = baseUrl 
         ? `${baseUrl.replace(/\/$/, '')}/api/seo/results` 
         : '/api/seo/results';
@@ -136,7 +141,12 @@ export default function SecretSeoAdmin() {
     setMessage('');
 
     try {
-      const baseUrl = import.meta.env.VITE_API_URL || '';
+      const isLocalOrPreview = window.location.hostname.includes('localhost') || 
+                               window.location.hostname.includes('run.app') || 
+                               window.location.hostname.includes('gitpod') || 
+                               window.location.hostname.includes('webcontainer');
+      
+      const baseUrl = isLocalOrPreview ? '' : (import.meta.env.VITE_API_URL || '');
       const endpoint = baseUrl 
         ? `${baseUrl.replace(/\/$/, '')}/api/seo/run-search` 
         : '/api/seo/run-search';
