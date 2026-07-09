@@ -14,7 +14,10 @@ import {
   Globe, 
   TrendingUp, 
   LogOut,
-  ListFilter
+  ListFilter,
+  BookOpen,
+  FileText,
+  Sparkles
 } from 'lucide-react';
 
 interface LinkTarget {
@@ -51,9 +54,11 @@ export default function SecretSeoAdmin() {
   const [dataError, setDataError] = useState('');
   const [links, setLinks] = useState<LinkTarget[]>([]);
   const [queries, setQueries] = useState<SearchQuery[]>([]);
+  const [blogPosts, setBlogPosts] = useState<any[]>([]);
+  const [generationLoading, setGenerationLoading] = useState(false);
 
   // Tab control
-  const [activeTab, setActiveTab] = useState<'links' | 'queries'>('links');
+  const [activeTab, setActiveTab] = useState<'links' | 'queries' | 'articles'>('links');
   const [queryFilter, setQueryFilter] = useState<string>('all');
 
   // Fetch data function
@@ -89,11 +94,76 @@ export default function SecretSeoAdmin() {
 
       setLinks(data.links || []);
       setQueries(data.queries || []);
+
+      // Fetch dynamic blog posts
+      const blogEndpoint = baseUrl 
+        ? `${baseUrl.replace(/\/$/, '')}/api/seo/blog-posts` 
+        : '/api/seo/blog-posts';
+
+      const blogResponse = await fetch(blogEndpoint, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (blogResponse.ok) {
+        const blogData = await blogResponse.json();
+        setBlogPosts(blogData.posts || []);
+      }
     } catch (err: any) {
       console.error('[Admin] Fetch error:', err);
       setDataError(err.message || 'Failed to fetch SEO results. Please verify your token.');
     } finally {
       setDataLoading(false);
+    }
+  };
+
+  // Automated Content Generator click handler
+  const handleGenerateContent = async () => {
+    if (!adminToken) {
+      setStatus('error');
+      setMessage('Please enter the Admin Secret Token.');
+      return;
+    }
+
+    setGenerationLoading(true);
+    setStatus('idle');
+    setMessage('');
+
+    try {
+      const isLocalOrPreview = window.location.hostname.includes('localhost') || 
+                               window.location.hostname.includes('run.app') || 
+                               window.location.hostname.includes('gitpod') || 
+                               window.location.hostname.includes('webcontainer');
+      
+      const baseUrl = isLocalOrPreview ? '' : (import.meta.env.VITE_API_URL || '');
+      const endpoint = baseUrl 
+        ? `${baseUrl.replace(/\/$/, '')}/api/seo/generate-content` 
+        : '/api/seo/generate-content';
+
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-admin-token': adminToken,
+        },
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || `Error ${response.status}: ${response.statusText}`);
+      }
+
+      setStatus('success');
+      setMessage(data.message || 'Automated AI Blog article generated successfully!');
+      fetchSeoData();
+    } catch (error: any) {
+      setStatus('error');
+      setMessage(error.message || 'An unexpected error occurred while generating content.');
+    } finally {
+      setGenerationLoading(false);
     }
   };
 
@@ -329,38 +399,67 @@ export default function SecretSeoAdmin() {
             </div>
 
             {/* Run SEO Engine Action Bar */}
-            <div className="bg-gradient-to-r from-[#0f0f0f] to-[#120a0b] border border-white/5 rounded-2xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-xl">
-              <div className="space-y-1.5 max-w-xl">
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-[#FF1E27] animate-ping" />
-                  <h3 className="text-base font-bold tracking-tight">Active Automation Engine</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="bg-gradient-to-r from-[#0f0f0f] to-[#120a0b] border border-white/5 rounded-2xl p-6 flex flex-col justify-between gap-4 shadow-xl">
+                <div className="space-y-1.5">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-[#FF1E27] animate-ping" />
+                    <h3 className="text-sm font-bold tracking-tight uppercase text-gray-300">Active Automation Engine</h3>
+                  </div>
+                  <p className="text-xs text-gray-400 font-light leading-relaxed">
+                    Triggering the engine reads the next <span className="text-yellow-400 font-medium">pending</span> search query, queries SerpApi securely, and saves high-authority link targets for programmatic SEO.
+                  </p>
                 </div>
-                <p className="text-xs text-gray-400 font-light">
-                  Triggering the engine reads the next <span className="text-yellow-400 font-medium">pending</span> search query from the PostgreSQL table, initiates an organic Google Search query via SerpApi, and parses the top results to programmatically register high-authority link targets.
-                </p>
+
+                <div className="flex items-center gap-3 mt-2">
+                  <button
+                    onClick={() => fetchSeoData()}
+                    disabled={dataLoading}
+                    className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 text-gray-200 hover:text-white rounded-xl text-xs font-bold transition-all border border-white/10 disabled:opacity-50 cursor-pointer"
+                  >
+                    <RefreshCw size={14} className={dataLoading ? 'animate-spin' : ''} />
+                    Refresh
+                  </button>
+                  <button
+                    onClick={handleRunSearch}
+                    disabled={loading || stats.pendingQueries === 0}
+                    className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-[#FF1E27] hover:bg-[#e0141d] text-white rounded-xl text-xs font-black transition-all shadow-md shadow-[#FF1E27]/20 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                  >
+                    {loading ? (
+                      <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                    ) : (
+                      <Play className="w-3.5 h-3.5 fill-current" />
+                    )}
+                    {loading ? 'Searching...' : 'Run SEO Engine'}
+                  </button>
+                </div>
               </div>
 
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto">
-                <button
-                  onClick={() => fetchSeoData()}
-                  disabled={dataLoading}
-                  className="flex items-center justify-center gap-2 px-4 py-2.5 bg-white/5 hover:bg-white/10 text-gray-200 hover:text-white rounded-xl text-xs font-bold transition-all border border-white/10 disabled:opacity-50 cursor-pointer"
-                >
-                  <RefreshCw size={14} className={dataLoading ? 'animate-spin' : ''} />
-                  Refresh Data
-                </button>
-                <button
-                  onClick={handleRunSearch}
-                  disabled={loading || stats.pendingQueries === 0}
-                  className="flex items-center justify-center gap-2 px-6 py-2.5 bg-[#FF1E27] hover:bg-[#e0141d] text-white rounded-xl text-xs font-black transition-all shadow-md shadow-[#FF1E27]/20 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-                >
-                  {loading ? (
-                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                  ) : (
-                    <Play className="w-3.5 h-3.5 fill-current" />
-                  )}
-                  {loading ? 'Processing SerpApi...' : 'Run SEO Engine'}
-                </button>
+              <div className="bg-gradient-to-r from-[#0f0f0f] to-[#0a1012] border border-white/5 rounded-2xl p-6 flex flex-col justify-between gap-4 shadow-xl">
+                <div className="space-y-1.5">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-blue-400 animate-pulse" />
+                    <h3 className="text-sm font-bold tracking-tight uppercase text-gray-300">AI Content Generator</h3>
+                  </div>
+                  <p className="text-xs text-gray-400 font-light leading-relaxed">
+                    Processes <span className="text-green-400 font-medium">completed</span> search queries. Generates an SEO-optimized blog article with embedded **RedStream IPTV** CTA utilizing Gemini models.
+                  </p>
+                </div>
+
+                <div className="flex items-center mt-2">
+                  <button
+                    onClick={handleGenerateContent}
+                    disabled={generationLoading || stats.completedQueries === 0}
+                    className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-black transition-all shadow-md shadow-blue-600/20 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                  >
+                    {generationLoading ? (
+                      <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                    ) : (
+                      <Sparkles size={14} />
+                    )}
+                    {generationLoading ? 'Generating Blog Article...' : 'Generate AI Article'}
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -404,7 +503,7 @@ export default function SecretSeoAdmin() {
                           : 'text-gray-400 hover:text-white'
                       }`}
                     >
-                      Extracted Link Targets ({links.length})
+                      Link Targets ({links.length})
                     </button>
                     <button
                       onClick={() => setActiveTab('queries')}
@@ -414,7 +513,17 @@ export default function SecretSeoAdmin() {
                           : 'text-gray-400 hover:text-white'
                       }`}
                     >
-                      Engine Search Queue ({queries.length})
+                      Search Queue ({queries.length})
+                    </button>
+                    <button
+                      onClick={() => setActiveTab('articles')}
+                      className={`px-4 py-2 rounded-lg text-xs font-extrabold uppercase tracking-wider transition-all cursor-pointer ${
+                        activeTab === 'articles'
+                          ? 'bg-[#FF1E27]/10 text-[#FF1E27] border border-[#FF1E27]/20'
+                          : 'text-gray-400 hover:text-white'
+                      }`}
+                    >
+                      AI Blog Articles ({blogPosts.length})
                     </button>
                   </div>
                   
@@ -499,7 +608,7 @@ export default function SecretSeoAdmin() {
                       </div>
                     )}
                   </div>
-                ) : (
+                ) : activeTab === 'queries' ? (
                   /* QUERIES LIST */
                   <div className="space-y-3">
                     {filteredQueries.length === 0 ? (
@@ -530,6 +639,65 @@ export default function SecretSeoAdmin() {
                             }`}>
                               {q.status}
                             </span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  /* BLOG ARTICLES LIST */
+                  <div className="space-y-4">
+                    {blogPosts.length === 0 ? (
+                      <div className="bg-[#0f0f0f] border border-white/5 rounded-2xl p-12 text-center text-gray-500 space-y-2">
+                        <FileText className="w-8 h-8 mx-auto text-gray-600" />
+                        <h4 className="text-sm font-semibold">No dynamic blog articles generated yet</h4>
+                        <p className="text-xs text-gray-600 max-w-sm mx-auto">
+                          Click **Generate AI Article** on the right side to convert completed queries and competitor snippets into fully-optimized blog posts!
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-1 gap-4">
+                        {blogPosts.map((post) => (
+                          <div 
+                            key={post.id} 
+                            className="bg-[#0f0f0f] border border-white/5 hover:border-white/10 rounded-2xl p-5 space-y-3 transition-all hover:bg-[#121212]"
+                          >
+                            <div className="flex justify-between items-start gap-4">
+                              <div className="space-y-1">
+                                <h4 className="text-sm sm:text-base font-bold text-gray-100 hover:text-[#FF1E27] transition-colors leading-snug">
+                                  {post.title}
+                                </h4>
+                                <span className="text-[10px] font-mono text-[#FF1E27] bg-[#FF1E27]/5 border border-[#FF1E27]/10 px-2.5 py-0.5 rounded">
+                                  /{post.slug}
+                                </span>
+                              </div>
+                              <span className="text-[10px] font-extrabold uppercase bg-green-500/10 border border-green-500/20 text-green-400 px-2.5 py-1 rounded-full whitespace-nowrap">
+                                {post.status}
+                              </span>
+                            </div>
+
+                            {post.description && (
+                              <p className="text-xs text-gray-400 font-light leading-relaxed">
+                                {post.description}
+                              </p>
+                            )}
+
+                            {post.tags && post.tags.length > 0 && (
+                              <div className="flex flex-wrap gap-1.5 pt-1">
+                                {post.tags.map((tag: string, i: number) => (
+                                  <span key={i} className="text-[9px] font-bold text-gray-500 bg-white/5 px-2 py-0.5 rounded border border-white/5">
+                                    #{tag}
+                                  </span>
+                                ))}
+                              </div>
+                            )}
+
+                            <div className="flex items-center gap-4 text-[10px] text-gray-500 font-bold border-t border-white/5 pt-3">
+                              <span className="flex items-center gap-1">
+                                <Clock size={11} />
+                                Generated: {new Date(post.created_at).toLocaleString()}
+                              </span>
+                            </div>
                           </div>
                         ))}
                       </div>

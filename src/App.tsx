@@ -6,7 +6,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Routes, Route, Navigate, useLocation, useNavigate, useParams, Outlet } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { Globe, ChevronDown, CheckCircle2 } from 'lucide-react';
+import { Globe, ChevronDown, CheckCircle2, Loader2 } from 'lucide-react';
 import { Language } from './types';
 import { loadBlogPosts } from './blog';
 import { translations } from './translations';
@@ -209,10 +209,49 @@ function BlogListRoute() {
   const currentLang = (validLanguages.includes(lang as Language) ? lang : 'en') as Language;
   const t = useMemo(() => translations[currentLang], [currentLang]);
   const navigate = useNavigate();
+  const [dynamicPosts, setDynamicPosts] = useState<any[]>([]);
 
-  const currentLangPosts = useMemo(() => {
-    return loadBlogPosts().filter((post) => post.lang === currentLang);
-  }, [currentLang]);
+  useEffect(() => {
+    const fetchDynamicPosts = async () => {
+      try {
+        const isLocalOrPreview = window.location.hostname.includes('localhost') || 
+                                 window.location.hostname.includes('run.app') || 
+                                 window.location.hostname.includes('gitpod') || 
+                                 window.location.hostname.includes('webcontainer');
+        
+        const baseUrl = isLocalOrPreview ? '' : (import.meta.env.VITE_API_URL || '');
+        const endpoint = baseUrl 
+          ? `${baseUrl.replace(/\/$/, '')}/api/seo/blog-posts` 
+          : '/api/seo/blog-posts';
+
+        const response = await fetch(endpoint);
+        if (response.ok) {
+          const data = await response.json();
+          setDynamicPosts(data.posts || []);
+        }
+      } catch (err) {
+        console.error('[BlogList] Error loading dynamic posts:', err);
+      }
+    };
+
+    fetchDynamicPosts();
+  }, []);
+
+  const combinedPosts = useMemo(() => {
+    const staticPosts = loadBlogPosts().filter((post) => post.lang === currentLang);
+    const convertedDynamic = dynamicPosts.map((dp: any) => ({
+      slug: dp.slug,
+      lang: 'en' as Language, // default dynamic articles to English as they are generated for SEO
+      title: dp.title,
+      date: new Date(dp.created_at).toISOString().split('T')[0],
+      author: 'RedStream Admin',
+      tags: dp.tags || [],
+      description: dp.description || '',
+      content: dp.content,
+      readingTime: Math.max(1, Math.ceil((dp.content || '').split(/\s+/).length / 200)),
+    }));
+    return [...staticPosts, ...convertedDynamic];
+  }, [currentLang, dynamicPosts]);
 
   const onNavigate = (view: string, slug?: string) => {
     if (view === 'post' && slug) {
@@ -223,7 +262,7 @@ function BlogListRoute() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  return <BlogList posts={currentLangPosts} lang={currentLang} t={t} onNavigate={onNavigate} />;
+  return <BlogList posts={combinedPosts} lang={currentLang} t={t} onNavigate={onNavigate} />;
 }
 
 function BlogPostRoute() {
@@ -231,14 +270,67 @@ function BlogPostRoute() {
   const currentLang = (validLanguages.includes(lang as Language) ? lang : 'en') as Language;
   const t = useMemo(() => translations[currentLang], [currentLang]);
   const navigate = useNavigate();
+  const [dynamicPost, setDynamicPost] = useState<any | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  const currentLangPosts = useMemo(() => {
-    return loadBlogPosts().filter((post) => post.lang === currentLang);
-  }, [currentLang]);
+  useEffect(() => {
+    const fetchSingleDynamicPost = async () => {
+      const staticPost = loadBlogPosts().find((p) => p.slug === slug && p.lang === currentLang);
+      if (staticPost) {
+        return;
+      }
+
+      setLoading(true);
+      try {
+        const isLocalOrPreview = window.location.hostname.includes('localhost') || 
+                                 window.location.hostname.includes('run.app') || 
+                                 window.location.hostname.includes('gitpod') || 
+                                 window.location.hostname.includes('webcontainer');
+        
+        const baseUrl = isLocalOrPreview ? '' : (import.meta.env.VITE_API_URL || '');
+        const endpoint = baseUrl 
+          ? `${baseUrl.replace(/\/$/, '')}/api/seo/blog-posts/${slug}` 
+          : `/api/seo/blog-posts/${slug}`;
+
+        const response = await fetch(endpoint);
+        if (response.ok) {
+          const data = await response.json();
+          if (data.success && data.post) {
+            setDynamicPost({
+              slug: data.post.slug,
+              lang: 'en' as Language,
+              title: data.post.title,
+              date: new Date(data.post.created_at).toISOString().split('T')[0],
+              author: 'RedStream Admin',
+              tags: data.post.tags || [],
+              description: data.post.description || '',
+              content: data.post.content,
+              readingTime: Math.max(1, Math.ceil((data.post.content || '').split(/\s+/).length / 200)),
+            });
+          }
+        }
+      } catch (err) {
+        console.error('[BlogPost] Error fetching dynamic post:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSingleDynamicPost();
+  }, [slug, currentLang]);
 
   const activePost = useMemo(() => {
-    return currentLangPosts.find((p) => p.slug === slug);
-  }, [slug, currentLangPosts]);
+    const staticPost = loadBlogPosts().find((p) => p.slug === slug && p.lang === currentLang);
+    return staticPost || dynamicPost;
+  }, [slug, currentLang, dynamicPost]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center text-white">
+        <Loader2 className="w-8 h-8 text-[#FF1E27] animate-spin" />
+      </div>
+    );
+  }
 
   if (!activePost) {
     return <Navigate to={`/${currentLang}/blog`} replace />;

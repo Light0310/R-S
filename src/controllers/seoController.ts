@@ -42,6 +42,20 @@ export const initializeDatabase = async () => {
       );
     `);
 
+    // Create blog_posts table if it doesn't exist
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS blog_posts (
+        id SERIAL PRIMARY KEY,
+        title TEXT NOT NULL,
+        content TEXT NOT NULL,
+        slug TEXT UNIQUE NOT NULL,
+        status VARCHAR(50) DEFAULT 'published' NOT NULL,
+        description TEXT,
+        tags TEXT[] DEFAULT '{}',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
+
     // 1. Clear/delete any existing dummy queries (like 'vibe coding') from the table on startup
     console.log('[Database] Cleaning up old dummy search queries...');
     const dummyQueriesToDelete = [

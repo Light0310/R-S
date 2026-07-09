@@ -1,5 +1,6 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import { executeSearchIntegration, getStoredSeoResults } from '../controllers/seoController';
+import { executeSearchIntegration, getStoredSeoResults, pool } from '../controllers/seoController';
+import { executeAutoContentGeneration } from '../services/contentGenerator';
 
 const router = Router();
 
@@ -30,5 +31,59 @@ router.post('/run-search', adminAuthMiddleware, executeSearchIntegration);
 
 // GET /results - Protected endpoint to retrieve stored SEO results (queries and link targets)
 router.get('/results', adminAuthMiddleware, getStoredSeoResults);
+
+// POST /generate-content - Protected endpoint to trigger AI blog content generation
+router.post('/generate-content', adminAuthMiddleware, async (req: Request, res: Response) => {
+  try {
+    const result = await executeAutoContentGeneration();
+    if (!result.success) {
+      res.status(400).json(result);
+      return;
+    }
+    res.json(result);
+  } catch (error: any) {
+    console.error('[SEO Routes] Error in generate-content endpoint:', error.message);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// GET /blog-posts - Public endpoint to retrieve dynamic database blog posts
+router.get('/blog-posts', async (req: Request, res: Response) => {
+  try {
+    const postsRes = await pool.query(`
+      SELECT id, title, content, slug, status, description, tags, created_at
+      FROM blog_posts
+      WHERE status = 'published'
+      ORDER BY created_at DESC
+    `);
+    res.json({ success: true, posts: postsRes.rows });
+  } catch (error: any) {
+    console.error('[SEO Routes] Error fetching dynamic blog posts:', error.message);
+    res.status(500).json({ success: false, message: 'Failed to fetch dynamic blog posts' });
+  }
+});
+
+// GET /blog-posts/:slug - Public endpoint to retrieve a single dynamic blog post by slug
+router.get('/blog-posts/:slug', async (req: Request, res: Response) => {
+  const { slug } = req.params;
+  try {
+    const postRes = await pool.query(`
+      SELECT id, title, content, slug, status, description, tags, created_at
+      FROM blog_posts
+      WHERE slug = $1 AND status = 'published'
+      LIMIT 1
+    `, [slug]);
+
+    if (postRes.rows.length === 0) {
+      res.status(404).json({ success: false, message: 'Blog post not found' });
+      return;
+    }
+
+    res.json({ success: true, post: postRes.rows[0] });
+  } catch (error: any) {
+    console.error('[SEO Routes] Error fetching single dynamic blog post:', error.message);
+    res.status(500).json({ success: false, message: 'Failed to fetch dynamic blog post' });
+  }
+});
 
 export default router;
