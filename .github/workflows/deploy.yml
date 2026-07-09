@@ -42,6 +42,8 @@ jobs:
         run: npm install
 
       - name: Build
+        env:
+          VITE_API_URL: https://r-s-3lw3.onrender.com
         run: npm run build
 
       - name: Setup Pages
