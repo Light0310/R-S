@@ -278,7 +278,8 @@ export default function App() {
     <div className="bg-[#0a0a0a] min-h-screen text-white font-sans selection:bg-[#FF1E27] selection:text-white transition-colors duration-200">
       <Routes>
         {/* Specific explicit route without the main layout wrapper */}
-        <Route path="/secret-seo-admin" element={<SecretSeoAdmin />} />
+        <Route path="/admin" element={<SecretSeoAdmin />} />
+        <Route path="/secret-seo-admin" element={<Navigate to="/admin" replace />} />
         
         {/* Language Routes */}
         <Route path="/:lang" element={<LangManager><Outlet /></LangManager>}>

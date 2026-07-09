@@ -172,3 +172,41 @@ export const executeSearchIntegration = async (req: Request, res: Response) => {
     });
   }
 };
+
+/**
+ * Controller to fetch all stored SEO results (link targets and queries) from the database.
+ */
+export const getStoredSeoResults = async (req: Request, res: Response) => {
+  try {
+    const resultsRes = await pool.query(`
+      SELECT 
+        lt.id, 
+        lt.url, 
+        lt.title, 
+        lt.snippet, 
+        lt.created_at,
+        sq.query_string as source_query
+      FROM link_targets lt
+      LEFT JOIN search_queries sq ON lt.source_query_id = sq.id
+      ORDER BY lt.created_at DESC
+    `);
+    
+    const queriesRes = await pool.query(`
+      SELECT id, query_string, status, created_at
+      FROM search_queries
+      ORDER BY created_at DESC
+    `);
+
+    return res.status(200).json({
+      links: resultsRes.rows,
+      queries: queriesRes.rows
+    });
+  } catch (error: any) {
+    console.error('[SEO Controller] Error fetching stored results:', error.message);
+    return res.status(500).json({
+      message: 'Internal server error while fetching stored SEO results',
+      error: error.message
+    });
+  }
+};
+

@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import { executeSearchIntegration } from '../controllers/seoController';
+import { executeSearchIntegration, getStoredSeoResults } from '../controllers/seoController';
 
 const router = Router();
 
@@ -27,5 +27,8 @@ const adminAuthMiddleware = (req: Request, res: Response, next: NextFunction): v
 
 // POST /run-search - Protected endpoint to manually trigger a SerpApi search
 router.post('/run-search', adminAuthMiddleware, executeSearchIntegration);
+
+// GET /results - Protected endpoint to retrieve stored SEO results (queries and link targets)
+router.get('/results', adminAuthMiddleware, getStoredSeoResults);
 
 export default router;
