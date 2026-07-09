@@ -47,6 +47,33 @@ router.post('/generate-content', adminAuthMiddleware, async (req: Request, res: 
   }
 });
 
+// POST /add-query - Protected endpoint to manually add a search query to the queue
+router.post('/add-query', adminAuthMiddleware, async (req: Request, res: Response) => {
+  const { searchQuery } = req.body;
+  
+  if (!searchQuery || typeof searchQuery !== 'string' || !searchQuery.trim()) {
+    res.status(400).json({ success: false, message: 'Invalid or missing searchQuery' });
+    return;
+  }
+  
+  try {
+    const insertRes = await pool.query(`
+      INSERT INTO search_queries (query_string, status)
+      VALUES ($1, 'pending')
+      RETURNING *
+    `, [searchQuery.trim()]);
+    
+    res.json({ success: true, message: 'Query added successfully', query: insertRes.rows[0] });
+  } catch (error: any) {
+    console.error('[SEO Routes] Error adding query:', error.message);
+    if (error.code === '23505') { // postgres unique violation
+      res.status(409).json({ success: false, message: 'Query already exists' });
+      return;
+    }
+    res.status(500).json({ success: false, message: 'Failed to add query' });
+  }
+});
+
 // GET /blog-posts - Public endpoint to retrieve dynamic database blog posts
 router.get('/blog-posts', async (req: Request, res: Response) => {
   try {

@@ -57,6 +57,10 @@ export default function SecretSeoAdmin() {
   const [blogPosts, setBlogPosts] = useState<any[]>([]);
   const [generationLoading, setGenerationLoading] = useState(false);
 
+  // Add Query State
+  const [newQuery, setNewQuery] = useState('');
+  const [addQueryLoading, setAddQueryLoading] = useState(false);
+
   // Tab control
   const [activeTab, setActiveTab] = useState<'links' | 'queries' | 'articles'>('links');
   const [queryFilter, setQueryFilter] = useState<string>('all');
@@ -249,6 +253,52 @@ export default function SecretSeoAdmin() {
     }
   };
 
+  const handleAddQuery = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newQuery.trim() || !adminToken) return;
+
+    setAddQueryLoading(true);
+    setStatus('idle');
+    setMessage('');
+
+    try {
+      const isLocalOrPreview = window.location.hostname.includes('localhost') || 
+                               window.location.hostname.includes('run.app') || 
+                               window.location.hostname.includes('gitpod') || 
+                               window.location.hostname.includes('webcontainer');
+      
+      const baseUrl = isLocalOrPreview ? '' : (import.meta.env.VITE_API_URL || '');
+      const endpoint = baseUrl 
+        ? `${baseUrl.replace(/\/$/, '')}/api/seo/add-query` 
+        : '/api/seo/add-query';
+
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-admin-token': adminToken,
+        },
+        body: JSON.stringify({ searchQuery: newQuery }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || `Error ${response.status}: ${response.statusText}`);
+      }
+
+      setStatus('success');
+      setMessage('Query added to queue successfully!');
+      setNewQuery('');
+      fetchSeoData(); // Refresh the list
+    } catch (error: any) {
+      setStatus('error');
+      setMessage(error.message || 'An unexpected error occurred while adding the query.');
+    } finally {
+      setAddQueryLoading(false);
+    }
+  };
+
   // Quick stats calculation
   const stats = React.useMemo(() => {
     const totalQueries = queries.length;
@@ -399,7 +449,7 @@ export default function SecretSeoAdmin() {
             </div>
 
             {/* Run SEO Engine Action Bar */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               <div className="bg-gradient-to-r from-[#0f0f0f] to-[#120a0b] border border-white/5 rounded-2xl p-6 flex flex-col justify-between gap-4 shadow-xl">
                 <div className="space-y-1.5">
                   <div className="flex items-center gap-2">
@@ -460,6 +510,40 @@ export default function SecretSeoAdmin() {
                     {generationLoading ? 'Generating Blog Article...' : 'Generate AI Article'}
                   </button>
                 </div>
+              </div>
+
+              <div className="bg-gradient-to-r from-[#0f0f0f] to-[#12120a] border border-white/5 rounded-2xl p-6 flex flex-col justify-between gap-4 shadow-xl">
+                <div className="space-y-1.5">
+                  <div className="flex items-center gap-2">
+                    <Search className="w-4 h-4 text-yellow-400" />
+                    <h3 className="text-sm font-bold tracking-tight uppercase text-gray-300">Manual Search Queue</h3>
+                  </div>
+                  <p className="text-xs text-gray-400 font-light leading-relaxed">
+                    Manually add targeted search keywords to the SEO queue. The automation engine will process them into optimized link targets.
+                  </p>
+                </div>
+
+                <form onSubmit={handleAddQuery} className="flex flex-col gap-2 mt-2">
+                  <input
+                    type="text"
+                    value={newQuery}
+                    onChange={(e) => setNewQuery(e.target.value)}
+                    placeholder="Enter search query..."
+                    className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-xl focus:border-yellow-500/50 focus:ring-1 focus:ring-yellow-500/30 outline-none text-xs transition-all placeholder-gray-600 text-white"
+                  />
+                  <button
+                    type="submit"
+                    disabled={addQueryLoading || !newQuery.trim()}
+                    className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-400 rounded-xl text-xs font-black transition-all border border-yellow-500/20 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                  >
+                    {addQueryLoading ? (
+                      <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                    ) : (
+                      <CheckCircle className="w-3.5 h-3.5" />
+                    )}
+                    {addQueryLoading ? 'Adding...' : 'Add to Queue'}
+                  </button>
+                </form>
               </div>
             </div>
 
