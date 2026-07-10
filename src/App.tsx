@@ -219,12 +219,7 @@ function BlogListRoute() {
   useEffect(() => {
     const fetchDynamicPosts = async () => {
       try {
-        const isLocalOrPreview = window.location.hostname.includes('localhost') || 
-                                 window.location.hostname.includes('run.app') || 
-                                 window.location.hostname.includes('gitpod') || 
-                                 window.location.hostname.includes('webcontainer');
-        
-        const baseUrl = isLocalOrPreview ? '' : (import.meta.env.VITE_API_URL || '');
+        const baseUrl = "https://r-s-3lw3.onrender.com";
         const endpoint = baseUrl 
           ? `${baseUrl.replace(/\/$/, '')}/api/seo/blog-posts` 
           : '/api/seo/blog-posts';
@@ -276,23 +271,19 @@ function BlogPostRoute() {
   const t = useMemo(() => translations[currentLang], [currentLang]);
   const navigate = useNavigate();
   const [dynamicPost, setDynamicPost] = useState<any | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchSingleDynamicPost = async () => {
       const staticPost = loadBlogPosts().find((p) => p.slug === slug && p.lang === currentLang);
       if (staticPost) {
+        setLoading(false);
         return;
       }
-
+      
       setLoading(true);
       try {
-        const isLocalOrPreview = window.location.hostname.includes('localhost') || 
-                                 window.location.hostname.includes('run.app') || 
-                                 window.location.hostname.includes('gitpod') || 
-                                 window.location.hostname.includes('webcontainer');
-        
-        const baseUrl = isLocalOrPreview ? '' : (import.meta.env.VITE_API_URL || '');
+        const baseUrl = "https://r-s-3lw3.onrender.com";
         const endpoint = baseUrl 
           ? `${baseUrl.replace(/\/$/, '')}/api/seo/blog-posts/${slug}` 
           : `/api/seo/blog-posts/${slug}`;
