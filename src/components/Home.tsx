@@ -189,13 +189,13 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
     window.addEventListener('scroll', handleScroll);
 
     // Countdown timer
-    const HOURS_IN_MS = 24 * 60 * 60 * 1000;
-    let targetTime = localStorage.getItem('redstream_promo_end');
+    const THREE_DAYS_IN_MS = 3 * 24 * 60 * 60 * 1000;
+    let targetTime = localStorage.getItem('redstream_promo_end_3days');
     const now = new Date().getTime();
 
     if (!targetTime || parseInt(targetTime) < now) {
-      targetTime = (now + (23 * 60 * 60 * 1000 + 45 * 60 * 1000)).toString();
-      localStorage.setItem('redstream_promo_end', targetTime);
+      targetTime = (now + THREE_DAYS_IN_MS).toString();
+      localStorage.setItem('redstream_promo_end_3days', targetTime);
     }
 
     const timerInterval = setInterval(() => {
@@ -203,20 +203,23 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
       let timeLeft = parseInt(targetTime!) - currentTime;
 
       if (timeLeft <= 0) {
-        const newEnd = currentTime + HOURS_IN_MS;
-        localStorage.setItem('redstream_promo_end', newEnd.toString());
+        const newEnd = currentTime + THREE_DAYS_IN_MS;
+        localStorage.setItem('redstream_promo_end_3days', newEnd.toString());
         targetTime = newEnd.toString();
-        timeLeft = HOURS_IN_MS;
+        timeLeft = THREE_DAYS_IN_MS;
       }
 
-      const hours = Math.floor(timeLeft / (1000 * 60 * 60));
+      const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
+      const dEl = document.getElementById('countdown-days');
       const hEl = document.getElementById('countdown-hours');
       const mEl = document.getElementById('countdown-minutes');
       const sEl = document.getElementById('countdown-seconds');
       
+      if (dEl) dEl.innerText = days.toString().padStart(2, '0');
       if (hEl) hEl.innerText = hours.toString().padStart(2, '0');
       if (mEl) mEl.innerText = minutes.toString().padStart(2, '0');
       if (sEl) sEl.innerText = seconds.toString().padStart(2, '0');
@@ -718,6 +721,11 @@ const LANDING_HTML_TOP = `
     <div class="countdown-timer-container" id="countdown-timer-box">
       <span class="countdown-timer-title">⚡ Special Offer Ends In:</span>
       <div class="countdown-timer">
+        <div class="countdown-unit">
+          <span class="countdown-number" id="countdown-days">03</span>
+          <span class="countdown-label">days</span>
+        </div>
+        <span class="countdown-separator">:</span>
         <div class="countdown-unit">
           <span class="countdown-number" id="countdown-hours">23</span>
           <span class="countdown-label">hours</span>

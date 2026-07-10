@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { BlogPost, Language, TranslationDictionary } from '../types';
 import { ArrowLeft, Calendar, User, Clock, ChevronRight, MessageCircle } from 'lucide-react';
@@ -16,6 +16,23 @@ interface BlogPostProps {
 }
 
 export default function BlogPostComponent({ post, lang, t, onBack }: BlogPostProps) {
+  useEffect(() => {
+    document.title = `${post.title} | RedStream™ Premium IPTV`;
+    let metaDescription = document.querySelector('meta[name="description"]');
+    if (!metaDescription) {
+      metaDescription = document.createElement('meta');
+      metaDescription.setAttribute('name', 'description');
+      document.head.appendChild(metaDescription);
+    }
+    metaDescription.setAttribute('content', post.description || post.title);
+    
+    // Cleanup on unmount
+    return () => {
+      document.title = 'RedStream™ | Premium IPTV Subscription - Fast & Stable Server';
+      metaDescription?.setAttribute('content', 'Stream over 20,000+ live premium TV channels and 60,000+ blockbuster movies & VOD in stunning Ultra HD 4K.');
+    };
+  }, [post]);
+
   // Find Cover Image based on slug
   const coverImage = post.slug.includes('samsung') 
     ? '/samsung_iptv_guide.svg' 

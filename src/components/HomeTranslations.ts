@@ -16,6 +16,7 @@ export const homeTranslations: Record<Exclude<Language, 'en'>, Record<string, st
     'Stream over 20,000+ live premium TV channels and 60,000+ blockbuster movies & VOD in stunning Ultra HD 4K. Zero freezing, smart loading, and instant instant activation.': 
       'بث أكثر من 20,000+ قناة تلفزيونية ممتازة مباشرة و 60,000+ فيلم ومسلسل VOD بدقة Ultra HD 4K المذهلة. بدون تقطيع، تحميل ذكي، وتفعيل فوري.',
     '⚡ Special Offer Ends In:': '⚡ ينتهي العرض الخاص في:',
+    'days': 'أيام',
     'hours': 'ساعة',
     'mins': 'دقيقة',
     'secs': 'ثانية',
@@ -117,6 +118,7 @@ export const homeTranslations: Record<Exclude<Language, 'en'>, Record<string, st
     'Stream over 20,000+ live premium TV channels and 60,000+ blockbuster movies & VOD in stunning Ultra HD 4K. Zero freezing, smart loading, and instant instant activation.': 
       'Transmite más de 20,000+ canales de TV en vivo y 60,000+ películas y series VOD en impresionante calidad Ultra HD 4K. Sin interrupciones, carga inteligente y activación instantánea.',
     '⚡ Special Offer Ends In:': '⚡ La Oferta Especial Termina En:',
+    'days': 'días',
     'hours': 'horas',
     'mins': 'mins',
     'secs': 'segs',
@@ -218,6 +220,7 @@ export const homeTranslations: Record<Exclude<Language, 'en'>, Record<string, st
     'Stream over 20,000+ live premium TV channels and 60,000+ blockbuster movies & VOD in stunning Ultra HD 4K. Zero freezing, smart loading, and instant instant activation.': 
       'Stream meer dan 20.000+ live premium zenders en 60.000+ topfilms en series in adembenemende Ultra HD 4K. Geen haperingen, slim laden en directe activatie.',
     '⚡ Special Offer Ends In:': '⚡ Speciale Aanbieding Eindigt Binnen:',
+    'days': 'dagen',
     'hours': 'uur',
     'mins': 'min',
     'secs': 'sec',
@@ -319,6 +322,7 @@ export const homeTranslations: Record<Exclude<Language, 'en'>, Record<string, st
     'Stream over 20,000+ live premium TV channels and 60,000+ blockbuster movies & VOD in stunning Ultra HD 4K. Zero freezing, smart loading, and instant instant activation.': 
       'Diffusez plus de 20 000+ chaînes de télévision premium en direct et 60 000+ films et séries VOD en Ultra HD 4K. Sans coupures, chargement intelligent et activation instantanée.',
     '⚡ Special Offer Ends In:': '⚡ L’offre spéciale se termine dans :',
+    'days': 'jours',
     'hours': 'heures',
     'mins': 'min',
     'secs': 'sec',
@@ -420,6 +424,7 @@ export const homeTranslations: Record<Exclude<Language, 'en'>, Record<string, st
     'Stream over 20,000+ live premium TV channels and 60,000+ blockbuster movies & VOD in stunning Ultra HD 4K. Zero freezing, smart loading, and instant instant activation.': 
       'Смотрите более 20 000+ каналов в прямом эфире и 60 000+ фильмов и сериалов в потрясающем качестве Ultra HD 4K. Без зависаний, быстрая загрузка и мгновенное подключение.',
     '⚡ Special Offer Ends In:': '⚡ Специальное предложение заканчивается через:',
+    'days': 'дн.',
     'hours': 'ч.',
     'mins': 'мин.',
     'secs': 'сек.',
@@ -521,6 +526,7 @@ export const homeTranslations: Record<Exclude<Language, 'en'>, Record<string, st
     'Stream over 20,000+ live premium TV channels and 60,000+ blockbuster movies & VOD in stunning Ultra HD 4K. Zero freezing, smart loading, and instant instant activation.': 
       'Streamen Sie über 20.000+ Live-Premium-TV-Kanäle und 60.000+ Filme & VOD in atemberaubendem Ultra HD 4K. Keine Ruckler, schnelles Laden und sofortige Aktivierung.',
     '⚡ Special Offer Ends In:': '⚡ Sonderangebot endet in:',
+    'days': 'Tage',
     'hours': 'Stunden',
     'mins': 'Min',
     'secs': 'Sek',

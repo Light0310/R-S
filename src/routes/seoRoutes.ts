@@ -76,6 +76,10 @@ router.post('/add-query', adminAuthMiddleware, async (req: Request, res: Respons
 
 // GET /blog-posts - Public endpoint to retrieve dynamic database blog posts
 router.get('/blog-posts', async (req: Request, res: Response) => {
+  if (!process.env.DATABASE_URL) {
+    res.json({ success: true, posts: [] });
+    return;
+  }
   try {
     const postsRes = await pool.query(`
       SELECT id, title, content, slug, status, description, tags, created_at
@@ -93,6 +97,10 @@ router.get('/blog-posts', async (req: Request, res: Response) => {
 // GET /blog-posts/:slug - Public endpoint to retrieve a single dynamic blog post by slug
 router.get('/blog-posts/:slug', async (req: Request, res: Response) => {
   const { slug } = req.params;
+  if (!process.env.DATABASE_URL) {
+    res.status(404).json({ success: false, message: 'Blog post not found' });
+    return;
+  }
   try {
     const postRes = await pool.query(`
       SELECT id, title, content, slug, status, description, tags, created_at

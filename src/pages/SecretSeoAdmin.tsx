@@ -330,7 +330,11 @@ export default function SecretSeoAdmin() {
               <h1 className="text-lg font-extrabold tracking-tight">
                 RedStream <span className="text-[#FF1E27]">SEO Control Panel</span>
               </h1>
-              <p className="text-xs text-gray-500 font-medium">Internal Programmatic SEO Administrator</p>
+              <p className="text-xs text-gray-500 font-medium flex items-center gap-2">
+                Internal Programmatic SEO Administrator
+                <span className="text-gray-700">|</span>
+                <a href="/en/home" className="text-gray-400 hover:text-white transition-colors">Return to Site</a>
+              </p>
             </div>
           </div>
 

@@ -4,7 +4,7 @@
  */
 
 import { useState, useEffect, useMemo } from 'react';
-import { Routes, Route, Navigate, useLocation, useNavigate, useParams, Outlet } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation, useNavigate, useParams, Outlet, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { Globe, ChevronDown, CheckCircle2, Loader2 } from 'lucide-react';
 import { Language } from './types';
@@ -193,7 +193,12 @@ function MainLayout() {
             <span className="font-extrabold text-white">RedStream IPTV</span>
           </div>
           
-          <p className="text-gray-400 font-light">{t.footerDesc}</p>
+          <p className="text-gray-400 font-light flex items-center gap-4">
+            <span>{t.footerDesc}</span>
+            <Link to="/admin" className="text-transparent hover:text-white/20 transition-colors select-none" aria-label="Admin Dashboard" title="Admin">
+              •
+            </Link>
+          </p>
           
           <p className="font-light">
             &copy; 2026 RedStream. {t.footerRights}
@@ -355,14 +360,51 @@ function HomeRoute() {
 function LangManager({ children }: { children: React.ReactNode }) {
   const { lang } = useParams<{ lang: string }>();
   const currentLang = validLanguages.includes(lang as Language) ? lang as Language : 'en';
+  const location = useLocation();
 
   useEffect(() => {
     const dir = currentLang === 'ar' ? 'rtl' : 'ltr';
     document.documentElement.dir = dir;
     document.documentElement.lang = currentLang;
-  }, [currentLang]);
 
-  return <>{children}</>;
+    // Remove existing canonical and hreflang tags to prevent duplicates
+    document.querySelectorAll('link[rel="canonical"], link[rel="alternate"][hreflang]').forEach(el => el.remove());
+
+    const baseUrl = 'https://www.red-stream.store';
+    
+    // Create new canonical tag (Self-referencing)
+    const canonicalLink = document.createElement('link');
+    canonicalLink.setAttribute('rel', 'canonical');
+    canonicalLink.setAttribute('href', `${baseUrl}${location.pathname}`);
+    document.head.appendChild(canonicalLink);
+
+    // Create hreflang tags for all valid languages
+    validLanguages.forEach((l) => {
+      const alternateLink = document.createElement('link');
+      alternateLink.setAttribute('rel', 'alternate');
+      alternateLink.setAttribute('hreflang', l);
+      const newPath = location.pathname.replace(/^\/[^\/]+/, `/${l}`);
+      alternateLink.setAttribute('href', `${baseUrl}${newPath}`);
+      document.head.appendChild(alternateLink);
+    });
+    
+    // Add x-default hreflang pointing to English fallback
+    const xDefault = document.createElement('link');
+    xDefault.setAttribute('rel', 'alternate');
+    xDefault.setAttribute('hreflang', 'x-default');
+    const defaultPath = location.pathname.replace(/^\/[^\/]+/, '/en');
+    xDefault.setAttribute('href', `${baseUrl}${defaultPath}`);
+    document.head.appendChild(xDefault);
+
+  }, [currentLang, location.pathname]);
+
+  return (
+    <div className="flex flex-col min-h-screen">
+      <div className="flex-1 flex flex-col">
+        {children}
+      </div>
+    </div>
+  );
 }
 
 export default function App() {
