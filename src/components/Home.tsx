@@ -8,6 +8,8 @@ import { Globe, ChevronDown } from 'lucide-react';
 import { Language } from '../types';
 import { getTranslatedLandingHTML } from './HomeTranslations';
 import FAQSection from './FAQSection';
+import DownloaderCodes from './DownloaderCodes';
+import { useGeoLocation } from '../hooks/useGeoLocation';
 
 const languageNames: Record<Language, { native: string; flag: string; label: string }> = {
   en: { native: 'English', flag: '🇬🇧', label: 'EN' },
@@ -36,6 +38,7 @@ interface HomeProps {
 }
 
 export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate }: HomeProps) {
+  useGeoLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
 
@@ -686,6 +689,7 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
 
       {/* Hero Section & Rest of Landing Page Content */}
       <div dangerouslySetInnerHTML={{ __html: getTranslatedLandingHTML(LANDING_HTML_TOP, currentLang) }} />
+      <DownloaderCodes />
 
       {/* Sleek dynamic FAQ Accordion Component */}
       <FAQSection currentLang={currentLang} />
@@ -708,7 +712,7 @@ const LANDING_HTML_TOP = `
       Premium 4K IPTV Service 2026
     </div>
     
-    <h1 id="hero-heading">
+    <h1 id="hero-title">
       <span>Experience Ultimate TV with</span><br>
       <span class="highlight">RedStream™ Premium IPTV</span>
     </h1>
@@ -903,49 +907,9 @@ const LANDING_HTML_TOP = `
         <p>No hidden fees. Select the subscription period that suits you and start watching instantly via secure WhatsApp order activation.</p>
       </div>
 
-      <div class="pricing-grid">
-        <!-- Plan 1: 24h Trial -->
-        <div class="pricing-card" id="plan-trial">
-          <div class="plan-header">
-            <h3 class="plan-name">24 Hours Trial</h3>
-            <div class="plan-price-wrapper">
-              <span class="plan-price">2</span>
-              <span class="plan-currency">€</span>
-              <span class="plan-duration">/Once</span>
-            </div>
-            <p class="plan-desc">Perfect to test our stable server and high 4K streaming quality</p>
-          </div>
-          <div class="plan-divider"></div>
-          <ul class="plan-features">
-            <li>
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              20,000+ Live Channels
-            </li>
-            <li>
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              60,000+ VOD Movies & Series
-            </li>
-            <li>
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              4K / Ultra HD Quality
-            </li>
-            <li>
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              Standard Support Setup
-            </li>
-          </ul>
-          <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20want%20to%20order%20the%2024%20Hours%20IPTV%20Trial%20for%202%E2%82%AC." target="_blank" rel="noopener noreferrer" class="plan-cta" id="btn-trial-order">Get 24H Trial</a>
-        </div>
-
-        <!-- Plan 2: 1 Month -->
+      
+      <div class="pricing-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+        <!-- Plan 1: 1 Month -->
         <div class="pricing-card" id="plan-1month">
           <div class="plan-header">
             <h3 class="plan-name">1 Month</h3>
@@ -958,46 +922,19 @@ const LANDING_HTML_TOP = `
           </div>
           <div class="plan-divider"></div>
           <ul class="plan-features">
-            <li>
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              20,000+ Live Channels
-            </li>
-            <li>
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              60,000+ VOD Movies & Series
-            </li>
-            <li>
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              4K / Ultra HD Quality
-            </li>
-            <li class="premium-feature">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              Anti-Freeze Stable Server
-            </li>
-            <li class="premium-feature">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              24/7 VIP Customer Support
-            </li>
+            <li><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 20,000+ Live Channels</li>
+            <li><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 60,000+ VOD Movies</li>
+            <li><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 4K / Ultra HD Quality</li>
           </ul>
-          <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20want%20to%20order%20the%201%20Month%20Premium%20Plan%20for%2012%E2%82%AC." target="_blank" rel="noopener noreferrer" class="plan-cta" id="btn-1month-order">Order 1 Month</a>
+          <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20want%20to%20order%20the%201%20Month%20Plan%20for%2012%E2%82%AC." target="_blank" rel="noopener noreferrer" class="plan-cta" id="btn-1month-order">Order 1 Month</a>
         </div>
 
-        <!-- Plan 3: 6 Months -->
+        <!-- Plan 2: 6 Months (Decoy) -->
         <div class="pricing-card" id="plan-6months">
           <div class="plan-header">
             <h3 class="plan-name">6 Months</h3>
             <div class="plan-price-wrapper">
-              <span class="plan-price">29</span>
+              <span class="plan-price">39</span>
               <span class="plan-currency">€</span>
               <span class="plan-duration">/6 Months</span>
             </div>
@@ -1005,43 +942,17 @@ const LANDING_HTML_TOP = `
           </div>
           <div class="plan-divider"></div>
           <ul class="plan-features">
-            <li>
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              20,000+ Live Channels
-            </li>
-            <li>
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              60,000+ VOD Movies & Series
-            </li>
-            <li>
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              4K / Ultra HD Quality
-            </li>
-            <li class="premium-feature">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              Anti-Freeze Stable Server
-            </li>
-            <li class="premium-feature">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              24/7 VIP Customer Support
-            </li>
+            <li><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 20,000+ Live Channels</li>
+            <li><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 60,000+ VOD Movies</li>
+            <li><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 4K / Ultra HD Quality</li>
+            <li class="premium-feature"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Anti-Freeze Stable Server</li>
           </ul>
-          <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20want%20to%20order%20the%206%20Months%20Premium%20Plan%20for%2029%E2%82%AC." target="_blank" rel="noopener noreferrer" class="plan-cta" id="btn-6months-order">Order 6 Months</a>
+          <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20want%20to%20order%20the%206%20Months%20Plan%20for%2039%E2%82%AC." target="_blank" rel="noopener noreferrer" class="plan-cta" id="btn-6months-order">Order 6 Months</a>
         </div>
 
-        <!-- Plan 4: 12 Months (Pulsing Red Neon Highlighted) -->
-        <div class="pricing-card popular" id="plan-12months">
-          <div class="pricing-tag">Best Deal (Save 60%)</div>
+        <!-- Plan 3: 12 Months (Pulsing Red Neon Highlighted - Best Value) -->
+        <div class="pricing-card popular" id="plan-12months" style="border: 2px solid #e50914; box-shadow: 0 0 20px rgba(229, 9, 20, 0.4); transform: scale(1.05);">
+          <div class="pricing-tag" style="background: #e50914; color: white; padding: 6px 12px; border-radius: 4px; font-weight: bold; position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: max-content;">🔥 Best Value (Save 65%)</div>
           <div class="plan-header">
             <h3 class="plan-name">12 Months</h3>
             <div class="plan-price-wrapper">
@@ -1049,51 +960,19 @@ const LANDING_HTML_TOP = `
               <span class="plan-currency">€</span>
               <span class="plan-duration">/Year</span>
             </div>
-            <p class="plan-desc">Ultimate premium package. Save over 60% compared to monthly plan.</p>
+            <p class="plan-desc">Ultimate premium package. Only 10€ more than 6 months!</p>
           </div>
           <div class="plan-divider"></div>
           <ul class="plan-features">
-            <li>
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              20,000+ Live Channels
-            </li>
-            <li>
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              60,000+ VOD Movies & Series
-            </li>
-            <li>
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              4K / Ultra HD Quality
-            </li>
-            <li class="premium-feature">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              Anti-Freeze Stable Server
-            </li>
-            <li class="premium-feature">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              24/7 VIP Customer Support
-            </li>
-            <li class="premium-feature">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              Free Weekly VOD Updates
-            </li>
+            <li><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 20,000+ Live Channels</li>
+            <li><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 60,000+ VOD Movies</li>
+            <li><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 4K / Ultra HD Quality</li>
+            <li class="premium-feature"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Anti-Freeze Stable Server</li>
+            <li class="premium-feature"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 24/7 VIP Customer Support</li>
           </ul>
-          <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20want%20to%20order%20the%2012%20Months%20Premium%20Plan%20for%2049%E2%82%AC." target="_blank" rel="noopener noreferrer" class="plan-cta" id="btn-12months-order">Get 12 Months (Best Deal)</a>
+          <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20want%20to%20order%20the%2012%20Months%20Premium%20Plan%20for%2049%E2%82%AC." target="_blank" rel="noopener noreferrer" class="plan-cta" style="background: #e50914; color: white;" id="btn-12months-order">Order 12 Months</a>
         </div>
       </div>
-
     </div>
   </section>
 
