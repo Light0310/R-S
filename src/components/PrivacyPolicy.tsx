@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { Language } from '../types';
@@ -9,8 +9,12 @@ export default function PrivacyPolicy() {
   const { lang } = useParams<{ lang: string }>();
   const currentLang = (validLanguages.includes(lang as Language) ? lang : 'en') as Language;
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
-    <div id="privacy" className="bg-neutral-950 text-white font-sans p-8 md:px-16 lg:px-24 min-h-screen">
+    <div id="privacy" className="min-h-screen bg-[#0a0a0a] text-white font-sans p-8">
       <div className="max-w-4xl mx-auto">
         <div className="mb-8">
           <Link 

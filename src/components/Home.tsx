@@ -698,7 +698,7 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
       <FAQSection currentLang={currentLang} />
 
       {/* Footer and Bottom Floating Widgets */}
-      <div dangerouslySetInnerHTML={{ __html: getTranslatedLandingHTML(LANDING_HTML_BOTTOM, currentLang).replace('href="#privacy"', `href="/${currentLang}/privacy"`) }} />
+      <div dangerouslySetInnerHTML={{ __html: getTranslatedLandingHTML(LANDING_HTML_BOTTOM, currentLang).replace('href="#privacy"', `href="/privacy"`) }} />
     </>
   );
 }

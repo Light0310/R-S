@@ -414,7 +414,6 @@ export default function App() {
           
           {/* Main Layout wraps other views like blog */}
           <Route element={<MainLayout />}>
-             <Route path="privacy" element={<PrivacyPolicy />} />
              <Route path="blog" element={<BlogListRoute />} />
              <Route path="blog/:slug" element={<BlogPostRoute />} />
              {/* Redirect any other path inside /:lang to /:lang/home */}
@@ -422,6 +421,7 @@ export default function App() {
           </Route>
         </Route>
         
+                <Route path="/privacy" element={<PrivacyPolicy />} />
         {/* Catch-all redirect mapped to default language */}
         <Route path="*" element={<Navigate to="/en/home" replace />} />
       </Routes>
