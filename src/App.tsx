@@ -16,7 +16,6 @@ import Home from './components/Home';
 import BlogList from './components/BlogList';
 import BlogPostComponent from './components/BlogPost';
 import SecretSeoAdmin from './pages/SecretSeoAdmin';
-import PrivacyPolicy from './components/PrivacyPolicy';
 
 const languageNames: Record<Language, { native: string; flag: string; label: string }> = {
   en: { native: 'English', flag: '🇬🇧', label: 'EN' },
@@ -421,7 +420,6 @@ export default function App() {
           </Route>
         </Route>
         
-                <Route path="/privacy" element={<PrivacyPolicy />} />
         {/* Catch-all redirect mapped to default language */}
         <Route path="*" element={<Navigate to="/en/home" replace />} />
       </Routes>
