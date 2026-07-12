@@ -8,7 +8,6 @@ import { Globe, ChevronDown } from 'lucide-react';
 import { Language } from '../types';
 import { getTranslatedLandingHTML } from './HomeTranslations';
 import FAQSection from './FAQSection';
-import PrivacyPolicy from './PrivacyPolicy';
 import DownloaderCodes from './DownloaderCodes';
 import { useGeoLocation } from '../hooks/useGeoLocation';
 
@@ -699,8 +698,7 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
       <FAQSection currentLang={currentLang} />
 
       {/* Footer and Bottom Floating Widgets */}
-      <PrivacyPolicy />
-      <div dangerouslySetInnerHTML={{ __html: getTranslatedLandingHTML(LANDING_HTML_BOTTOM, currentLang) }} />
+      <div dangerouslySetInnerHTML={{ __html: getTranslatedLandingHTML(LANDING_HTML_BOTTOM, currentLang).replace('href="#privacy"', `href="/${currentLang}/privacy"`) }} />
     </>
   );
 }

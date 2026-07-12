@@ -1,9 +1,27 @@
 import React from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
+import { Language } from '../types';
+
+const validLanguages: Language[] = ['en', 'ar', 'es', 'nl', 'fr', 'ru', 'de'];
 
 export default function PrivacyPolicy() {
+  const { lang } = useParams<{ lang: string }>();
+  const currentLang = (validLanguages.includes(lang as Language) ? lang : 'en') as Language;
+
   return (
-    <div id="privacy" className="bg-neutral-950 text-white font-sans p-8 md:px-16 lg:px-24">
+    <div id="privacy" className="bg-neutral-950 text-white font-sans p-8 md:px-16 lg:px-24 min-h-screen">
       <div className="max-w-4xl mx-auto">
+        <div className="mb-8">
+          <Link 
+            to={`/${currentLang}/home`} 
+            className="inline-flex items-center text-red-500 hover:text-red-400 font-medium transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to Home
+          </Link>
+        </div>
+
         <h2 className="text-3xl md:text-4xl font-bold mb-2">Privacy Policy</h2>
         <p className="text-gray-400 mb-8">Last Updated: July 12, 2026</p>
 
