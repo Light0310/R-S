@@ -16,7 +16,6 @@ import Home from './components/Home';
 import BlogList from './components/BlogList';
 import BlogPostComponent from './components/BlogPost';
 import SecretSeoAdmin from './pages/SecretSeoAdmin';
-import PrivacyPolicy from './components/PrivacyPolicy';
 
 const languageNames: Record<Language, { native: string; flag: string; label: string }> = {
   en: { native: 'English', flag: '🇬🇧', label: 'EN' },
@@ -415,7 +414,6 @@ export default function App() {
           {/* Main Layout wraps other views like blog */}
           <Route element={<MainLayout />}>
              <Route path="blog" element={<BlogListRoute />} />
-             <Route path="privacy" element={<PrivacyPolicy />} />
              <Route path="blog/:slug" element={<BlogPostRoute />} />
              {/* Redirect any other path inside /:lang to /:lang/home */}
              <Route path="*" element={<Navigate to="home" replace />} />

@@ -8,6 +8,7 @@ import { Globe, ChevronDown } from 'lucide-react';
 import { Language } from '../types';
 import { getTranslatedLandingHTML } from './HomeTranslations';
 import FAQSection from './FAQSection';
+import PrivacyPolicy from './PrivacyPolicy';
 import DownloaderCodes from './DownloaderCodes';
 import { useGeoLocation } from '../hooks/useGeoLocation';
 
@@ -59,14 +60,7 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
     };
     window.addEventListener('hashchange', handleHashChange);
 
-    const handlePrivacy = () => {
-      if (onNavigate) {
-        onNavigate(`/${currentLang}/privacy`);
-      } else {
-        window.location.href = `/${currentLang}/privacy`;
-      }
-    };
-    window.addEventListener('navigate-privacy', handlePrivacy);
+
 
     // Image state checkers for showcase
     const showcaseImgs = document.querySelectorAll('.showcase-slide img');
@@ -477,7 +471,7 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
     // Cleanup function
     return () => {
       window.removeEventListener('hashchange', handleHashChange);
-      window.removeEventListener('navigate-privacy', handlePrivacy);
+      
       window.removeEventListener('scroll', handleScroll);
       clearInterval(timerInterval);
       clearTimeout(initialToastTimeout);
@@ -705,6 +699,7 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
       <FAQSection currentLang={currentLang} />
 
       {/* Footer and Bottom Floating Widgets */}
+      <PrivacyPolicy />
       <div dangerouslySetInnerHTML={{ __html: getTranslatedLandingHTML(LANDING_HTML_BOTTOM, currentLang) }} />
     </>
   );
@@ -1515,7 +1510,7 @@ const LANDING_HTML_BOTTOM = `
           <li><a href="#pricing">Pricing</a></li>
           <li><a href="#faq">FAQ</a></li>
           <li><a href="https://wa.me/212694843943" target="_blank" rel="noopener noreferrer">Contact</a></li>
-          <li><a href="/en/privacy" onclick="event.preventDefault(); window.dispatchEvent(new CustomEvent('navigate-privacy'))" class="privacy-link">Privacy Policy</a></li>
+          <li><a href="#privacy">Privacy Policy</a></li>
         </ul>
       </div>
 
