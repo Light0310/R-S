@@ -226,10 +226,10 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
       const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
-      const dEl = document.getElementById('countdown-days');
-      const hEl = document.getElementById('countdown-hours');
-      const mEl = document.getElementById('countdown-minutes');
-      const sEl = document.getElementById('countdown-seconds');
+      const dEl = document.getElementById('cd-val-d');
+      const hEl = document.getElementById('cd-val-h');
+      const mEl = document.getElementById('cd-val-m');
+      const sEl = document.getElementById('cd-val-s');
       
       if (dEl) dEl.innerText = days.toString().padStart(2, '0');
       if (hEl) hEl.innerText = hours.toString().padStart(2, '0');
@@ -734,24 +734,24 @@ const LANDING_HTML_TOP = `
     <!-- Conversion Countdown Timer -->
     <div class="countdown-timer-container" id="countdown-timer-box">
       <span class="countdown-timer-title">⚡ Special Offer Ends In:</span>
-      <div class="countdown-timer">
+      <div class="countdown-timer" dir="ltr">
         <div class="countdown-unit">
-          <span class="countdown-number" id="countdown-days">03</span>
+          <span class="countdown-number" id="cd-val-d">03</span>
           <span class="countdown-label">days</span>
         </div>
         <span class="countdown-separator">:</span>
         <div class="countdown-unit">
-          <span class="countdown-number" id="countdown-hours">23</span>
+          <span class="countdown-number" id="cd-val-h">23</span>
           <span class="countdown-label">hours</span>
         </div>
         <span class="countdown-separator">:</span>
         <div class="countdown-unit">
-          <span class="countdown-number" id="countdown-minutes">59</span>
+          <span class="countdown-number" id="cd-val-m">59</span>
           <span class="countdown-label">mins</span>
         </div>
         <span class="countdown-separator">:</span>
         <div class="countdown-unit">
-          <span class="countdown-number" id="countdown-seconds">59</span>
+          <span class="countdown-number" id="cd-val-s">59</span>
           <span class="countdown-label">secs</span>
         </div>
       </div>
