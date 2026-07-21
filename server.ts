@@ -92,26 +92,27 @@ async function startServer() {
 
       // 3. Append all dynamically generated AI blog posts from PostgreSQL
       try {
-        const postsRes = await pool.query(`
-          SELECT slug, created_at
-          FROM blog_posts
-          WHERE status = 'published'
-          ORDER BY created_at DESC
-        `);
-
-        postsRes.rows.forEach((post: any) => {
-          const lastmod = new Date(post.created_at).toISOString().split('T')[0];
-          urls.push({
-            loc: `${baseUrl}/en/blog/${post.slug}`,
-            lastmod,
-            changefreq: 'weekly',
-            priority: '0.7',
+        if (process.env.DATABASE_URL) {
+          const postsRes = await pool.query(`
+            SELECT slug, created_at
+            FROM blog_posts
+            WHERE status = 'published'
+            ORDER BY created_at DESC
+          `);
+          postsRes.rows.forEach((post: any) => {
+            const lastmod = new Date(post.created_at).toISOString().split('T')[0];
+            urls.push({
+              loc: `${baseUrl}/en/blog/${post.slug}`,
+              lastmod,
+              changefreq: 'weekly',
+              priority: '0.7',
+            });
           });
-        });
+        }
       } catch (dbErr: any) {
         console.error('[Sitemap] Database post query error:', dbErr.message);
       }
-
+      
       // 4. Construct perfectly valid, high-compliance sitemap XML string
       let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
       xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';

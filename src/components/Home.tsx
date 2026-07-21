@@ -230,52 +230,7 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
       if (sEl) sEl.innerText = seconds.toString().padStart(2, '0');
     }, 1000);
 
-    // Live Social Proof Toast
-    const purchases = [
-      { location: "Munich, Germany", plan: "12-Month Premium Plan (Best Deal)", time: "just now" },
-      { location: "London, United Kingdom", plan: "6-Month Premium Plan", time: "2 minutes ago" },
-      { location: "Paris, France", plan: "24 Hours Trial", time: "5 minutes ago" },
-      { location: "Madrid, Spain", plan: "12-Month Premium Plan (Best Deal)", time: "just now" },
-      { location: "Amsterdam, Netherlands", plan: "1 Month Premium Plan", time: "1 minute ago" },
-      { location: "Brussels, Belgium", plan: "12-Month Premium Plan (Best Deal)", time: "3 minutes ago" },
-      { location: "Stockholm, Sweden", plan: "6-Month Premium Plan", time: "4 minutes ago" },
-      { location: "Zurich, Switzerland", plan: "12-Month Premium Plan (Best Deal)", time: "just now" },
-      { location: "Rome, Italy", plan: "24 Hours Trial", time: "10 minutes ago" }
-    ];
-
-    const toast = document.createElement('div');
-    toast.className = 'social-proof-toast';
-    toast.id = 'live-social-proof';
-    toast.innerHTML = `
-      <div class="social-proof-avatar">🔥</div>
-      <div class="social-proof-content">
-        <div class="social-proof-text" id="social-proof-text"></div>
-        <div class="social-proof-time" id="social-proof-time"></div>
-      </div>
-    `;
-    document.body.appendChild(toast);
-
-    let currentIndex = 0;
-    const showNextPurchase = () => {
-      const data = purchases[currentIndex];
-      const textEl = document.getElementById('social-proof-text');
-      const timeEl = document.getElementById('social-proof-time');
-      
-      if (textEl && timeEl) {
-        textEl.innerHTML = `Someone from <strong>${data.location}</strong> just purchased a <strong>${data.plan}</strong>!`;
-        timeEl.innerText = data.time;
-      }
-
-      toast.classList.add('show');
-      setTimeout(() => {
-        toast.classList.remove('show');
-      }, 6000);
-
-      currentIndex = (currentIndex + 1) % purchases.length;
-    };
-
-    const initialToastTimeout = setTimeout(showNextPurchase, 6000);
-    const socialProofInterval = setInterval(showNextPurchase, 45000);
+    
 
     // Exit Intent Modal
     let overlay: HTMLDivElement | null = null;
@@ -290,18 +245,18 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
       overlay.className = 'exit-modal-overlay';
       overlay.id = 'exit-intent-modal';
       overlay.innerHTML = `
-        <div class="exit-modal-content">
-          <button class="exit-modal-x" id="exit-modal-close-x" aria-label="Close modal">&times;</button>
-          <span class="exit-modal-gift">🎁</span>
-          <h3 class="exit-modal-headline">WAIT! DON'T MISS OUT! 🎁</h3>
-          <p class="exit-modal-body">
+        <div className="exit-modal-content">
+          <button className="exit-modal-x" id="exit-modal-close-x" aria-label="Close modal">&times;</button>
+          <span className="exit-modal-gift">🎁</span>
+          <h3 className="exit-modal-headline">WAIT! DON'T MISS OUT! 🎁</h3>
+          <p className="exit-modal-body">
             Get an <strong>Extra 2 Hours Free Trial</strong> Right Now to Test Our Premium Freeze-Free Server Uptime!
           </p>
           <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20triggered%20the%20exit%20offer%20and%20want%20the%20extra%202%20hours%20free%20trial!" 
-             target="_blank" rel="noopener noreferrer" class="exit-modal-cta" id="exit-modal-cta-btn">
+             target="_blank" rel="noopener noreferrer" className="exit-modal-cta" id="exit-modal-cta-btn">
              Claim My Extra 2 Hours Now
           </a>
-          <button class="exit-modal-close" id="exit-modal-close-link">No thanks, let me leave</button>
+          <button className="exit-modal-close" id="exit-modal-close-link">No thanks, let me leave</button>
         </div>
       `;
       document.body.appendChild(overlay);
@@ -473,14 +428,7 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
       
       window.removeEventListener('scroll', handleScroll);
       clearInterval(timerInterval);
-      clearTimeout(initialToastTimeout);
-      clearInterval(socialProofInterval);
-      if (toast && document.body.contains(toast)) document.body.removeChild(toast);
-      if (overlay) {
-        document.removeEventListener('mouseleave', handleMouseLeave);
-        if (document.body.contains(overlay)) document.body.removeChild(overlay);
-      }
-
+                        
       if (testimonialsPrevBtn) testimonialsPrevBtn.removeEventListener('click', handleTestimonialsPrev);
       if (testimonialsNextBtn) testimonialsNextBtn.removeEventListener('click', handleTestimonialsNext);
       if (testimonialsTrack) {
@@ -526,7 +474,7 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
             ? 'RedStream™ Premium IPTV - Beste Stabiele IPTV-abonnement Service 2026'
             : 'RedStream™ Premium IPTV - Ultimate 4K IPTV Service 2026'}
         </h1>
-        <h2>
+        <h2 className="text-white">
           {currentLang === 'ar'
             ? 'لماذا RedStream هو المزود الممتاز رقم #1'
             : currentLang === 'es'
@@ -535,7 +483,7 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
             ? 'Waarom RedStream de #1 Premium IPTV-aanbieder is'
             : 'Why RedStream is the #1 Premium Provider'}
         </h2>
-        <h2>
+        <h2 className="text-white">
           {currentLang === 'ar'
             ? 'التحقق من توافق الأجهزة والأنظمة'
             : currentLang === 'es'
@@ -544,7 +492,7 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
             ? 'Controleer Apparaatcompatibiliteit'
             : 'Check Device Compatibility'}
         </h2>
-        <h2>
+        <h2 className="text-white">
           {currentLang === 'ar'
             ? 'اختر باقة RedStream المناسبة لك'
             : currentLang === 'es'
@@ -553,7 +501,7 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
             ? 'Kies Uw RedStream Premium Plan'
             : 'Choose Your RedStream Plan'}
         </h2>
-        <h2>
+        <h2 className="text-white">
           {currentLang === 'ar'
             ? 'ماذا يقول أعضاؤنا المميزون'
             : currentLang === 'es'
@@ -562,7 +510,7 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
             ? 'Wat Onze Premium Leden Zeggen'
             : 'What Our Premium Members Say'}
         </h2>
-        <h2>
+        <h2 className="text-white">
           {currentLang === 'ar'
             ? 'الأسئلة الشائعة والاستفسارات'
             : currentLang === 'es'
@@ -608,9 +556,7 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
                   gap: '6px',
                   padding: '6px 12px',
                   borderRadius: '8px',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
-                  backgroundColor: '#141414',
-                  color: 'white',
+                  border: '1px solid rgba(255, 255, 255, 0.2)', backgroundColor: 'rgba(10, 10, 10, 0.5)', backdropFilter: 'blur(10px)', color: 'white',
                   fontSize: '12px',
                   fontWeight: 'bold',
                   cursor: 'pointer',
@@ -618,7 +564,7 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
                 }}
               >
                 <Globe size={14} style={{ color: '#9ca3af' }} />
-                <span>{languageNames[currentLang].flag} {languageNames[currentLang].label}</span>
+                <span style={{ fontWeight: 800 }}>{currentLang.toUpperCase()}</span>
                 <ChevronDown size={12} style={{ color: '#9ca3af', transform: langDropdownOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
               </button>
 
@@ -635,10 +581,7 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
                       marginTop: '8px',
                       width: '140px',
                       borderRadius: '12px',
-                      border: '1px solid rgba(255, 255, 255, 0.1)',
-                      backgroundColor: '#141414',
-                      padding: '4px',
-                      boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.5)',
+                      backgroundColor: 'rgba(20, 20, 20, 0.8)', backdropFilter: 'blur(15px)', padding: '6px', boxShadow: '0 10px 35px rgba(0, 0, 0, 0.9), 0 0 10px rgba(255, 0, 0, 0.2)', border: '1px solid rgba(255, 255, 255, 0.1)',
                       zIndex: 1000,
                     }}
                   >
@@ -705,7 +648,7 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
 
 const LANDING_HTML_TOP = `
   <!-- Hero Section -->
-  <section class="hero container" id="hero-section">
+  <section class="hero container py-16 md:py-24" id="hero-section">
     <div class="badge" id="hero-badge">
       <span>
         <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -751,13 +694,21 @@ const LANDING_HTML_TOP = `
     </div>
 
     <!-- WhatsApp CTA -->
-    <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20would%20like%20to%20activate%20a%20premium%20IPTV%20subscription." target="_blank" rel="noopener noreferrer" class="cta-btn" id="hero-main-cta">
+    <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20would%20like%20to%20activate%20a%20premium%20IPTV%20subscription." target="_blank" rel="noopener noreferrer" class="cta-btn" style="box-shadow: 0 0 25px rgba(229,9,20,0.6);" id="hero-main-cta">
       <!-- WhatsApp Icon -->
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.965C16.528 2.012 14.059.99 11.45.99c-5.442 0-9.866 4.372-9.87 9.802 0 1.672.454 3.302 1.313 4.735L1.87 20.895l5.59-1.452l-.003-.004-.002-.002-.001-.001zm11.488-7.7c-.3-.15-1.774-.875-2.05-.976-.275-.1-.475-.15-.675.15-.2.3-.775.976-.95 1.176-.175.2-.35.225-.65.075-3.04-1.516-4.004-2.614-4.834-4.04-.22-.38-.02-.585.18-.78.18-.175.4-.475.6-.7.2-.225.27-.375.4-.625.13-.25.07-.475-.03-.675-.1-.2-.675-1.626-.925-2.225-.244-.589-.49-.51-.675-.52l-.575-.01c-.2 0-.525.075-.8.375-.275.3-1.05 1.026-1.05 2.5s1.075 2.9 1.225 3.1c.15.2 2.11 3.225 5.116 4.525.715.31 1.273.495 1.708.633.72.23 1.374.197 1.892.12.577-.087 1.774-.725 2.025-1.425.25-.7.25-1.3 1.15-1.425.075-.013.15-.075.225-.11z"/>
       </svg>
       Start Watching Instantly on WhatsApp
     </a>
+
+    <!-- Secure Payment Badges -->
+    <div style="display: flex; justify-content: center; gap: 15px; margin-top: 20px; align-items: center; filter: grayscale(100%) opacity(0.7);">
+      <svg style="height: 24px;" viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg" role="img" width="38" height="24" aria-labelledby="pi-visa"><title id="pi-visa">Visa</title><path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"></path><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"></path><path d="M28.3 10.1H28c-.4 1-.7 1.5-1 3h1.9c-.3-1.5-.3-2.2-.6-3zm2.9 5.9h-1.7c-.1 0-.1 0-.2-.1l-.2-.9-.1-.2h-2.4c-.1 0-.2 0-.2.2l-.3.9c0 .1-.1.1-.1.1h-2.1l.2-.5L27 8.7c0-.5.3-.7.8-.7h1.5c.1 0 .2 0 .2.2l1.4 6.5c.1.4.2.7.2 1.1.1.1.1.1.1.2zm-13.4-.3l.4-1.8c.1 0 .2.1.2.1.7.3 1.4.5 2.1.4.2 0 .5-.1.7-.2.5-.2.5-.7.1-1.1-.2-.2-.5-.3-.8-.5-.4-.2-.8-.4-1.1-.7-1.2-1-.8-2.4-.1-3.1.6-.4.9-.8 1.7-.8 1.2 0 2.5 0 3.1.2h.1c-.1.6-.2 1.1-.4 1.7-.5-.2-1-.4-1.5-.4-.3 0-.6 0-.9.1-.2 0-.3.1-.4.2-.2.2-.2.5 0 .7l.5.4c.4.2.8.4 1.1.6.5.3 1 .8 1.1 1.4.2.9-.1 1.7-.9 2.3-.5.4-1.1.6-2.1.6-1.1 0-2.5-.2-3.1-.5zm5.4-5.3c-.3 0-.6.3-.7.6l-1.6 6.1c0 .1-.1.1-.2.1h-2.6c-.1 0-.2 0-.2-.2l2.7-8.7c0-.2.3-.3.5-.3h2.6c.1 0 .2.2.2.2l-1 2.2zm-7.6 6.4h-2.6c-.1 0-.2 0-.2-.2L7.3 8.3c0-.1-.1-.1-.2-.2-.2-.1-.7-.3-1.5-.5L5.7 7c.8-.1 1.6-.2 2.3-.2.3 0 .4.1.5.3l1.8 7.3z" fill="#1434CB"></path></svg>
+      <svg style="height: 24px;" viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg" role="img" width="38" height="24" aria-labelledby="pi-master"><title id="pi-master">Mastercard</title><path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"></path><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"></path><circle fill="#EB001B" cx="15" cy="12" r="7"></circle><circle fill="#F79E1B" cx="23" cy="12" r="7"></circle><path fill="#FF5F00" d="M22 12c0-2.4-1.2-4.5-3-5.7-1.8 1.2-3 3.3-3 5.7s1.2 4.5 3 5.7c1.8-1.2 3-3.3 3-5.7z"></path></svg>
+      <svg style="height: 24px;" viewBox="0 0 38 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" width="38" height="24" aria-labelledby="pi-paypal"><title id="pi-paypal">PayPal</title><path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"></path><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"></path><path fill="#003087" d="M23.9 8.3c.2-1 0-1.7-.6-2.3-.6-.4-1.6-.7-3.1-.7h-4.7c-.1 0-.2.1-.2.2l-2.7 17.3c0 .1.1.2.2.2h3.2c.1 0 .2-.1.2-.2l1.3-8.2c0-.1.1-.2.2-.2h1.5c4.6 0 6.9-2.3 4.7-6.1z"></path><path fill="#3086C8" d="M23.9 8.3c-1.1 5.4-4.8 6.1-8 6.1H15c-.1 0-.2.1-.2.2l-1.3 8.2c0 .1.1.2.2.2h3.2c.1 0 .2-.1.2-.2l.9-5.9c0-.1.1-.2.2-.2h1.5c3.8 0 6.3-1.6 7-4.6 1-4.1-1.6-4.5-2.8-4.2z"></path><path fill="#012169" d="M23.3 8.1c-.1-.1-.2-.1-.3-.1-.1 0-.2 0-.3-.1-.3-.1-.7-.1-1.1-.1h-3c-.1 0-.2.1-.2.2l-2.7 17.3c0 .1.1.2.2.2h3.2c.1 0 .2-.1.2-.2l.6-4c0-.1.1-.2.2-.2h1.5c3.2 0 5.4-1.3 6-3.8.7-3 .2-5.4-1.4-6.8-.7-.6-1.5-1.1-2.9-1.3z"></path></svg>
+      <span style="font-size: 0.8rem; font-weight: 500; letter-spacing: 0.5px;">SSL SECURE PAYMENT</span>
+    </div>
 
     <!-- Trust Badges Under Hero CTA -->
     <div class="trust-badges-row">
@@ -793,16 +744,16 @@ const LANDING_HTML_TOP = `
   </section>
 
   <!-- Features Section -->
-  <section class="features" id="features">
+  <section class="features py-16 md:py-24" id="features">
     <div class="container">
       <div class="section-header">
-        <h2>Why RedStream is the #1 Premium Provider</h2>
+        <h2 class="text-white">Why RedStream is the #1 Premium Provider</h2>
         <p>We invest in top-tier bare-metal hardware and proprietary caching algorithms to bring you zero lag and crisp imagery.</p>
       </div>
 
       <div class="features-grid">
         <!-- Benefit 1 -->
-        <div class="feature-card" id="feature-card-1">
+        <div class="feature-card border border-gray-800 bg-gradient-to-b from-gray-900 to-black shadow-lg rounded-xl" id="feature-card-1">
           <div class="feature-icon-wrapper">
             <!-- Stability Icon -->
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -814,7 +765,7 @@ const LANDING_HTML_TOP = `
         </div>
 
         <!-- Benefit 2 -->
-        <div class="feature-card" id="feature-card-2">
+        <div class="feature-card border border-gray-800 bg-gradient-to-b from-gray-900 to-black shadow-lg rounded-xl" id="feature-card-2">
           <div class="feature-icon-wrapper">
             <!-- Setup Icon -->
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -826,7 +777,7 @@ const LANDING_HTML_TOP = `
         </div>
 
         <!-- Benefit 3 -->
-        <div class="feature-card" id="feature-card-3">
+        <div class="feature-card border border-gray-800 bg-gradient-to-b from-gray-900 to-black shadow-lg rounded-xl" id="feature-card-3">
           <div class="feature-icon-wrapper">
             <!-- UHD Movie Icon -->
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -845,7 +796,7 @@ const LANDING_HTML_TOP = `
         </div>
 
         <!-- Benefit 4 -->
-        <div class="feature-card" id="feature-card-4">
+        <div class="feature-card border border-gray-800 bg-gradient-to-b from-gray-900 to-black shadow-lg rounded-xl" id="feature-card-4">
           <div class="feature-icon-wrapper">
             <!-- Support Icon -->
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -860,10 +811,10 @@ const LANDING_HTML_TOP = `
   </section>
 
   <!-- Device Compatibility Logos Section -->
-  <section class="compatibility" id="compatibility" style="background: linear-gradient(180deg, #0a0a0a 0%, #121212 100%); padding: 60px 0; border-top: 1px solid rgba(255, 255, 255, 0.05); border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+  <section class="compatibility py-16 md:py-24" id="compatibility">
     <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
       <div style="max-width: 800px; margin: 0 auto; text-align: center;">
-        <h2 style="font-family: var(--font-sans, sans-serif); font-weight: 800; font-size: 1.8rem; color: #ffffff; text-transform: uppercase; letter-spacing: -0.02em; margin-bottom: 15px;">Supported Devices</h2>
+        <h2 style="font-family: var(--font-sans, sans-serif); font-weight: 800; font-size: 1.8rem; color: #ffffff; text-transform: uppercase; letter-spacing: -0.02em; margin-bottom: 15px;" class="text-white">Supported Devices</h2>
         <p style="color: #aaaaaa; font-size: 1rem; line-height: 1.6; margin-bottom: 40px;">RedStream™ is fully optimized and 100% compatible with all your favorite smart devices and streaming boxes. Setup takes less than 5 minutes.</p>
         
         <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
@@ -903,17 +854,17 @@ const LANDING_HTML_TOP = `
   </section>
 
   <!-- Pricing Table Section -->
-  <section class="pricing" id="pricing">
+  <section class="pricing py-16 md:py-24" id="pricing">
     <div class="container">
       <div class="section-header">
-        <h2>Choose Your RedStream Plan</h2>
+        <h2 class="text-white">Choose Your RedStream Plan</h2>
         <p>No hidden fees. Select the subscription period that suits you and start watching instantly via secure WhatsApp order activation.</p>
       </div>
 
       
       <div class="pricing-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
         <!-- Plan 1: 1 Month -->
-        <div class="pricing-card" id="plan-1month">
+        <div class="pricing-card border border-gray-800 bg-gradient-to-b from-gray-900 to-black shadow-lg rounded-xl relative" id="plan-1month">
           <div class="plan-header">
             <h3 class="plan-name">1 Month</h3>
             <div class="plan-price-wrapper">
@@ -921,7 +872,7 @@ const LANDING_HTML_TOP = `
               <span class="plan-currency">€</span>
               <span class="plan-duration">/Month</span>
             </div>
-            <p class="plan-desc">Flexible month-by-month premium access. Cancel anytime.</p>
+            <p class="plan-desc text-gray-400 font-normal normal-case not-italic">Flexible month-by-month premium access. Cancel anytime.</p>
           </div>
           <div class="plan-divider"></div>
           <ul class="plan-features">
@@ -929,11 +880,11 @@ const LANDING_HTML_TOP = `
             <li><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 60,000+ VOD Movies</li>
             <li><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 4K / Ultra HD Quality</li>
           </ul>
-          <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20want%20to%20order%20the%201%20Month%20Plan%20for%2012%E2%82%AC." target="_blank" rel="noopener noreferrer" class="plan-cta" id="btn-1month-order">Order 1 Month</a>
+          <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20want%20to%20order%20the%201%20Month%20Plan%20for%2012%E2%82%AC." target="_blank" rel="noopener noreferrer" class="plan-cta bg-gray-800 hover:bg-gray-700 text-white border border-gray-700 transition-colors" id="btn-1month-order">Order 1 Month</a>
         </div>
 
         <!-- Plan 2: 6 Months (Decoy) -->
-        <div class="pricing-card" id="plan-6months">
+        <div class="pricing-card border border-gray-800 bg-gradient-to-b from-gray-900 to-black shadow-lg rounded-xl relative" id="plan-6months">
           <div class="plan-header">
             <h3 class="plan-name">6 Months</h3>
             <div class="plan-price-wrapper">
@@ -941,7 +892,7 @@ const LANDING_HTML_TOP = `
               <span class="plan-currency">€</span>
               <span class="plan-duration">/6 Months</span>
             </div>
-            <p class="plan-desc">Our highly popular plan. Ideal for keeping up with sports season.</p>
+            <p class="plan-desc text-gray-400 font-normal normal-case not-italic">Our highly popular plan. Ideal for keeping up with sports season.</p>
           </div>
           <div class="plan-divider"></div>
           <ul class="plan-features">
@@ -950,12 +901,12 @@ const LANDING_HTML_TOP = `
             <li><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 4K / Ultra HD Quality</li>
             <li class="premium-feature"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Anti-Freeze Stable Server</li>
           </ul>
-          <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20want%20to%20order%20the%206%20Months%20Plan%20for%2039%E2%82%AC." target="_blank" rel="noopener noreferrer" class="plan-cta" id="btn-6months-order">Order 6 Months</a>
+          <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20want%20to%20order%20the%206%20Months%20Plan%20for%2039%E2%82%AC." target="_blank" rel="noopener noreferrer" class="plan-cta bg-gray-800 hover:bg-gray-700 text-white border border-gray-700 transition-colors" id="btn-6months-order">Order 6 Months</a>
         </div>
 
         <!-- Plan 3: 12 Months (Pulsing Red Neon Highlighted - Best Value) -->
-        <div class="pricing-card popular" id="plan-12months" style="border: 2px solid #e50914; box-shadow: 0 0 20px rgba(229, 9, 20, 0.4); transform: scale(1.05);">
-          <div class="pricing-tag" style="background: #e50914; color: white; padding: 6px 12px; border-radius: 4px; font-weight: bold; position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: max-content;">🔥 Best Value (Save 65%)</div>
+        <div class="pricing-card popular scale-105 transform bg-gradient-to-b from-gray-900 to-black z-10 border border-[#e50914]/50 shadow-[0_10px_30px_rgba(229,9,20,0.2)] relative" id="plan-12months">
+          <div class="pricing-tag" style="background: #e50914; color: white; padding: 4px 12px; border-radius: 9999px; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); width: max-content; box-shadow: 0 0 15px rgba(229,9,20,0.5);">BEST VALUE</div>
           <div class="plan-header">
             <h3 class="plan-name">12 Months</h3>
             <div class="plan-price-wrapper">
@@ -963,7 +914,7 @@ const LANDING_HTML_TOP = `
               <span class="plan-currency">€</span>
               <span class="plan-duration">/Year</span>
             </div>
-            <p class="plan-desc">Ultimate premium package. Only 10€ more than 6 months!</p>
+            <p class="plan-desc text-gray-400 font-normal normal-case not-italic">Ultimate premium package. Only 10€ more than 6 months!</p>
           </div>
           <div class="plan-divider"></div>
           <ul class="plan-features">
@@ -973,47 +924,27 @@ const LANDING_HTML_TOP = `
             <li class="premium-feature"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Anti-Freeze Stable Server</li>
             <li class="premium-feature"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 24/7 VIP Customer Support</li>
           </ul>
-          <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20want%20to%20order%20the%2012%20Months%20Premium%20Plan%20for%2049%E2%82%AC." target="_blank" rel="noopener noreferrer" class="plan-cta" style="background: #e50914; color: white;" id="btn-12months-order">Order 12 Months</a>
+          <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20want%20to%20order%20the%2012%20Months%20Premium%20Plan%20for%2049%E2%82%AC." target="_blank" rel="noopener noreferrer" class="plan-cta bg-[#e50914] text-white shadow-[0_0_20px_rgba(229,9,20,0.6)] hover:shadow-[0_0_30px_rgba(229,9,20,0.8)] transition-shadow" id="btn-12months-order">Order 12 Months</a>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- Premium Testimonials Carousel Section -->
-  <section class="testimonials-section" id="testimonials">
-    <div class="container">
-      <div class="section-header">
-        <h2>What Our Premium Members Say</h2>
-        <p>Read real experiences from our global community who enjoy lag-free streaming, quick activation, and dedicated customer support.</p>
+      
+      
+      <div class="pricing-trust-signals" style="display: flex; justify-content: center; gap: 40px; margin-top: 60px; flex-wrap: wrap; text-align: center; color: #888; font-size: 0.85rem; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.05em;">
+        <div style="display: flex; align-items: center; gap: 10px; opacity: 0.7;">
+          <svg style="width: 18px; height: 18px; color: #aaa;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+          <span>Anti-Freeze Technology</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px; opacity: 0.7;">
+          <svg style="width: 18px; height: 18px; color: #aaa;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          <span>99.9% Uptime Server</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px; opacity: 0.7;">
+          <svg style="width: 18px; height: 18px; color: #aaa;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+          <span>256-Bit SSL Encrypted</span>
+        </div>
       </div>
 
-      <div class="testimonials-slider-wrapper">
-        <!-- Navigation Arrows -->
-        <button class="testimonial-arrow prev" id="testimonials-prev" aria-label="Previous Review">◀</button>
-        <button class="testimonial-arrow next" id="testimonials-next" aria-label="Next Review">▶</button>
-
-        <div class="testimonials-slider-container">
-          <div class="testimonials-track" id="testimonials-track">
-            
-            <!-- Testimonial 1 -->
-            <div class="testimonial-card">
-              <span class="testimonial-quote-icon">“</span>
-              <div class="testimonial-header">
-                <div class="testimonial-stars">
-                  <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-                </div>
-              </div>
-              <p class="testimonial-content">
-                "Absolutely phenomenal server stability! I watched the entire Champions League final in full 4K UHD without a single second of buffering. The 10-minute setup via WhatsApp was incredibly fast and professional."
-              </p>
-              <div class="testimonial-author-info">
-                <div class="testimonial-avatar">L</div>
-                <div class="testimonial-meta">
-                  <span class="testimonial-name">Liam <span class="testimonial-badge-verified">Verified</span></span>
-                  <span class="testimonial-location">United Kingdom</span>
-                </div>
-              </div>
-            </div>
 
             <!-- Testimonial 2 -->
             <div class="testimonial-card">
@@ -1085,10 +1016,10 @@ const LANDING_HTML_TOP = `
   </section>
 
   <!-- Trending Entertainment Showcase Section -->
-  <section class="showcase-section" id="showcase-section">
+  <section class="showcase-section py-16 md:py-24" id="showcase-section">
     <div class="container">
       <div class="section-header">
-        <h2>Trending Entertainment Showcase</h2>
+        <h2 class="text-white">Trending Entertainment Showcase</h2>
         <p>Explore a taste of our massive library, including blockbuster movies, popular TV shows, and premium live broadcasts, all streamable on any device.</p>
       </div>
 

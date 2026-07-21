@@ -9,6 +9,10 @@ let isJobRunning = false;
  * Core processing function to fetch and execute the next pending SEO search query.
  */
 async function processNextPendingQuery(): Promise<{ processed: boolean; query?: string; insertedCount?: number; error?: string }> {
+  if (!process.env.DATABASE_URL) {
+    return { processed: false, error: "No DATABASE_URL set. Skipping PostgreSQL operation." };
+  }
+
   const client = await pool.connect();
   try {
     // 1. Fetch the next pending search query

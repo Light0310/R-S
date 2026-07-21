@@ -173,6 +173,9 @@ For maximum speed, flawless 4K quality, and zero buffering, pair your IPTV playe
  * and store the organic results efficiently in PostgreSQL.
  */
 export const executeSearchIntegration = async (req: Request, res: Response) => {
+  if (!process.env.DATABASE_URL) {
+    return res.status(500).json({ message: 'No DATABASE_URL configured' });
+  }
   try {
     // 1. Read a standard search query string from our PostgreSQL database
     const queryRes = await pool.query(
@@ -275,6 +278,9 @@ export const executeSearchIntegration = async (req: Request, res: Response) => {
  * Controller to fetch all stored SEO results (link targets and queries) from the database.
  */
 export const getStoredSeoResults = async (req: Request, res: Response) => {
+  if (!process.env.DATABASE_URL) {
+    return res.status(200).json({ links: [], queries: [] });
+  }
   try {
     const resultsRes = await pool.query(`
       SELECT 

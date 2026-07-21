@@ -243,8 +243,7 @@ export default function FAQSection({ currentLang }: FAQSectionProps) {
           "sku": "REDSTREAM-PREMIUM",
           "mpn": "RS-PREMIUM-01",
           "brand": {
-            "@type": "Brand",
-            "name": "RedStream™"
+            "@id": "https://www.red-stream.store/#organization"
           },
           "aggregateRating": {
             "@type": "AggregateRating",
@@ -363,10 +362,10 @@ export default function FAQSection({ currentLang }: FAQSectionProps) {
             return (
               <div
                 key={index}
-                className={`bg-[#111111] border rounded-xl overflow-hidden transition-all duration-300 ${
+                className={`bg-[#0a0a0a] border rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl ${
                   isOpen 
                     ? 'border-[#e50914] shadow-[0_10px_30px_rgba(229,9,20,0.15)]' 
-                    : 'border-[#1a1a1a] hover:border-[#2a2a2a]'
+                    : 'border-[#1f2937] hover:border-[rgba(229,9,20,0.4)]'
                 }`}
               >
                 <button
