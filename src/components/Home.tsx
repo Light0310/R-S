@@ -203,7 +203,7 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
       localStorage.setItem('redstream_promo_end_3days', targetTime);
     }
 
-    const timerInterval = setInterval(() => {
+    const updateTimer = () => {
       const currentTime = new Date().getTime();
       let timeLeft = parseInt(targetTime!) - currentTime;
 
@@ -228,7 +228,10 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
       if (hEl) hEl.innerText = hours.toString().padStart(2, '0');
       if (mEl) mEl.innerText = minutes.toString().padStart(2, '0');
       if (sEl) sEl.innerText = seconds.toString().padStart(2, '0');
-    }, 1000);
+    };
+    
+    updateTimer(); // Prevent initial flash
+    const timerInterval = setInterval(updateTimer, 1000);
 
 
 
@@ -625,22 +628,22 @@ const LANDING_HTML_TOP = `
       <span class="countdown-timer-title text-gray-400 font-medium text-sm mb-2" style="text-transform: none; letter-spacing: normal; color: #a3a3a3;">Limited time offer ends in:</span>
       <div class="countdown-timer" dir="ltr">
         <div class="countdown-unit">
-          <span class="countdown-number" id="cd-val-d">03</span>
+          <span class="countdown-number" id="cd-val-d">00</span>
           <span class="countdown-label">days</span>
         </div>
         <span class="countdown-separator">:</span>
         <div class="countdown-unit">
-          <span class="countdown-number" id="cd-val-h">23</span>
+          <span class="countdown-number" id="cd-val-h">00</span>
           <span class="countdown-label">hours</span>
         </div>
         <span class="countdown-separator">:</span>
         <div class="countdown-unit">
-          <span class="countdown-number" id="cd-val-m">59</span>
+          <span class="countdown-number" id="cd-val-m">00</span>
           <span class="countdown-label">mins</span>
         </div>
         <span class="countdown-separator">:</span>
         <div class="countdown-unit">
-          <span class="countdown-number" id="cd-val-s">59</span>
+          <span class="countdown-number" id="cd-val-s">00</span>
           <span class="countdown-label">secs</span>
         </div>
       </div>
@@ -658,53 +661,52 @@ const LANDING_HTML_TOP = `
       </a>
       
       <!-- Secondary CTA -->
-      <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20would%20like%20to%20request%20my%202-Hour%20Free%20Trial." target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center border border-gray-500 text-gray-300 hover:text-white hover:border-white transition-all rounded-md px-6 py-[14px] font-semibold tracking-wider text-[15px] w-full max-w-[320px] sm:max-w-[400px] mx-auto bg-transparent" id="hero-secondary-cta" style="font-family: var(--font-display); text-transform: uppercase;">
-        Request 2-Hour Free Trial
+      <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20would%20like%20to%20request%20my%202-Hour%20Free%20Trial." target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors text-sm font-medium underline underline-offset-4 decoration-gray-600 hover:decoration-white mt-2" id="hero-secondary-cta">
+        Or request a 2-Hour Free Trial
       </a>
     </div>
 
-    <!-- Secure Payment Badges -->
-    <div style="display: flex; justify-content: center; gap: 15px; margin-top: 20px; align-items: center; filter: grayscale(100%) opacity(0.7);">
-      <svg style="height: 24px;" viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg" role="img" width="38" height="24" aria-labelledby="pi-visa"><title id="pi-visa">Visa</title><path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"></path><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"></path><path d="M28.3 10.1H28c-.4 1-.7 1.5-1 3h1.9c-.3-1.5-.3-2.2-.6-3zm2.9 5.9h-1.7c-.1 0-.1 0-.2-.1l-.2-.9-.1-.2h-2.4c-.1 0-.2 0-.2.2l-.3.9c0 .1-.1.1-.1.1h-2.1l.2-.5L27 8.7c0-.5.3-.7.8-.7h1.5c.1 0 .2 0 .2.2l1.4 6.5c.1.4.2.7.2 1.1.1.1.1.1.1.2zm-13.4-.3l.4-1.8c.1 0 .2.1.2.1.7.3 1.4.5 2.1.4.2 0 .5-.1.7-.2.5-.2.5-.7.1-1.1-.2-.2-.5-.3-.8-.5-.4-.2-.8-.4-1.1-.7-1.2-1-.8-2.4-.1-3.1.6-.4.9-.8 1.7-.8 1.2 0 2.5 0 3.1.2h.1c-.1.6-.2 1.1-.4 1.7-.5-.2-1-.4-1.5-.4-.3 0-.6 0-.9.1-.2 0-.3.1-.4.2-.2.2-.2.5 0 .7l.5.4c.4.2.8.4 1.1.6.5.3 1 .8 1.1 1.4.2.9-.1 1.7-.9 2.3-.5.4-1.1.6-2.1.6-1.1 0-2.5-.2-3.1-.5zm5.4-5.3c-.3 0-.6.3-.7.6l-1.6 6.1c0 .1-.1.1-.2.1h-2.6c-.1 0-.2 0-.2-.2l2.7-8.7c0-.2.3-.3.5-.3h2.6c.1 0 .2.2.2.2l-1 2.2zm-7.6 6.4h-2.6c-.1 0-.2 0-.2-.2L7.3 8.3c0-.1-.1-.1-.2-.2-.2-.1-.7-.3-1.5-.5L5.7 7c.8-.1 1.6-.2 2.3-.2.3 0 .4.1.5.3l1.8 7.3z" fill="#1434CB"></path></svg>
-      <svg style="height: 24px;" viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg" role="img" width="38" height="24" aria-labelledby="pi-master"><title id="pi-master">Mastercard</title><path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"></path><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"></path><circle fill="#EB001B" cx="15" cy="12" r="7"></circle><circle fill="#F79E1B" cx="23" cy="12" r="7"></circle><path fill="#FF5F00" d="M22 12c0-2.4-1.2-4.5-3-5.7-1.8 1.2-3 3.3-3 5.7s1.2 4.5 3 5.7c1.8-1.2 3-3.3 3-5.7z"></path></svg>
-      <svg style="height: 24px;" viewBox="0 0 38 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" width="38" height="24" aria-labelledby="pi-paypal"><title id="pi-paypal">PayPal</title><path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"></path><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"></path><path fill="#003087" d="M23.9 8.3c.2-1 0-1.7-.6-2.3-.6-.4-1.6-.7-3.1-.7h-4.7c-.1 0-.2.1-.2.2l-2.7 17.3c0 .1.1.2.2.2h3.2c.1 0 .2-.1.2-.2l1.3-8.2c0-.1.1-.2.2-.2h1.5c4.6 0 6.9-2.3 4.7-6.1z"></path><path fill="#3086C8" d="M23.9 8.3c-1.1 5.4-4.8 6.1-8 6.1H15c-.1 0-.2.1-.2.2l-1.3 8.2c0 .1.1.2.2.2h3.2c.1 0 .2-.1.2-.2l.9-5.9c0-.1.1-.2.2-.2h1.5c3.8 0 6.3-1.6 7-4.6 1-4.1-1.6-4.5-2.8-4.2z"></path><path fill="#012169" d="M23.3 8.1c-.1-.1-.2-.1-.3-.1-.1 0-.2 0-.3-.1-.3-.1-.7-.1-1.1-.1h-3c-.1 0-.2.1-.2.2l-2.7 17.3c0 .1.1.2.2.2h3.2c.1 0 .2-.1.2-.2l.6-4c0-.1.1-.2.2-.2h1.5c3.2 0 5.4-1.3 6-3.8.7-3 .2-5.4-1.4-6.8-.7-.6-1.5-1.1-2.9-1.3z"></path></svg>
-      <span style="font-size: 0.8rem; font-weight: 500; letter-spacing: 0.5px;">SSL SECURE PAYMENT</span>
-    </div>
+    <!-- Sleek Trust Signals -->
+    <div class="flex flex-col items-center gap-4 mt-8 opacity-70">
+      <!-- Minimalist Features -->
+      <div class="flex flex-wrap justify-center gap-4 text-xs font-medium tracking-wide text-gray-400 uppercase">
+        <span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-[#e50914]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg> Instant Setup</span>
+        <span class="hidden sm:inline text-gray-600">•</span>
+        <span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-[#e50914]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg> 99.9% Uptime</span>
+        <span class="hidden sm:inline text-gray-600">•</span>
+        <span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-[#e50914]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/></svg> 24/7 Support</span>
+      </div>
 
-    <!-- Trust Badges Under Hero CTA -->
-    <div class="trust-badges-row">
-      <div class="trust-badge-item">
-        <span class="trust-badge-icon">⚡</span>
-        <span>Instant 10-Min Setup</span>
-      </div>
-      <div class="trust-badge-item">
-        <span class="trust-badge-icon">🔒</span>
-        <span>99.9% Anti-Freeze Uptime</span>
-      </div>
-      <div class="trust-badge-item">
-        <span class="trust-badge-icon">🛠️</span>
-        <span>24/7 VIP Dedicated Support</span>
-      </div>
-    </div>
-
-    <!-- Live Stats -->
-    <div class="stats-row" id="stats-dashboard">
-      <div class="stat-item">
-        <span class="stat-number accent">15,000+</span>
-        <span class="stat-label">Happy Clients</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-number">99.9%</span>
-        <span class="stat-label">Server Uptime</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-number accent">4.9 / 5</span>
-        <span class="stat-label">Google Rating</span>
+      <!-- Payment Icons (Tiny & Clean) -->
+      <div class="flex items-center gap-3 grayscale opacity-60">
+        <svg style="height: 16px;" viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg" role="img"><path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"></path><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"></path><path d="M28.3 10.1H28c-.4 1-.7 1.5-1 3h1.9c-.3-1.5-.3-2.2-.6-3zm2.9 5.9h-1.7c-.1 0-.1 0-.2-.1l-.2-.9-.1-.2h-2.4c-.1 0-.2 0-.2.2l-.3.9c0 .1-.1.1-.1.1h-2.1l.2-.5L27 8.7c0-.5.3-.7.8-.7h1.5c.1 0 .2 0 .2.2l1.4 6.5c.1.4.2.7.2 1.1.1.1.1.1.1.2zm-13.4-.3l.4-1.8c.1 0 .2.1.2.1.7.3 1.4.5 2.1.4.2 0 .5-.1.7-.2.5-.2.5-.7.1-1.1-.2-.2-.5-.3-.8-.5-.4-.2-.8-.4-1.1-.7-1.2-1-.8-2.4-.1-3.1.6-.4.9-.8 1.7-.8 1.2 0 2.5 0 3.1.2h.1c-.1.6-.2 1.1-.4 1.7-.5-.2-1-.4-1.5-.4-.3 0-.6 0-.9.1-.2 0-.3.1-.4.2-.2.2-.2.5 0 .7l.5.4c.4.2.8.4 1.1.6.5.3 1 .8 1.1 1.4.2.9-.1 1.7-.9 2.3-.5.4-1.1.6-2.1.6-1.1 0-2.5-.2-3.1-.5zm5.4-5.3c-.3 0-.6.3-.7.6l-1.6 6.1c0 .1-.1.1-.2.1h-2.6c-.1 0-.2 0-.2-.2l2.7-8.7c0-.2.3-.3.5-.3h2.6c.1 0 .2.2.2.2l-1 2.2zm-7.6 6.4h-2.6c-.1 0-.2 0-.2-.2L7.3 8.3c0-.1-.1-.1-.2-.2-.2-.1-.7-.3-1.5-.5L5.7 7c.8-.1 1.6-.2 2.3-.2.3 0 .4.1.5.3l1.8 7.3z" fill="#1434CB"></path></svg>
+        <svg style="height: 16px;" viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg" role="img"><path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"></path><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"></path><circle fill="#EB001B" cx="15" cy="12" r="7"></circle><circle fill="#F79E1B" cx="23" cy="12" r="7"></circle><path fill="#FF5F00" d="M22 12c0-2.4-1.2-4.5-3-5.7-1.8 1.2-3 3.3-3 5.7s1.2 4.5 3 5.7c1.8-1.2 3-3.3 3-5.7z"></path></svg>
+        <svg style="height: 16px;" viewBox="0 0 38 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img"><path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"></path><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"></path><path fill="#003087" d="M23.9 8.3c.2-1 0-1.7-.6-2.3-.6-.4-1.6-.7-3.1-.7h-4.7c-.1 0-.2.1-.2.2l-2.7 17.3c0 .1.1.2.2.2h3.2c.1 0 .2-.1.2-.2l1.3-8.2c0-.1.1-.2.2-.2h1.5c4.6 0 6.9-2.3 4.7-6.1z"></path><path fill="#3086C8" d="M23.9 8.3c-1.1 5.4-4.8 6.1-8 6.1H15c-.1 0-.2.1-.2.2l-1.3 8.2c0 .1.1.2.2.2h3.2c.1 0 .2-.1.2-.2l.9-5.9c0-.1.1-.2.2-.2h1.5c3.8 0 6.3-1.6 7-4.6 1-4.1-1.6-4.5-2.8-4.2z"></path><path fill="#012169" d="M23.3 8.1c-.1-.1-.2-.1-.3-.1-.1 0-.2 0-.3-.1-.3-.1-.7-.1-1.1-.1h-3c-.1 0-.2.1-.2.2l-2.7 17.3c0 .1.1.2.2.2h3.2c.1 0 .2-.1.2-.2l.6-4c0-.1.1-.2.2-.2h1.5c3.2 0 5.4-1.3 6-3.8.7-3 .2-5.4-1.4-6.8-.7-.6-1.5-1.1-2.9-1.3z"></path></svg>
       </div>
     </div>
   </section>
 
-  <!-- Features Section -->
+  <!-- Live Stats (Moved outside hero, minimalist design) -->
+  <section class="border-y border-gray-800/50 bg-black/50 py-8">
+    <div class="container">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-gray-800/50">
+        <div class="flex flex-col items-center pt-4 md:pt-0">
+          <span class="text-3xl font-bold text-white tracking-tight mb-1">15,000+</span>
+          <span class="text-sm text-gray-400 font-medium uppercase tracking-wider">Happy Clients</span>
+        </div>
+        <div class="flex flex-col items-center pt-4 md:pt-0">
+          <span class="text-3xl font-bold text-[#e50914] tracking-tight mb-1">99.9%</span>
+          <span class="text-sm text-gray-400 font-medium uppercase tracking-wider">Server Uptime</span>
+        </div>
+        <div class="flex flex-col items-center pt-4 md:pt-0">
+          <span class="text-3xl font-bold text-white tracking-tight mb-1">4.9 / 5</span>
+          <span class="text-sm text-gray-400 font-medium uppercase tracking-wider">Google Rating</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section --><!-- Features Section -->
   <section class="features py-16 md:py-24" id="features">
     <div class="container">
       <div class="section-header">
@@ -824,24 +826,34 @@ const LANDING_HTML_TOP = `
 
       
       <!-- How it Works Section -->
-      <div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 mb-12" style="font-family: var(--font-sans);">
-        <div class="flex flex-col items-center text-center">
-          <div class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-white font-bold mb-2">1</div>
-          <span class="text-gray-300 font-medium text-sm uppercase tracking-wide">Choose a Plan</span>
+      <div class="flex flex-row items-start justify-between md:justify-center w-full max-w-3xl mx-auto" style="font-family: var(--font-sans); margin-top: 40px; margin-bottom: 70px; gap: 10px;">
+        
+        <div class="flex flex-col items-center text-center flex-1">
+          <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gray-800 flex items-center justify-center text-white font-bold mb-3 shadow-lg text-sm md:text-base">1</div>
+          <span class="text-gray-300 font-medium text-[10px] md:text-sm uppercase tracking-wider leading-tight">Choose<br class="md:hidden"/> a Plan</span>
         </div>
-        <div class="hidden md:block w-12 h-px bg-gray-700"></div>
-        <div class="flex flex-col items-center text-center">
-          <div class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-white font-bold mb-2">2</div>
-          <span class="text-gray-300 font-medium text-sm uppercase tracking-wide">Get via WhatsApp</span>
+        
+        <div class="hidden md:flex flex-col justify-center h-12 w-16">
+          <div class="w-full h-px bg-gray-700"></div>
         </div>
-        <div class="hidden md:block w-12 h-px bg-gray-700"></div>
-        <div class="flex flex-col items-center text-center">
-          <div class="w-10 h-10 rounded-full bg-[#e50914] flex items-center justify-center text-white font-bold mb-2 shadow-[0_0_15px_rgba(229,9,20,0.4)]">3</div>
-          <span class="text-white font-semibold text-sm uppercase tracking-wide">Start Watching</span>
+        
+        <div class="flex flex-col items-center text-center flex-1">
+          <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gray-800 flex items-center justify-center text-white font-bold mb-3 shadow-lg text-sm md:text-base">2</div>
+          <span class="text-gray-300 font-medium text-[10px] md:text-sm uppercase tracking-wider leading-tight">Get via<br class="md:hidden"/> WhatsApp</span>
         </div>
+        
+        <div class="hidden md:flex flex-col justify-center h-12 w-16">
+          <div class="w-full h-px bg-gray-700"></div>
+        </div>
+        
+        <div class="flex flex-col items-center text-center flex-1">
+          <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#e50914] flex items-center justify-center text-white font-bold mb-3 shadow-[0_0_15px_rgba(229,9,20,0.5)] text-sm md:text-base">3</div>
+          <span class="text-white font-bold text-[10px] md:text-sm uppercase tracking-wider leading-tight">Start<br class="md:hidden"/> Watching</span>
+        </div>
+        
       </div>
 
-      <div class="pricing-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+      <div class="pricing-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin-top: 40px;">
         <!-- Plan 1: 1 Month -->
         <div class="pricing-card border border-gray-800 bg-gradient-to-b from-gray-900 to-black shadow-lg rounded-xl relative" id="plan-1month">
           <div class="plan-header">
@@ -866,11 +878,12 @@ const LANDING_HTML_TOP = `
         <div class="pricing-card border border-gray-800 bg-gradient-to-b from-gray-900 to-black shadow-lg rounded-xl relative" id="plan-6months">
           <div class="plan-header">
             <h3 class="plan-name">6 Months</h3>
-            <div class="plan-price-wrapper">
+            <div class="plan-price-wrapper" style="margin-bottom: 4px;">
               <span class="plan-price">39.00</span>
               <span class="plan-currency">€</span>
               <span class="plan-duration">/6 Months</span>
             </div>
+            <div class="text-[11px] text-gray-400/80 font-medium tracking-wide uppercase mb-3">Equals 6.50€ / mo</div>
             <p class="plan-desc text-gray-400 font-normal normal-case not-italic">Our highly popular plan. Ideal for keeping up with sports season.</p>
           </div>
           <div class="plan-divider"></div>
@@ -888,7 +901,7 @@ const LANDING_HTML_TOP = `
           <div class="pricing-tag" style="background: #e50914; color: white; padding: 4px 12px; border-radius: 9999px; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); width: max-content; box-shadow: 0 0 15px rgba(229,9,20,0.5);">Launch Offer</div>
           <div class="plan-header">
             <h3 class="plan-name">12 Months</h3>
-            <div class="flex flex-col items-center justify-center my-4">
+            <div class="flex flex-col items-center justify-center mt-4 mb-2">
               <span class="text-gray-500 line-through text-lg font-medium mb-1">79.00 €</span>
               <div class="flex items-baseline text-[#e50914]">
                 <span class="plan-price text-[#e50914]">49.00</span>
@@ -896,6 +909,7 @@ const LANDING_HTML_TOP = `
                 <span class="plan-duration text-gray-400">/Year</span>
               </div>
             </div>
+            <div class="text-[11px] text-[#e50914]/80 font-medium tracking-wide uppercase mb-3">Equals 4.08€ / mo</div>
             <p class="plan-desc text-gray-400 font-normal normal-case not-italic">Ultimate premium package. Only 10€ more than 6 months!</p>
           </div>
           <div class="plan-divider"></div>
