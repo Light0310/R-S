@@ -650,18 +650,18 @@ const LANDING_HTML_TOP = `
     </div>
 
     <!-- CTA Actions Container -->
-    <div class="flex flex-col items-center gap-4 w-full">
+    <div class="flex flex-col items-center gap-5 w-full">
       <!-- WhatsApp CTA -->
-      <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20would%20like%20to%20activate%20a%20premium%20IPTV%20subscription." target="_blank" rel="noopener noreferrer" class="cta-btn w-full max-w-[320px] sm:max-w-[400px] mx-auto justify-center" style="box-shadow: 0 0 25px rgba(229,9,20,0.6);" id="hero-main-cta">
+      <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20would%20like%20to%20activate%20a%20premium%20IPTV%20subscription." target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center gap-3 bg-[#e50914] hover:bg-[#b80710] text-white text-base sm:text-lg font-bold py-4 px-8 rounded-xl w-full max-w-sm mx-auto transition-all duration-300 transform hover:-translate-y-1 shadow-[0_8px_20px_rgba(229,9,20,0.25)] hover:shadow-[0_12px_25px_rgba(229,9,20,0.4)]" id="hero-main-cta">
         <!-- WhatsApp Icon -->
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.965C16.528 2.012 14.059.99 11.45.99c-5.442 0-9.866 4.372-9.87 9.802 0 1.672.454 3.302 1.313 4.735L1.87 20.895l5.59-1.452l-.003-.004-.002-.002-.001-.001zm11.488-7.7c-.3-.15-1.774-.875-2.05-.976-.275-.1-.475-.15-.675.15-.2.3-.775.976-.95 1.176-.175.2-.35.225-.65.075-3.04-1.516-4.004-2.614-4.834-4.04-.22-.38-.02-.585.18-.78.18-.175.4-.475.6-.7.2-.225.27-.375.4-.625.13-.25.07-.475-.03-.675-.1-.2-.675-1.626-.925-2.225-.244-.589-.49-.51-.675-.52l-.575-.01c-.2 0-.525.075-.8.375-.275.3-1.05 1.026-1.05 2.5s1.075 2.9 1.225 3.1c.15.2 2.11 3.225 5.116 4.525.715.31 1.273.495 1.708.633.72.23 1.374.197 1.892.12.577-.087 1.774-.725 2.025-1.425.25-.7.25-1.3 1.15-1.425.075-.013.15-.075.225-.11z"/>
+        <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
         </svg>
-        Start Watching Instantly on WhatsApp
+        <span>Get Started on WhatsApp</span>
       </a>
       
       <!-- Secondary CTA -->
-      <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20would%20like%20to%20request%20my%202-Hour%20Free%20Trial." target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors text-sm font-medium underline underline-offset-4 decoration-gray-600 hover:decoration-white mt-2" id="hero-secondary-cta">
+      <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20would%20like%20to%20request%20my%202-Hour%20Free%20Trial." target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors text-sm font-medium underline underline-offset-4 decoration-gray-600 hover:decoration-white" id="hero-secondary-cta">
         Or request a 2-Hour Free Trial
       </a>
     </div>
@@ -714,60 +714,56 @@ const LANDING_HTML_TOP = `
         <p>We invest in top-tier bare-metal hardware and proprietary caching algorithms to bring you zero lag and crisp imagery.</p>
       </div>
 
-      <div class="features-grid">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <!-- Benefit 1 -->
-        <div class="feature-card border border-gray-800 bg-gradient-to-b from-gray-900 to-black shadow-lg rounded-xl" id="feature-card-1">
-          <div class="feature-icon-wrapper">
-            <!-- Stability Icon -->
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <div class="bg-gradient-to-b from-gray-900 to-black border border-gray-800 shadow-xl rounded-2xl p-8 flex flex-col items-center text-center transition-all duration-300 hover:-translate-y-2 hover:border-[#e50914]/40 hover:shadow-[0_15px_30px_rgba(229,9,20,0.1)] group">
+          <div class="w-14 h-14 bg-[#e50914] rounded-xl flex items-center justify-center text-white mb-6 shadow-lg shadow-[#e50914]/30 group-hover:scale-110 transition-transform duration-300">
+            <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z"/>
             </svg>
           </div>
-          <h3>Anti-Freeze 9.0 Technology</h3>
-          <p>Our intelligent load-balancing and direct peering with major ISPs worldwide guarantees stream stability even during major events.</p>
+          <h3 class="text-white font-bold text-lg uppercase tracking-wide mb-3">Anti-Freeze 9.0</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">Intelligent load-balancing and direct peering with major ISPs guarantees stream stability even during major events.</p>
         </div>
 
         <!-- Benefit 2 -->
-        <div class="feature-card border border-gray-800 bg-gradient-to-b from-gray-900 to-black shadow-lg rounded-xl" id="feature-card-2">
-          <div class="feature-icon-wrapper">
-            <!-- Setup Icon -->
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 2V22M17 5H9.5C8.67157 5 8 5.67157 8 6.5C8 7.32843 8.67157 8 9.5 8H14.5C15.3284 8 16 8.67157 16 9.5C16 10.3284 15.3284 11 14.5 11H8M12 11V14M16 14H10C9.17157 14 8.5 14.6716 8.5 15.5C8.5 16.3284 9.17157 17 10 17H14C14.8284 17 15.5 17.6716 15.5 18.5C15.5 19.3284 14.8284 20 14 20H8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <div class="bg-gradient-to-b from-gray-900 to-black border border-gray-800 shadow-xl rounded-2xl p-8 flex flex-col items-center text-center transition-all duration-300 hover:-translate-y-2 hover:border-[#e50914]/40 hover:shadow-[0_15px_30px_rgba(229,9,20,0.1)] group">
+          <div class="w-14 h-14 bg-[#e50914] rounded-xl flex items-center justify-center text-white mb-6 shadow-lg shadow-[#e50914]/30 group-hover:scale-110 transition-transform duration-300">
+            <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="M12 2V22M17 5H9.5C8.67157 5 8 5.67157 8 6.5C8 7.32843 8.67157 8 9.5 8H14.5C15.3284 8 16 8.67157 16 9.5C16 10.3284 15.3284 11 14.5 11H8M12 11V14M16 14H10C9.17157 14 8.5 14.6716 8.5 15.5C8.5 16.3284 9.17157 17 10 17H14C14.8284 17 15.5 17.6716 15.5 18.5C15.5 19.3284 14.8284 20 14 20H8"/>
             </svg>
           </div>
-          <h3>10-Min Setup & Activation</h3>
-          <p>No waiting games. Purchase your desired subscription, ping our WhatsApp agent, and receive your personalized login within 10 minutes.</p>
+          <h3 class="text-white font-bold text-lg uppercase tracking-wide mb-3">10-Min Setup</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">No waiting games. Purchase your subscription and receive your personalized login via WhatsApp in minutes.</p>
         </div>
 
         <!-- Benefit 3 -->
-        <div class="feature-card border border-gray-800 bg-gradient-to-b from-gray-900 to-black shadow-lg rounded-xl" id="feature-card-3">
-          <div class="feature-icon-wrapper">
-            <!-- UHD Movie Icon -->
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <line x1="7" y1="2" x2="7" y2="22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <line x1="17" y1="2" x2="17" y2="22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <line x1="2" y1="12" x2="22" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <line x1="2" y1="7" x2="7" y2="7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <line x1="2" y1="17" x2="7" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <line x1="17" y1="17" x2="22" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <line x1="17" y1="7" x2="22" y2="7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <div class="bg-gradient-to-b from-gray-900 to-black border border-gray-800 shadow-xl rounded-2xl p-8 flex flex-col items-center text-center transition-all duration-300 hover:-translate-y-2 hover:border-[#e50914]/40 hover:shadow-[0_15px_30px_rgba(229,9,20,0.1)] group">
+          <div class="w-14 h-14 bg-[#e50914] rounded-xl flex items-center justify-center text-white mb-6 shadow-lg shadow-[#e50914]/30 group-hover:scale-110 transition-transform duration-300">
+            <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/>
+              <line x1="7" y1="2" x2="7" y2="22"/>
+              <line x1="17" y1="2" x2="17" y2="22"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <line x1="2" y1="7" x2="7" y2="7"/>
+              <line x1="2" y1="17" x2="7" y2="17"/>
+              <line x1="17" y1="17" x2="22" y2="17"/>
+              <line x1="17" y1="7" x2="22" y2="7"/>
             </svg>
           </div>
-          <h3>20K Live & 60K VOD</h3>
-          <p>Full sports catalogs, US/UK/CA local channels, premium cinema, and the hottest Netflix, HBO Max, Disney+, and Amazon Prime releases.</p>
+          <h3 class="text-white font-bold text-lg uppercase tracking-wide mb-3">20K Live & 60K VOD</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">Full sports catalogs, local channels, premium cinema, and the hottest streaming releases in one place.</p>
         </div>
 
         <!-- Benefit 4 -->
-        <div class="feature-card border border-gray-800 bg-gradient-to-b from-gray-900 to-black shadow-lg rounded-xl" id="feature-card-4">
-          <div class="feature-icon-wrapper">
-            <!-- Support Icon -->
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <div class="bg-gradient-to-b from-gray-900 to-black border border-gray-800 shadow-xl rounded-2xl p-8 flex flex-col items-center text-center transition-all duration-300 hover:-translate-y-2 hover:border-[#e50914]/40 hover:shadow-[0_15px_30px_rgba(229,9,20,0.1)] group">
+          <div class="w-14 h-14 bg-[#e50914] rounded-xl flex items-center justify-center text-white mb-6 shadow-lg shadow-[#e50914]/30 group-hover:scale-110 transition-transform duration-300">
+            <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
             </svg>
           </div>
-          <h3>24/7 Support on WhatsApp</h3>
-          <p>Real human engineers ready to help you with activation, device troubleshooting, and guide installation anytime, day or night.</p>
+          <h3 class="text-white font-bold text-lg uppercase tracking-wide mb-3">24/7 WhatsApp</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">Real human engineers ready to help you with activation, device troubleshooting, and setup anytime.</p>
         </div>
       </div>
     </div>
@@ -780,41 +776,46 @@ const LANDING_HTML_TOP = `
         <h2 style="font-family: var(--font-sans, sans-serif); font-weight: 800; font-size: 1.8rem; color: #ffffff; text-transform: uppercase; letter-spacing: -0.02em; margin-bottom: 15px;" class="text-white">Supported Devices</h2>
         <p style="color: #aaaaaa; font-size: 1rem; line-height: 1.6; margin-bottom: 40px;">RedStream™ is fully optimized and 100% compatible with all your favorite smart devices and streaming boxes. Setup takes less than 5 minutes.</p>
         
-        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 max-w-3xl mx-auto px-4">
           <!-- Smart TV -->
-          <div style="background: #141414; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 20px 25px; display: flex; flex-direction: column; align-items: center; gap: 10px; min-width: 130px; transition: transform 0.3s ease, border-color 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='rgba(229, 9, 20, 0.5)';" onmouseout="this.style.transform='none'; this.style.borderColor='rgba(255, 255, 255, 0.08)';">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#e50914" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect><polyline points="17 2 12 7 7 2"></polyline></svg>
-            <span style="color: #fff; font-weight: 600; font-size: 0.9rem; font-family: var(--font-sans, sans-serif);">Smart TV</span>
+          <div class="bg-[#111] border border-gray-800 rounded-xl p-6 flex flex-col items-center justify-center gap-4 transition-all duration-300 hover:-translate-y-1 hover:border-[#e50914] hover:shadow-[0_10px_20px_rgba(229,9,20,0.15)] group relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-b from-[#e50914]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <svg class="w-10 h-10 text-gray-400 group-hover:text-[#e50914] transition-colors duration-300 relative z-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect><polyline points="17 2 12 7 7 2"></polyline></svg>
+            <span class="text-gray-300 group-hover:text-white font-semibold text-[13px] uppercase tracking-wider font-sans text-center relative z-10">Smart TV</span>
           </div>
           <!-- Android -->
-          <div style="background: #141414; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 20px 25px; display: flex; flex-direction: column; align-items: center; gap: 10px; min-width: 130px; transition: transform 0.3s ease, border-color 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='rgba(229, 9, 20, 0.5)';" onmouseout="this.style.transform='none'; this.style.borderColor='rgba(255, 255, 255, 0.08)';">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#e50914" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
-            <span style="color: #fff; font-weight: 600; font-size: 0.9rem; font-family: var(--font-sans, sans-serif);">Android / iOS</span>
+          <div class="bg-[#111] border border-gray-800 rounded-xl p-6 flex flex-col items-center justify-center gap-4 transition-all duration-300 hover:-translate-y-1 hover:border-[#e50914] hover:shadow-[0_10px_20px_rgba(229,9,20,0.15)] group relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-b from-[#e50914]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <svg class="w-10 h-10 text-gray-400 group-hover:text-[#e50914] transition-colors duration-300 relative z-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+            <span class="text-gray-300 group-hover:text-white font-semibold text-[13px] uppercase tracking-wider font-sans text-center relative z-10">Android / iOS</span>
           </div>
           <!-- Apple TV -->
-          <div style="background: #141414; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 20px 25px; display: flex; flex-direction: column; align-items: center; gap: 10px; min-width: 130px; transition: transform 0.3s ease, border-color 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='rgba(229, 9, 20, 0.5)';" onmouseout="this.style.transform='none'; this.style.borderColor='rgba(255, 255, 255, 0.08)';">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#e50914" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-            <span style="color: #fff; font-weight: 600; font-size: 0.9rem; font-family: var(--font-sans, sans-serif);">Apple TV</span>
+          <div class="bg-[#111] border border-gray-800 rounded-xl p-6 flex flex-col items-center justify-center gap-4 transition-all duration-300 hover:-translate-y-1 hover:border-[#e50914] hover:shadow-[0_10px_20px_rgba(229,9,20,0.15)] group relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-b from-[#e50914]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <svg class="w-10 h-10 text-gray-400 group-hover:text-[#e50914] transition-colors duration-300 relative z-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+            <span class="text-gray-300 group-hover:text-white font-semibold text-[13px] uppercase tracking-wider font-sans text-center relative z-10">Apple TV</span>
           </div>
           <!-- Firestick -->
-          <div style="background: #141414; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 20px 25px; display: flex; flex-direction: column; align-items: center; gap: 10px; min-width: 130px; transition: transform 0.3s ease, border-color 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='rgba(229, 9, 20, 0.5)';" onmouseout="this.style.transform='none'; this.style.borderColor='rgba(255, 255, 255, 0.08)';">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#e50914" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2" ry="2"></rect><circle cx="12" cy="14" r="4"></circle><line x1="12" y1="6" x2="12.01" y2="6"></line></svg>
-            <span style="color: #fff; font-weight: 600; font-size: 0.9rem; font-family: var(--font-sans, sans-serif);">Firestick</span>
+          <div class="bg-[#111] border border-gray-800 rounded-xl p-6 flex flex-col items-center justify-center gap-4 transition-all duration-300 hover:-translate-y-1 hover:border-[#e50914] hover:shadow-[0_10px_20px_rgba(229,9,20,0.15)] group relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-b from-[#e50914]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <svg class="w-10 h-10 text-gray-400 group-hover:text-[#e50914] transition-colors duration-300 relative z-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2" ry="2"></rect><circle cx="12" cy="14" r="4"></circle><line x1="12" y1="6" x2="12.01" y2="6"></line></svg>
+            <span class="text-gray-300 group-hover:text-white font-semibold text-[13px] uppercase tracking-wider font-sans text-center relative z-10">Firestick</span>
           </div>
           <!-- MAG Box -->
-          <div style="background: #141414; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 20px 25px; display: flex; flex-direction: column; align-items: center; gap: 10px; min-width: 130px; transition: transform 0.3s ease, border-color 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='rgba(229, 9, 20, 0.5)';" onmouseout="this.style.transform='none'; this.style.borderColor='rgba(255, 255, 255, 0.08)';">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#e50914" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"></rect><path d="M12 12h.01"></path><path d="M17 12h.01"></path><path d="M7 12h.01"></path></svg>
-            <span style="color: #fff; font-weight: 600; font-size: 0.9rem; font-family: var(--font-sans, sans-serif);">MAG / Formuler</span>
+          <div class="bg-[#111] border border-gray-800 rounded-xl p-6 flex flex-col items-center justify-center gap-4 transition-all duration-300 hover:-translate-y-1 hover:border-[#e50914] hover:shadow-[0_10px_20px_rgba(229,9,20,0.15)] group relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-b from-[#e50914]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <svg class="w-10 h-10 text-gray-400 group-hover:text-[#e50914] transition-colors duration-300 relative z-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"></rect><path d="M12 12h.01"></path><path d="M17 12h.01"></path><path d="M7 12h.01"></path></svg>
+            <span class="text-gray-300 group-hover:text-white font-semibold text-[13px] uppercase tracking-wider font-sans text-center leading-tight relative z-10">MAG / Formuler</span>
           </div>
           <!-- PC / Web -->
-          <div style="background: #141414; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 20px 25px; display: flex; flex-direction: column; align-items: center; gap: 10px; min-width: 130px; transition: transform 0.3s ease, border-color 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='rgba(229, 9, 20, 0.5)';" onmouseout="this.style.transform='none'; this.style.borderColor='rgba(255, 255, 255, 0.08)';">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#e50914" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-            <span style="color: #fff; font-weight: 600; font-size: 0.9rem; font-family: var(--font-sans, sans-serif);">PC / Web Player</span>
+          <div class="bg-[#111] border border-gray-800 rounded-xl p-6 flex flex-col items-center justify-center gap-4 transition-all duration-300 hover:-translate-y-1 hover:border-[#e50914] hover:shadow-[0_10px_20px_rgba(229,9,20,0.15)] group relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-b from-[#e50914]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <svg class="w-10 h-10 text-gray-400 group-hover:text-[#e50914] transition-colors duration-300 relative z-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+            <span class="text-gray-300 group-hover:text-white font-semibold text-[13px] uppercase tracking-wider font-sans text-center leading-tight relative z-10">PC / Web Player</span>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
   <!-- Pricing Table Section -->
   <section class="pricing py-16 md:py-24" id="pricing">
@@ -1450,8 +1451,8 @@ const LANDING_HTML_BOTTOM = `
   <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20am%20on%20your%20website%20and%20would%20like%20to%20get%20a%20premium%20IPTV%20trial." class="whatsapp-floating" target="_blank" rel="noopener noreferrer" id="floating-whatsapp-btn" aria-label="Chat with our sales agent on WhatsApp">
     <div class="whatsapp-pulse"></div>
     <!-- Clean WhatsApp SVG -->
-    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.965C16.528 2.012 14.059.99 11.45.99c-5.442 0-9.866 4.372-9.87 9.802 0 1.672.454 3.302 1.313 4.735L1.87 20.895l5.59-1.452zm11.488-7.7c-.3-.15-1.774-.875-2.05-.976-.275-.1-.475-.15-.675.15-.2.3-.775.976-.95 1.176-.175.2-.35.225-.65.075-3.04-1.516-4.004-2.614-4.834-4.04-.22-.38-.02-.585.18-.78.18-.175.4-.475.6-.7.2-.225.27-.375.4-.625.13-.25.07-.475-.03-.675-.1-.2-.675-1.626-.925-2.225-.244-.589-.49-.51-.675-.52l-.575-.01c-.2 0-.525.075-.8.375-.275.3-1.05 1.026-1.05 2.5s1.075 2.9 1.225 3.1c.15.2 2.11 3.225 5.116 4.525.715.31 1.273.495 1.708.633.72.23 1.374.197 1.892.12.577-.087 1.774-.725 2.025-1.425.25-.7.25-1.3 1.15-1.425.075-.013.15-.075.225-.11z"/>
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 32px; height: 32px; fill: currentColor; margin: auto; display: block;">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
     </svg>
   </a>
 `;

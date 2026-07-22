@@ -434,32 +434,35 @@
     }
 
     .feature-card {
-       /* gray-800 */
       padding: 40px 30px;
       border-radius: 12px;
       position: relative;
       box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
       transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .feature-card:hover {  transform: translateY(-5px);  box-shadow: 0 15px 35px rgba(0,0,0,0.8), 0 0 15px rgba(255,0,0,0.1);  border-color: rgba(255,0,0,0.3); }
 
     .feature-icon-wrapper {
-      width: 48px;
-      height: 48px;
+      width: 56px;
+      height: 56px;
       background-color: var(--color-primary);
-      border-radius: 4px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 24px;
+      margin: 0 auto 24px auto;
       color: var(--color-text-white);
-      box-shadow: 0 0 15px rgba(229, 9, 20, 0.3);
+      box-shadow: 0 10px 25px -5px rgba(229, 9, 20, 0.5);
     }
 
     .feature-icon-wrapper svg {
-      width: 24px;
-      height: 24px;
+      width: 28px;
+      height: 28px;
       stroke: currentColor;
     }
 
@@ -852,8 +855,8 @@
     /* Floating WhatsApp Widget */
     .whatsapp-floating {
       position: fixed;
-      bottom: 30px;
-      right: 30px;
+      bottom: 25px;
+      right: 25px;
       background-color: #25d366;
       color: #ffffff;
       width: 60px;
@@ -874,11 +877,12 @@
     }
 
     .whatsapp-floating svg {
-      width: 30px !important;
-      height: 30px !important;
-      aspect-ratio: 1 / 1 !important;
-      object-fit: contain !important;
+      width: 34px !important;
+      height: 34px !important;
       fill: currentColor;
+      display: block;
+      margin: 0;
+      padding: 0;
     }
 
     .whatsapp-pulse {
@@ -890,6 +894,7 @@
       z-index: -1;
       animation: whatsapp-glow 2s infinite;
     }
+
 
     @keyframes whatsapp-glow {
       0% { transform: scale(1); opacity: 0.5; }
@@ -980,10 +985,7 @@
         height: 50px;
       }
 
-      .whatsapp-floating svg {
-        width: 26px;
-        height: 26px;
-      }
+      .whatsapp-floating svg { width: 30px !important; height: 30px !important; }
     }
 
     /* Dynamic Plan Highlight CSS */
