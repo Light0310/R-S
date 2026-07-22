@@ -826,31 +826,32 @@ const LANDING_HTML_TOP = `
       </div>
 
       
-            <!-- How it Works Section -->
-      <div class="flex flex-row items-start justify-between w-full max-w-xl mx-auto relative px-4" style="font-family: var(--font-sans); margin-top: 40px; margin-bottom: 70px;">
+      <!-- How it Works Section -->
+      <div class="relative flex flex-row items-start justify-between w-full max-w-md mx-auto" style="font-family: var(--font-sans); margin-top: 40px; margin-bottom: 70px;">
         
-        <!-- Connecting Line Background -->
-        <div class="absolute top-[20px] md:top-[24px] left-[15%] right-[15%] h-[2px] bg-gray-700 z-0 hidden sm:block"></div>
-        
-        <div class="flex flex-col items-center text-center flex-1 relative z-10 px-1">
-          <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gray-800 flex items-center justify-center text-white font-bold mb-3 shadow-lg text-sm md:text-base transition-transform hover:scale-110 relative border-4 border-[#0a0a0a]">1</div>
-          <span class="text-gray-300 font-medium text-xs sm:text-sm uppercase tracking-wider leading-tight">Choose<br class="sm:hidden"/> a Plan</span>
+        <!-- Connecting Line -->
+        <div class="absolute top-5 md:top-6 left-0 w-full h-px bg-gray-700 z-0"></div>
+
+        <div class="flex flex-col items-center text-center w-24 relative z-10">
+          <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gray-800 flex items-center justify-center text-white font-bold mb-3 shadow-lg text-sm md:text-base">1</div>
+          <span class="text-gray-300 font-medium text-[10px] md:text-xs uppercase tracking-wider leading-tight">Choose<br/> a Plan</span>
         </div>
-        
-        <div class="flex flex-col items-center text-center flex-1 relative z-10 px-1">
-          <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gray-800 flex items-center justify-center text-white font-bold mb-3 shadow-lg text-sm md:text-base transition-transform hover:scale-110 relative border-4 border-[#0a0a0a]">2</div>
-          <span class="text-gray-300 font-medium text-xs sm:text-sm uppercase tracking-wider leading-tight">Get via<br class="sm:hidden"/> WhatsApp</span>
+
+        <div class="flex flex-col items-center text-center w-24 relative z-10">
+          <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gray-800 flex items-center justify-center text-white font-bold mb-3 shadow-lg text-sm md:text-base">2</div>
+          <span class="text-gray-300 font-medium text-[10px] md:text-xs uppercase tracking-wider leading-tight">Get via<br/> WhatsApp</span>
         </div>
-        
-        <div class="flex flex-col items-center text-center flex-1 relative z-10 px-1">
-          <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#e50914] flex items-center justify-center text-white font-bold mb-3 shadow-[0_0_15px_rgba(229,9,20,0.5)] text-sm md:text-base transition-transform hover:scale-110 relative border-4 border-[#0a0a0a]">3</div>
-          <span class="text-white font-bold text-xs sm:text-sm uppercase tracking-wider leading-tight">Start<br class="sm:hidden"/> Watching</span>
+
+        <div class="flex flex-col items-center text-center w-24 relative z-10">
+          <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#e50914] flex items-center justify-center text-white font-bold mb-3 shadow-[0_0_15px_rgba(229,9,20,0.5)] text-sm md:text-base">3</div>
+          <span class="text-white font-bold text-[10px] md:text-xs uppercase tracking-wider leading-tight">Start<br/> Watching</span>
         </div>
         
       </div>
-      <div class="flex flex-wrap justify-center gap-8 md:gap-6 lg:gap-8 mt-10 max-w-5xl mx-auto">
+
+      <div class="flex flex-wrap justify-center gap-8 md:gap-6 lg:gap-10 mt-10 max-w-5xl mx-auto">
         <!-- Plan 1: 1 Month -->
-        <div class="pricing-card w-full sm:w-[calc(50%-16px)] md:w-[calc(50%-20px)] lg:w-[calc(33.333%-20px)] max-w-[380px] flex flex-col border border-gray-800 bg-gradient-to-b from-gray-900 to-black shadow-lg rounded-xl relative" id="plan-1month">
+        <div class="pricing-card w-full sm:w-[calc(50%-16px)] lg:w-[calc(33.333%-24px)] max-w-[340px] flex flex-col border border-gray-800 bg-gradient-to-b from-gray-900 to-black shadow-lg rounded-xl relative" id="plan-1month">
           <div class="plan-header">
             <h3 class="plan-name">1 Month</h3>
             <div class="plan-price-wrapper">
@@ -869,8 +870,30 @@ const LANDING_HTML_TOP = `
           <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20want%20to%20order%20the%201%20Month%20Plan%20for%2012%E2%82%AC." target="_blank" rel="noopener noreferrer" class="plan-cta mt-auto bg-gray-800 hover:bg-gray-700 text-white border border-gray-700 transition-colors" id="btn-1month-order">Order 1 Month</a>
         </div>
 
+        <!-- Plan 2: 6 Months (Decoy) -->
+        <div class="pricing-card w-full sm:w-[calc(50%-16px)] lg:w-[calc(33.333%-24px)] max-w-[340px] flex flex-col border border-gray-800 bg-gradient-to-b from-gray-900 to-black shadow-lg rounded-xl relative" id="plan-6months">
+          <div class="plan-header">
+            <h3 class="plan-name">6 Months</h3>
+            <div class="plan-price-wrapper" style="margin-bottom: 4px;">
+              <span class="plan-price">39.00</span>
+              <span class="plan-currency">€</span>
+              <span class="plan-duration">/6 Months</span>
+            </div>
+            <div class="text-[11px] text-gray-400/80 font-medium tracking-wide uppercase mb-3">Equals 6.50€ / mo</div>
+            <p class="plan-desc text-gray-400 font-normal normal-case not-italic">Our highly popular plan. Ideal for keeping up with sports season.</p>
+          </div>
+          <div class="plan-divider"></div>
+          <ul class="plan-features">
+            <li><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 20,000+ Live Channels</li>
+            <li><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 60,000+ VOD Movies</li>
+            <li><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 4K / Ultra HD Quality</li>
+            <li class="premium-feature"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Anti-Freeze Stable Server</li>
+          </ul>
+          <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20want%20to%20order%20the%206%20Months%20Plan%20for%2039%E2%82%AC." target="_blank" rel="noopener noreferrer" class="plan-cta mt-auto bg-gray-800 hover:bg-gray-700 text-white border border-gray-700 transition-colors" id="btn-6months-order">Order 6 Months</a>
+        </div>
+
         <!-- Plan 3: 12 Months (Pulsing Red Neon Highlighted - Best Value) -->
-        <div class="pricing-card popular w-full sm:w-[calc(50%-16px)] md:w-[calc(50%-20px)] lg:w-[calc(33.333%-20px)] max-w-[380px] flex flex-col bg-gradient-to-b from-gray-900 to-black z-10 border border-[#e50914]/50 shadow-[0_10px_30px_rgba(229,9,20,0.2)] relative" id="plan-12months">
+        <div class="pricing-card popular w-full sm:w-[calc(50%-16px)] lg:w-[calc(33.333%-24px)] max-w-[340px] flex flex-col scale-105 transform bg-gradient-to-b from-gray-900 to-black z-10 border border-[#e50914]/50 shadow-[0_10px_30px_rgba(229,9,20,0.2)] relative lg:mt-0 mt-4 mx-auto" id="plan-12months">
           <div class="pricing-tag" style="background: #e50914; color: white; padding: 4px 12px; border-radius: 9999px; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); width: max-content; box-shadow: 0 0 15px rgba(229,9,20,0.5);">Launch Offer</div>
           <div class="plan-header">
             <h3 class="plan-name">12 Months</h3>
@@ -894,28 +917,6 @@ const LANDING_HTML_TOP = `
             <li class="premium-feature"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 24/7 VIP Customer Support</li>
           </ul>
           <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20want%20to%20order%20the%2012%20Months%20Premium%20Plan%20for%2049%E2%82%AC." target="_blank" rel="noopener noreferrer" class="plan-cta mt-auto bg-[#e50914] text-white shadow-[0_0_20px_rgba(229,9,20,0.6)] hover:shadow-[0_0_30px_rgba(229,9,20,0.8)] transition-shadow" id="btn-12months-order">Order 12 Months</a>
-        <!-- Plan 2: 6 Months (Decoy) -->
-        <div class="pricing-card w-full sm:w-[calc(50%-16px)] md:w-[calc(50%-20px)] lg:w-[calc(33.333%-20px)] max-w-[380px] flex flex-col border border-gray-800 bg-gradient-to-b from-gray-900 to-black shadow-lg rounded-xl relative" id="plan-6months">
-          <div class="plan-header">
-            <h3 class="plan-name">6 Months</h3>
-            <div class="plan-price-wrapper" style="margin-bottom: 4px;">
-              <span class="plan-price">39.00</span>
-              <span class="plan-currency">€</span>
-              <span class="plan-duration">/6 Months</span>
-            </div>
-            <div class="text-[11px] text-gray-400/80 font-medium tracking-wide uppercase mb-3">Equals 6.50€ / mo</div>
-            <p class="plan-desc text-gray-400 font-normal normal-case not-italic">Our highly popular plan. Ideal for keeping up with sports season.</p>
-          </div>
-          <div class="plan-divider"></div>
-          <ul class="plan-features">
-            <li><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 20,000+ Live Channels</li>
-            <li><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 60,000+ VOD Movies</li>
-            <li><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 4K / Ultra HD Quality</li>
-            <li class="premium-feature"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Anti-Freeze Stable Server</li>
-          </ul>
-          <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20want%20to%20order%20the%206%20Months%20Plan%20for%2039%E2%82%AC." target="_blank" rel="noopener noreferrer" class="plan-cta mt-auto bg-gray-800 hover:bg-gray-700 text-white border border-gray-700 transition-colors" id="btn-6months-order">Order 6 Months</a>
-        </div>
-
         </div>
       </div>
 
@@ -1445,8 +1446,8 @@ const LANDING_HTML_BOTTOM = `
   <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20am%20on%20your%20website%20and%20would%20like%20to%20get%20a%20premium%20IPTV%20trial." class="whatsapp-floating" target="_blank" rel="noopener noreferrer" id="floating-whatsapp-btn" aria-label="Chat with our sales agent on WhatsApp">
     <div class="whatsapp-pulse"></div>
     <!-- Clean WhatsApp SVG -->
-    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 32px; height: 32px; fill: currentColor; margin: auto; display: block;">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    <svg viewBox="0 0 24 24" width="34" height="34" fill="white" xmlns="http://www.w3.org/2000/svg" style="margin: auto; display: block;">
+      <path d="M12 2.039c-5.5 0-9.961 4.461-9.961 9.961 0 1.758.469 3.477 1.348 4.984L2 22l5.168-1.348c1.469.824 3.141 1.258 4.832 1.258 5.5 0 9.961-4.461 9.961-9.961 0-5.5-4.461-9.961-9.961-9.961zm5.352 14.336c-.234.664-1.359 1.277-1.875 1.359-.492.078-1.125.109-3.563-.898-2.93-1.211-4.797-4.203-4.938-4.391-.141-.188-1.18-1.57-1.18-2.992 0-1.422.742-2.125 1.008-2.406.266-.281.578-.352.766-.352.188 0 .375.008.539.016.172.008.406-.063.633.484.234.547.742 1.828.813 1.969.07.141.117.305.023.492-.094.188-.141.305-.281.469-.141.164-.297.352-.422.484-.141.141-.297.297-.125.594.172.297.766 1.266 1.641 2.047 1.133 1.008 2.086 1.32 2.383 1.461.297.141.469.117.641-.07.172-.188.742-.867.945-1.164.203-.297.406-.25.68-.148.273.094 1.734.82 2.031.969.297.148.492.219.563.344.07.125.07.727-.164 1.391z"/>
     </svg>
   </a>
 `;
