@@ -1,4 +1,8 @@
-import { GoogleGenAI, Type } from '@google/genai';
+const fs = require('fs');
+const path = require('path');
+
+const content = `import { getGeminiClient } from '../utils/geminiClient';
+import { Type } from '@google/genai';
 import { pool } from '../controllers/seoController';
 
 interface Snippet {
@@ -15,10 +19,7 @@ export async function generateArticle(
   snippets: Snippet[],
   recentArticles: { title: string; slug: string }[] = []
 ): Promise<{ title: string; content: string; slug: string; description: string; tags: string[] }> {
-  let ai = null;
-  if (process.env.GEMINI_API_KEY) {
-    ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-  }
+  const ai = getGeminiClient();
 
   if (ai) {
     let retries = 0;
@@ -26,18 +27,18 @@ export async function generateArticle(
 
     while (retries <= delays.length) {
       try {
-        console.log(`[Content Generator] Generating AI blog post for: "${queryString}" (Attempt ${retries + 1})...`);
+        console.log(\`[Content Generator] Generating AI blog post for: "\${queryString}" (Attempt \${retries + 1})...\`);
         
         const snippetsContext = snippets
-          .map((s, i) => `Source ${i + 1}: ${s.title || 'No Title'} (${s.url})\nSnippet: ${s.snippet || 'No Content'}`)
-          .join('\n\n');
+          .map((s, i) => \`Source \${i + 1}: \${s.title || 'No Title'} (\${s.url})\\nSnippet: \${s.snippet || 'No Content'}\`)
+          .join('\\n\\n');
 
         const recentArticlesContext = recentArticles.length > 0
-          ? `\nRecent Articles to Interlink:\n` + recentArticles.map(a => `- "${a.title}" (URL: /blog/${a.slug})`).join('\n')
+          ? \`\\nRecent Articles to Interlink:\\n\` + recentArticles.map(a => \`- "\${a.title}" (URL: /blog/\${a.slug})\`).join('\\n')
           : '';
 
-        const prompt = `Act as an Autonomous Programmatic SEO Master Agent & Senior Content Architect.
-Your task is to write a highly engaging, SEO-optimized blog post targeting the exact search query: "${queryString}".
+        const prompt = \`Act as an Autonomous Programmatic SEO Master Agent & Senior Content Architect.
+Your task is to write a highly engaging, SEO-optimized blog post targeting the exact search query: "\${queryString}".
 
 Strict Content Generation & Safety Rules:
 1. Keyword Density: Maintain a strict natural keyword density of 1.2% to 1.8%. Never spam or force keywords.
@@ -45,12 +46,12 @@ Strict Content Generation & Safety Rules:
 3. Readability: Use short, readable paragraphs (maximum 3-4 sentences per paragraph).
 4. LSI Keywords: Use LSI keywords and synonyms naturally instead of robotic repetition.
 5. CTA Integration: Smoothly integrate the RedStream IPTV Call to Action (CTA) naturally at the conclusion or within context. Do not be overly aggressive.
-6. Dynamic Interlinking Protocol:${recentArticlesContext ? ` Insert 1 to 2 contextual internal links pointing to these recent articles using descriptive anchor texts relevant to the paragraph:${recentArticlesContext}` : ' (No recent articles available to interlink right now).'}
+6. Dynamic Interlinking Protocol:\${recentArticlesContext ? \` Insert 1 to 2 contextual internal links pointing to these recent articles using descriptive anchor texts relevant to the paragraph:\${recentArticlesContext}\` : ' (No recent articles available to interlink right now).'}
 
 Context from top search results:
-${snippetsContext}
+\${snippetsContext}
 
-Please output strictly conforming to the requested JSON schema without any conversational filler.`;
+Please output strictly conforming to the requested JSON schema without any conversational filler.\`;
 
         const response = await ai.models.generateContent({
           model: 'gemini-3.5-flash',
@@ -79,16 +80,16 @@ Please output strictly conforming to the requested JSON schema without any conve
         const articleData = JSON.parse(dataStr);
         
         return {
-          title: articleData.title || `How to Optimize ${queryString}`,
-          content: articleData.content || `Article content for ${queryString}`,
+          title: articleData.title || \`How to Optimize \${queryString}\`,
+          content: articleData.content || \`Article content for \${queryString}\`,
           slug: articleData.slug || queryString.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
-          description: articleData.description || `Read our ultimate guide on ${queryString} for premium IPTV streaming.`,
+          description: articleData.description || \`Read our ultimate guide on \${queryString} for premium IPTV streaming.\`,
           tags: articleData.tags || ['iptv', 'streaming', 'guide']
         };
       } catch (error: any) {
-        console.error(`[Content Generator] Gemini API error on attempt ${retries + 1}:`, error.message);
+        console.error(\`[Content Generator] Gemini API error on attempt \${retries + 1}:\`, error.message);
         if (retries < delays.length) {
-          console.log(`[Content Generator] Retrying in ${delays[retries] / 1000} seconds...`);
+          console.log(\`[Content Generator] Retrying in \${delays[retries] / 1000} seconds...\`);
           await sleep(delays[retries]);
           retries++;
         } else {
@@ -100,23 +101,23 @@ Please output strictly conforming to the requested JSON schema without any conve
   }
 
   // Structured High-Quality fallback template
-  console.log(`[Content Generator] Generating fallback template article for: "${queryString}"`);
+  console.log(\`[Content Generator] Generating fallback template article for: "\${queryString}"\`);
   const cleanSlug = queryString.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
   
   const snippetBulletPoints = snippets
-    .map(s => `* **${s.title || 'Streaming Guide'}** - Insights from reference: _${s.snippet || 'No specific snippet information extracted.'}_`)
+    .map(s => \`* **\${s.title || 'Streaming Guide'}** - Insights from reference: _\${s.snippet || 'No specific snippet information extracted.'}_\`)
     .slice(0, 4)
-    .join('\n');
+    .join('\\n');
 
-  const contentMarkdown = `## Understanding the Challenge: ${queryString}
+  const contentMarkdown = \`## Understanding the Challenge: \${queryString}
 
-If you have been looking for clear answers on **${queryString}**, you are in the right place. Fast, reliable streaming is no longer a luxury—it is an absolute necessity. Whether you are setting up a Smart TV, an Android TV box, or seeking live sporting broadcasts, understanding how to configure your home network is key to unlocking the best streaming quality.
+If you have been looking for clear answers on **\${queryString}**, you are in the right place. Fast, reliable streaming is no longer a luxury—it is an absolute necessity. Whether you are setting up a Smart TV, an Android TV box, or seeking live sporting broadcasts, understanding how to configure your home network is key to unlocking the best streaming quality.
 
 ### Top Expert Solutions & Insights
 
 Based on our SEO target analysis and competitor lookup, here are the most effective tactics to implement:
 
-${snippetBulletPoints || '* Make sure you use a high-speed, stable connection (Ethernet is preferred over Wi-Fi).\n* Clear your app caches regularly to prevent sluggish rendering.'}
+\${snippetBulletPoints || '* Make sure you use a high-speed, stable connection (Ethernet is preferred over Wi-Fi).\\n* Clear your app caches regularly to prevent sluggish rendering.'}
 
 ### Recommended Network Optimizations
 1. **Switch to 5GHz Wi-Fi or Ethernet**: 2.4GHz bands are often congested. An Ethernet connection provides a direct, uninterrupted route.
@@ -136,13 +137,13 @@ Join **RedStream IPTV** and enjoy:
 * **Super-Fast Anti-Freezing Servers** with 99.9% uptime
 * **24/7 dedicated customer assistance** for Android, iOS, Smart TV, and Firestick
 
-👉 [Claim Your Free Trial Instantly on WhatsApp](https://wa.me/212694843943?text=Hello%20RedStream,%20I%20read%20your%20article%20on%20${encodeURIComponent(queryString)}%20and%20want%20a%20free%20trial.) to get set up in under 5 minutes!`;
+👉 [Claim Your Free Trial Instantly on WhatsApp](https://wa.me/212694843943?text=Hello%20RedStream,%20I%20read%20your%20article%20on%20\${encodeURIComponent(queryString)}%20and%20want%20a%20free%20trial.) to get set up in under 5 minutes!\`;
 
   return {
-    title: `Ultimate Guide: ${queryString}`,
+    title: \`Ultimate Guide: \${queryString}\`,
     content: contentMarkdown,
     slug: cleanSlug,
-    description: `Tired of lag? Discover our ultimate guide on "${queryString}" to optimize your streaming setup and get the best performance in 2026.`,
+    description: \`Tired of lag? Discover our ultimate guide on "\${queryString}" to optimize your streaming setup and get the best performance in 2026.\`,
     tags: ['iptv', 'streaming setup', 'buffering fix', 'cord-cutting']
   };
 }
@@ -151,12 +152,12 @@ export async function executeAutoContentGeneration(): Promise<{ success: boolean
   const client = await pool.connect();
   try {
     // 1. Fetch ALL completed search queries
-    const completedQueriesRes = await client.query(`
+    const completedQueriesRes = await client.query(\`
       SELECT sq.id, sq.query_string 
       FROM search_queries sq
       WHERE sq.status = 'completed'
       ORDER BY sq.id ASC
-    `);
+    \`);
 
     if (completedQueriesRes.rows.length === 0) {
       return { 
@@ -169,10 +170,10 @@ export async function executeAutoContentGeneration(): Promise<{ success: boolean
     let selectedQuery = null;
     for (const row of completedQueriesRes.rows) {
       const slug = row.query_string.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-      const existsRes = await client.query(`SELECT 1 FROM blog_posts WHERE slug = $1 LIMIT 1`, [slug]);
+      const existsRes = await client.query(\`SELECT 1 FROM blog_posts WHERE slug = $1 LIMIT 1\`, [slug]);
       
       if (existsRes.rows.length > 0) {
-        console.log(`[Content Generator] Duplicate Skipped: "${row.query_string}" already exists as an article. Moving to next fresh keyword...`);
+        console.log(\`[Content Generator] Duplicate Skipped: "\${row.query_string}" already exists as an article. Moving to next fresh keyword...\`);
         continue; // Move to next
       } else {
         selectedQuery = row;
@@ -190,34 +191,34 @@ export async function executeAutoContentGeneration(): Promise<{ success: boolean
     const { id: queryId, query_string: queryString } = selectedQuery;
 
     // 2. Fetch all associated snippets for this query
-    const snippetsRes = await client.query(`
+    const snippetsRes = await client.query(\`
       SELECT url, title, snippet 
       FROM link_targets 
       WHERE source_query_id = $1
-    `, [queryId]);
+    \`, [queryId]);
     const snippets = snippetsRes.rows;
 
     // Fetch last 3-5 published articles for dynamic interlinking
-    const recentArticlesRes = await client.query(`
+    const recentArticlesRes = await client.query(\`
       SELECT title, slug 
       FROM blog_posts 
       WHERE status = 'published' 
       ORDER BY created_at DESC 
       LIMIT 3
-    `);
+    \`);
     const recentArticles = recentArticlesRes.rows;
 
     // 3. Generate article (via Gemini or high-quality fallback)
     const article = await generateArticle(queryId, queryString, snippets, recentArticles);
 
     // 4. Save into blog_posts table in PostgreSQL
-    const insertRes = await client.query(`
+    const insertRes = await client.query(\`
       INSERT INTO blog_posts (title, content, slug, status, description, tags)
       VALUES ($1, $2, $3, $4, $5, $6)
       ON CONFLICT (slug) DO UPDATE 
       SET title = EXCLUDED.title, content = EXCLUDED.content, description = EXCLUDED.description, tags = EXCLUDED.tags
       RETURNING id, title, slug, status, created_at
-    `, [
+    \`, [
       article.title, 
       article.content, 
       article.slug, 
@@ -230,7 +231,7 @@ export async function executeAutoContentGeneration(): Promise<{ success: boolean
 
     return {
       success: true,
-      message: `Successfully generated and saved blog post: "${article.title}"`,
+      message: \`Successfully generated and saved blog post: "\${article.title}"\`,
       post: savedPost
     };
   } catch (error: any) {
@@ -244,3 +245,7 @@ export async function executeAutoContentGeneration(): Promise<{ success: boolean
     client.release();
   }
 }
+`;
+
+fs.writeFileSync(path.join(process.cwd(), 'src/services/contentGenerator.ts'), content);
+console.log("Rewritten contentGenerator.ts successfully.");
