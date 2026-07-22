@@ -826,33 +826,31 @@ const LANDING_HTML_TOP = `
       </div>
 
       
-      <!-- How it Works Section -->
-      <div class="flex flex-row items-start justify-center w-full max-w-2xl mx-auto" style="font-family: var(--font-sans); margin-top: 40px; margin-bottom: 70px;">
+            <!-- How it Works Section -->
+      <div class="flex flex-row items-start justify-between w-full max-w-xl mx-auto relative px-4" style="font-family: var(--font-sans); margin-top: 40px; margin-bottom: 70px;">
         
-        <div class="flex flex-col items-center text-center w-28 md:w-32 relative">
-          <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gray-800 flex items-center justify-center text-white font-bold mb-3 shadow-lg text-sm md:text-base z-10 relative">1</div>
-          <span class="text-gray-300 font-medium text-[10px] md:text-xs uppercase tracking-wider leading-tight">Choose<br class="md:hidden"/> a Plan</span>
-          <!-- Divider Line -->
-          <div class="hidden md:block absolute top-6 left-[50%] w-full h-px bg-gray-700 z-0"></div>
+        <!-- Connecting Line Background -->
+        <div class="absolute top-[20px] md:top-[24px] left-[15%] right-[15%] h-[2px] bg-gray-700 z-0 hidden sm:block"></div>
+        
+        <div class="flex flex-col items-center text-center flex-1 relative z-10 px-1">
+          <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gray-800 flex items-center justify-center text-white font-bold mb-3 shadow-lg text-sm md:text-base transition-transform hover:scale-110 relative border-4 border-[#0a0a0a]">1</div>
+          <span class="text-gray-300 font-medium text-xs sm:text-sm uppercase tracking-wider leading-tight">Choose<br class="sm:hidden"/> a Plan</span>
         </div>
-
-        <div class="flex flex-col items-center text-center w-28 md:w-32 relative">
-          <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gray-800 flex items-center justify-center text-white font-bold mb-3 shadow-lg text-sm md:text-base z-10 relative">2</div>
-          <span class="text-gray-300 font-medium text-[10px] md:text-xs uppercase tracking-wider leading-tight">Get via<br class="md:hidden"/> WhatsApp</span>
-          <!-- Divider Line -->
-          <div class="hidden md:block absolute top-6 left-[50%] w-full h-px bg-gray-700 z-0"></div>
+        
+        <div class="flex flex-col items-center text-center flex-1 relative z-10 px-1">
+          <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gray-800 flex items-center justify-center text-white font-bold mb-3 shadow-lg text-sm md:text-base transition-transform hover:scale-110 relative border-4 border-[#0a0a0a]">2</div>
+          <span class="text-gray-300 font-medium text-xs sm:text-sm uppercase tracking-wider leading-tight">Get via<br class="sm:hidden"/> WhatsApp</span>
         </div>
-
-        <div class="flex flex-col items-center text-center w-28 md:w-32 relative">
-          <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#e50914] flex items-center justify-center text-white font-bold mb-3 shadow-[0_0_15px_rgba(229,9,20,0.5)] text-sm md:text-base z-10 relative">3</div>
-          <span class="text-white font-bold text-[10px] md:text-xs uppercase tracking-wider leading-tight">Start<br class="md:hidden"/> Watching</span>
+        
+        <div class="flex flex-col items-center text-center flex-1 relative z-10 px-1">
+          <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#e50914] flex items-center justify-center text-white font-bold mb-3 shadow-[0_0_15px_rgba(229,9,20,0.5)] text-sm md:text-base transition-transform hover:scale-110 relative border-4 border-[#0a0a0a]">3</div>
+          <span class="text-white font-bold text-xs sm:text-sm uppercase tracking-wider leading-tight">Start<br class="sm:hidden"/> Watching</span>
         </div>
         
       </div>
-
-      <div class="flex flex-wrap justify-center gap-8 md:gap-10 mt-10 max-w-4xl mx-auto">
+      <div class="flex flex-wrap justify-center gap-8 md:gap-6 lg:gap-8 mt-10 max-w-5xl mx-auto">
         <!-- Plan 1: 1 Month -->
-        <div class="pricing-card w-full sm:w-[calc(50%-16px)] md:w-[calc(50%-20px)] max-w-[380px] flex flex-col border border-gray-800 bg-gradient-to-b from-gray-900 to-black shadow-lg rounded-xl relative" id="plan-1month">
+        <div class="pricing-card w-full sm:w-[calc(50%-16px)] md:w-[calc(50%-20px)] lg:w-[calc(33.333%-20px)] max-w-[380px] flex flex-col border border-gray-800 bg-gradient-to-b from-gray-900 to-black shadow-lg rounded-xl relative" id="plan-1month">
           <div class="plan-header">
             <h3 class="plan-name">1 Month</h3>
             <div class="plan-price-wrapper">
@@ -871,30 +869,8 @@ const LANDING_HTML_TOP = `
           <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20want%20to%20order%20the%201%20Month%20Plan%20for%2012%E2%82%AC." target="_blank" rel="noopener noreferrer" class="plan-cta mt-auto bg-gray-800 hover:bg-gray-700 text-white border border-gray-700 transition-colors" id="btn-1month-order">Order 1 Month</a>
         </div>
 
-        <!-- Plan 2: 6 Months (Decoy) -->
-        <div class="pricing-card w-full sm:w-[calc(50%-16px)] md:w-[calc(50%-20px)] max-w-[380px] flex flex-col border border-gray-800 bg-gradient-to-b from-gray-900 to-black shadow-lg rounded-xl relative" id="plan-6months">
-          <div class="plan-header">
-            <h3 class="plan-name">6 Months</h3>
-            <div class="plan-price-wrapper" style="margin-bottom: 4px;">
-              <span class="plan-price">39.00</span>
-              <span class="plan-currency">€</span>
-              <span class="plan-duration">/6 Months</span>
-            </div>
-            <div class="text-[11px] text-gray-400/80 font-medium tracking-wide uppercase mb-3">Equals 6.50€ / mo</div>
-            <p class="plan-desc text-gray-400 font-normal normal-case not-italic">Our highly popular plan. Ideal for keeping up with sports season.</p>
-          </div>
-          <div class="plan-divider"></div>
-          <ul class="plan-features">
-            <li><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 20,000+ Live Channels</li>
-            <li><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 60,000+ VOD Movies</li>
-            <li><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 4K / Ultra HD Quality</li>
-            <li class="premium-feature"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Anti-Freeze Stable Server</li>
-          </ul>
-          <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20want%20to%20order%20the%206%20Months%20Plan%20for%2039%E2%82%AC." target="_blank" rel="noopener noreferrer" class="plan-cta mt-auto bg-gray-800 hover:bg-gray-700 text-white border border-gray-700 transition-colors" id="btn-6months-order">Order 6 Months</a>
-        </div>
-
         <!-- Plan 3: 12 Months (Pulsing Red Neon Highlighted - Best Value) -->
-        <div class="pricing-card popular w-full sm:w-[calc(50%-16px)] md:w-[calc(50%-20px)] max-w-[380px] flex flex-col scale-105 transform bg-gradient-to-b from-gray-900 to-black z-10 border border-[#e50914]/50 shadow-[0_10px_30px_rgba(229,9,20,0.2)] relative" id="plan-12months">
+        <div class="pricing-card popular w-full sm:w-[calc(50%-16px)] md:w-[calc(50%-20px)] lg:w-[calc(33.333%-20px)] max-w-[380px] flex flex-col bg-gradient-to-b from-gray-900 to-black z-10 border border-[#e50914]/50 shadow-[0_10px_30px_rgba(229,9,20,0.2)] relative" id="plan-12months">
           <div class="pricing-tag" style="background: #e50914; color: white; padding: 4px 12px; border-radius: 9999px; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); width: max-content; box-shadow: 0 0 15px rgba(229,9,20,0.5);">Launch Offer</div>
           <div class="plan-header">
             <h3 class="plan-name">12 Months</h3>
@@ -918,6 +894,28 @@ const LANDING_HTML_TOP = `
             <li class="premium-feature"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 24/7 VIP Customer Support</li>
           </ul>
           <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20want%20to%20order%20the%2012%20Months%20Premium%20Plan%20for%2049%E2%82%AC." target="_blank" rel="noopener noreferrer" class="plan-cta mt-auto bg-[#e50914] text-white shadow-[0_0_20px_rgba(229,9,20,0.6)] hover:shadow-[0_0_30px_rgba(229,9,20,0.8)] transition-shadow" id="btn-12months-order">Order 12 Months</a>
+        <!-- Plan 2: 6 Months (Decoy) -->
+        <div class="pricing-card w-full sm:w-[calc(50%-16px)] md:w-[calc(50%-20px)] lg:w-[calc(33.333%-20px)] max-w-[380px] flex flex-col border border-gray-800 bg-gradient-to-b from-gray-900 to-black shadow-lg rounded-xl relative" id="plan-6months">
+          <div class="plan-header">
+            <h3 class="plan-name">6 Months</h3>
+            <div class="plan-price-wrapper" style="margin-bottom: 4px;">
+              <span class="plan-price">39.00</span>
+              <span class="plan-currency">€</span>
+              <span class="plan-duration">/6 Months</span>
+            </div>
+            <div class="text-[11px] text-gray-400/80 font-medium tracking-wide uppercase mb-3">Equals 6.50€ / mo</div>
+            <p class="plan-desc text-gray-400 font-normal normal-case not-italic">Our highly popular plan. Ideal for keeping up with sports season.</p>
+          </div>
+          <div class="plan-divider"></div>
+          <ul class="plan-features">
+            <li><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 20,000+ Live Channels</li>
+            <li><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 60,000+ VOD Movies</li>
+            <li><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 4K / Ultra HD Quality</li>
+            <li class="premium-feature"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Anti-Freeze Stable Server</li>
+          </ul>
+          <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20want%20to%20order%20the%206%20Months%20Plan%20for%2039%E2%82%AC." target="_blank" rel="noopener noreferrer" class="plan-cta mt-auto bg-gray-800 hover:bg-gray-700 text-white border border-gray-700 transition-colors" id="btn-6months-order">Order 6 Months</a>
+        </div>
+
         </div>
       </div>
 
