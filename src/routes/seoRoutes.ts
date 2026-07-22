@@ -121,4 +121,54 @@ router.get('/blog-posts/:slug', async (req: Request, res: Response) => {
   }
 });
 
+// PUT /blog-posts/:id - Protected endpoint to edit a dynamic blog post
+router.put('/blog-posts/:id', adminAuthMiddleware, async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { title, content, slug, description, tags, status } = req.body;
+  if (!process.env.DATABASE_URL) {
+    res.status(404).json({ success: false, message: 'Database not configured' });
+    return;
+  }
+  try {
+    const updateRes = await pool.query(`
+      UPDATE blog_posts
+      SET title = $1, content = $2, slug = $3, description = $4, tags = $5, status = $6
+      WHERE id = $7
+      RETURNING *
+    `, [title, content, slug, description, tags, status, id]);
+    if (updateRes.rows.length === 0) {
+      res.status(404).json({ success: false, message: 'Blog post not found' });
+      return;
+    }
+    res.json({ success: true, post: updateRes.rows[0] });
+  } catch (error: any) {
+    console.error('[SEO Routes] Error updating blog post:', error.message);
+    res.status(500).json({ success: false, message: 'Failed to update blog post' });
+  }
+});
+
+// DELETE /blog-posts/:id - Protected endpoint to delete a dynamic blog post
+router.delete('/blog-posts/:id', adminAuthMiddleware, async (req: Request, res: Response) => {
+  const { id } = req.params;
+  if (!process.env.DATABASE_URL) {
+    res.status(404).json({ success: false, message: 'Database not configured' });
+    return;
+  }
+  try {
+    const deleteRes = await pool.query(`
+      DELETE FROM blog_posts
+      WHERE id = $1
+      RETURNING id
+    `, [id]);
+    if (deleteRes.rows.length === 0) {
+      res.status(404).json({ success: false, message: 'Blog post not found' });
+      return;
+    }
+    res.json({ success: true, message: 'Blog post deleted' });
+  } catch (error: any) {
+    console.error('[SEO Routes] Error deleting blog post:', error.message);
+    res.status(500).json({ success: false, message: 'Failed to delete blog post' });
+  }
+});
+
 export default router;

@@ -17,7 +17,11 @@ import {
   ListFilter,
   BookOpen,
   FileText,
-  Sparkles
+  Sparkles,
+  Edit,
+  Trash2,
+  X,
+  Save
 } from 'lucide-react';
 
 interface LinkTarget {
@@ -64,6 +68,11 @@ export default function SecretSeoAdmin() {
   // Tab control
   const [activeTab, setActiveTab] = useState<'links' | 'queries' | 'articles'>('links');
   const [queryFilter, setQueryFilter] = useState<string>('all');
+
+  // Edit/Delete Article States
+  const [editingPost, setEditingPost] = useState<any>(null);
+  const [deletingPostId, setDeletingPostId] = useState<string | null>(null);
+  const [actionError, setActionError] = useState('');
 
   // Fetch data function
   const fetchSeoData = async (tokenToUse = adminToken) => {
@@ -201,6 +210,64 @@ export default function SecretSeoAdmin() {
     setStatus('idle');
     setMessage('');
     setDataError('');
+  };
+
+  const handleUpdatePost = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!adminToken || !editingPost) return;
+    setLoading(true);
+    setActionError('');
+    try {
+      const baseUrl = "https://r-s-3lw3.onrender.com";
+      const endpoint = baseUrl 
+        ? `${baseUrl.replace(/\/$/, '')}/api/seo/blog-posts/${editingPost.id}`
+        : `/api/seo/blog-posts/${editingPost.id}`;
+      
+      const response = await fetch(endpoint, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-admin-token': adminToken,
+        },
+        body: JSON.stringify(editingPost)
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.message || 'Failed to update post');
+      
+      setBlogPosts(prev => prev.map(p => p.id === editingPost.id ? data.post : p));
+      setEditingPost(null);
+    } catch (err: any) {
+      setActionError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDeletePost = async (id: string) => {
+    if (!adminToken || !window.confirm('Are you sure you want to delete this AI article?')) return;
+    setDeletingPostId(id);
+    setActionError('');
+    try {
+      const baseUrl = "https://r-s-3lw3.onrender.com";
+      const endpoint = baseUrl 
+        ? `${baseUrl.replace(/\/$/, '')}/api/seo/blog-posts/${id}`
+        : `/api/seo/blog-posts/${id}`;
+      
+      const response = await fetch(endpoint, {
+        method: 'DELETE',
+        headers: {
+          'x-admin-token': adminToken,
+        },
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.message || 'Failed to delete post');
+      
+      setBlogPosts(prev => prev.filter(p => p.id !== id));
+    } catch (err: any) {
+      setActionError(err.message);
+    } finally {
+      setDeletingPostId(null);
+    }
   };
 
   const handleRunSearch = async () => {
@@ -780,11 +847,27 @@ export default function SecretSeoAdmin() {
                               </div>
                             )}
 
-                            <div className="flex items-center gap-4 text-[10px] text-gray-500 font-bold border-t border-white/5 pt-3">
+                            <div className="flex items-center justify-between gap-4 text-[10px] text-gray-500 font-bold border-t border-white/5 pt-3">
                               <span className="flex items-center gap-1">
                                 <Clock size={11} />
                                 Generated: {new Date(post.created_at).toLocaleString()}
                               </span>
+                              <div className="flex items-center gap-2">
+                                <button
+                                  onClick={() => setEditingPost(post)}
+                                  className="flex items-center gap-1 hover:text-white transition-colors"
+                                >
+                                  <Edit size={12} /> Edit
+                                </button>
+                                <button
+                                  onClick={() => handleDeletePost(post.id)}
+                                  disabled={deletingPostId === post.id}
+                                  className="flex items-center gap-1 text-red-500/70 hover:text-red-500 transition-colors"
+                                >
+                                  {deletingPostId === post.id ? <Loader2 size={12} className="animate-spin" /> : <Trash2 size={12} />} 
+                                  Delete
+                                </button>
+                              </div>
                             </div>
                           </div>
                         ))}
@@ -848,6 +931,110 @@ export default function SecretSeoAdmin() {
         )}
 
       </main>
+
+        {/* Edit Post Modal */}
+        {editingPost && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 overflow-y-auto">
+            <div className="bg-[#121212] border border-white/10 rounded-2xl p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto space-y-6">
+              <div className="flex justify-between items-center">
+                <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                  <Edit className="w-5 h-5 text-[#FF1E27]" />
+                  Edit AI Article
+                </h3>
+                <button 
+                  onClick={() => setEditingPost(null)}
+                  className="text-gray-400 hover:text-white transition-colors p-1"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+
+              {actionError && (
+                <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-3 rounded-lg text-sm flex items-center gap-2">
+                  <AlertCircle size={16} />
+                  {actionError}
+                </div>
+              )}
+
+              <form onSubmit={handleUpdatePost} className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold text-gray-400 uppercase tracking-wider block">Title</label>
+                    <input
+                      type="text"
+                      required
+                      value={editingPost.title}
+                      onChange={(e) => setEditingPost({...editingPost, title: e.target.value})}
+                      className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#FF1E27] transition-colors font-medium"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold text-gray-400 uppercase tracking-wider block">Slug</label>
+                    <input
+                      type="text"
+                      required
+                      value={editingPost.slug}
+                      onChange={(e) => setEditingPost({...editingPost, slug: e.target.value})}
+                      className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#FF1E27] transition-colors font-mono"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-gray-400 uppercase tracking-wider block">Description</label>
+                  <textarea
+                    rows={2}
+                    value={editingPost.description || ''}
+                    onChange={(e) => setEditingPost({...editingPost, description: e.target.value})}
+                    className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#FF1E27] transition-colors resize-y"
+                  ></textarea>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-gray-400 uppercase tracking-wider block">Tags (comma separated)</label>
+                  <input
+                    type="text"
+                    value={(editingPost.tags || []).join(', ')}
+                    onChange={(e) => setEditingPost({...editingPost, tags: e.target.value.split(',').map((t: string) => t.trim()).filter(Boolean)})}
+                    className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#FF1E27] transition-colors font-mono"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <label className="text-xs font-bold text-gray-400 uppercase tracking-wider block">Content (Markdown)</label>
+                    <span className="text-[10px] text-gray-500 font-mono">Use ![alt](url) to insert images</span>
+                  </div>
+                  <textarea
+                    required
+                    rows={15}
+                    value={editingPost.content}
+                    onChange={(e) => setEditingPost({...editingPost, content: e.target.value})}
+                    className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-sm text-gray-300 focus:outline-none focus:border-[#FF1E27] transition-colors font-mono resize-y"
+                  ></textarea>
+                </div>
+
+                <div className="flex justify-end gap-3 pt-4 border-t border-white/10">
+                  <button
+                    type="button"
+                    onClick={() => setEditingPost(null)}
+                    className="px-6 py-3 rounded-xl font-bold text-sm text-gray-400 hover:text-white bg-white/5 hover:bg-white/10 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="px-6 py-3 rounded-xl font-bold text-sm text-white bg-[#FF1E27] hover:bg-[#E01A22] transition-colors flex items-center gap-2 shadow-lg shadow-[#FF1E27]/20 disabled:opacity-50"
+                  >
+                    {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+                    Save Changes
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
     </div>
   );
 }
