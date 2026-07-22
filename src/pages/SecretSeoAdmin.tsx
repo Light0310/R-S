@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   Play, 
   Loader2, 
@@ -21,7 +21,8 @@ import {
   Edit,
   Trash2,
   X,
-  Save
+  Save,
+  ImagePlus
 } from 'lucide-react';
 
 interface LinkTarget {
@@ -73,6 +74,52 @@ export default function SecretSeoAdmin() {
   const [editingPost, setEditingPost] = useState<any>(null);
   const [deletingPostId, setDeletingPostId] = useState<string | null>(null);
   const [actionError, setActionError] = useState('');
+
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !editingPost) return;
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64String = reader.result as string;
+      
+      // SEO Optimization: Prompt for Alt text
+      const defaultAlt = file.name.split('.')[0].replace(/[-_]/g, ' ');
+      const seoAltText = window.prompt("Enter SEO Alt Text for this image (Important for Google indexing):", defaultAlt);
+      
+      if (seoAltText === null) {
+        if (fileInputRef.current) fileInputRef.current.value = '';
+        return; // Cancelled
+      }
+      
+      const imageMarkdown = `\n![${seoAltText || defaultAlt}](${base64String})\n`;
+
+      const textarea = textareaRef.current;
+      if (textarea) {
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        const currentContent = editingPost.content || '';
+        const newContent = currentContent.substring(0, start) + imageMarkdown + currentContent.substring(end);
+        setEditingPost({ ...editingPost, content: newContent });
+        
+        setTimeout(() => {
+          textarea.focus();
+          textarea.selectionStart = start + imageMarkdown.length;
+          textarea.selectionEnd = start + imageMarkdown.length;
+        }, 0);
+      } else {
+        setEditingPost({ ...editingPost, content: (editingPost.content || '') + imageMarkdown });
+      }
+    };
+    reader.readAsDataURL(file);
+    
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
 
   // Fetch data function
   const fetchSeoData = async (tokenToUse = adminToken) => {
@@ -1003,9 +1050,26 @@ export default function SecretSeoAdmin() {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <label className="text-xs font-bold text-gray-400 uppercase tracking-wider block">Content (Markdown)</label>
-                    <span className="text-[10px] text-gray-500 font-mono">Use ![alt](url) to insert images</span>
+                    <div className="flex items-center gap-3">
+                      <input 
+                        type="file" 
+                        accept="image/*" 
+                        className="hidden" 
+                        ref={fileInputRef}
+                        onChange={handleImageUpload} 
+                      />
+                      <button 
+                        type="button" 
+                        onClick={() => fileInputRef.current?.click()}
+                        className="flex items-center gap-1.5 text-[10px] bg-white/5 hover:bg-white/10 border border-white/10 px-2 py-1 rounded text-gray-300 transition-colors cursor-pointer"
+                      >
+                        <ImagePlus size={12} /> Upload Image
+                      </button>
+                      <span className="text-[10px] text-gray-500 font-mono hidden sm:inline">Or use ![alt](url)</span>
+                    </div>
                   </div>
                   <textarea
+                    ref={textareaRef}
                     required
                     rows={15}
                     value={editingPost.content}
