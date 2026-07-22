@@ -8,13 +8,12 @@ export function useGeoLocation() {
         if (!response.ok) throw new Error('Network response was not ok');
         const data = await response.json();
         
-        const titleEl = document.getElementById('hero-title');
-        if (titleEl && data.country) {
-          titleEl.innerHTML = `<span>The Best Premium IPTV in</span><br><span class="highlight">${data.country}</span>`;
+        const geoEl = document.getElementById('geo-hidden-text');
+        if (geoEl && data.country) {
+          geoEl.innerText = `The Best IPTV in ${data.country}`;
         }
       } catch (error) {
         console.error('Failed to fetch geolocation', error);
-        // Fallback is already present in the HTML (RedStream™ Premium IPTV)
       }
     }
     

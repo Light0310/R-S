@@ -614,9 +614,10 @@ const LANDING_HTML_TOP = `
       Premium 4K IPTV Service 2026
     </div>
     
-    <h1 id="hero-title">
+    <h1 id="hero-title" style="position: relative; margin-bottom: 8px;">
       <span>Experience Ultimate TV with</span><br>
       <span class="highlight">RedStream™ Premium IPTV</span>
+      <span id="geo-hidden-text" class="block text-[11px] md:text-sm text-gray-400/90 uppercase tracking-[0.2em] mt-5 md:mt-6 font-semibold" style="user-select: none;">The Best Premium IPTV</span>
     </h1>
     
     <p id="hero-subheading">
@@ -827,24 +828,25 @@ const LANDING_HTML_TOP = `
 
       
       <!-- How it Works Section -->
-      <div class="relative flex flex-row items-start justify-between w-full max-w-md mx-auto" style="font-family: var(--font-sans); margin-top: 40px; margin-bottom: 70px;">
+      <div class="flex flex-row items-start justify-center w-full max-w-3xl mx-auto px-2" style="font-family: var(--font-sans); margin-top: 40px; margin-bottom: 70px;">
         
-        <!-- Connecting Line -->
-        <div class="absolute top-5 md:top-6 left-0 w-full h-px bg-gray-700 z-0"></div>
-
-        <div class="flex flex-col items-center text-center w-24 relative z-10">
-          <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gray-800 flex items-center justify-center text-white font-bold mb-3 shadow-lg text-sm md:text-base">1</div>
-          <span class="text-gray-300 font-medium text-[10px] md:text-xs uppercase tracking-wider leading-tight">Choose<br/> a Plan</span>
+        <div class="flex-1 flex flex-col items-center text-center relative z-10">
+          <div class="w-10 h-10 md:w-14 md:h-14 rounded-full bg-gray-800 flex items-center justify-center text-white font-bold mb-3 shadow-lg text-sm md:text-lg relative z-10">1</div>
+          <span class="text-gray-300 font-medium text-[10px] md:text-sm uppercase tracking-wider leading-tight px-1">Choose a Plan</span>
+          <!-- Connecting Line -->
+          <div class="absolute top-5 md:top-7 left-[50%] w-full h-[2px] bg-gray-800 z-0"></div>
         </div>
 
-        <div class="flex flex-col items-center text-center w-24 relative z-10">
-          <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gray-800 flex items-center justify-center text-white font-bold mb-3 shadow-lg text-sm md:text-base">2</div>
-          <span class="text-gray-300 font-medium text-[10px] md:text-xs uppercase tracking-wider leading-tight">Get via<br/> WhatsApp</span>
+        <div class="flex-1 flex flex-col items-center text-center relative z-10">
+          <div class="w-10 h-10 md:w-14 md:h-14 rounded-full bg-gray-800 flex items-center justify-center text-white font-bold mb-3 shadow-lg text-sm md:text-lg relative z-10">2</div>
+          <span class="text-gray-300 font-medium text-[10px] md:text-sm uppercase tracking-wider leading-tight px-1">Get via WhatsApp</span>
+          <!-- Connecting Line -->
+          <div class="absolute top-5 md:top-7 left-[50%] w-full h-[2px] bg-gray-800 z-0"></div>
         </div>
 
-        <div class="flex flex-col items-center text-center w-24 relative z-10">
-          <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#e50914] flex items-center justify-center text-white font-bold mb-3 shadow-[0_0_15px_rgba(229,9,20,0.5)] text-sm md:text-base">3</div>
-          <span class="text-white font-bold text-[10px] md:text-xs uppercase tracking-wider leading-tight">Start<br/> Watching</span>
+        <div class="flex-1 flex flex-col items-center text-center relative z-10">
+          <div class="w-10 h-10 md:w-14 md:h-14 rounded-full bg-[#e50914] flex items-center justify-center text-white font-bold mb-3 shadow-[0_0_20px_rgba(229,9,20,0.6)] text-sm md:text-lg relative z-10">3</div>
+          <span class="text-white font-bold text-[10px] md:text-sm uppercase tracking-wider leading-tight px-1">Start Watching</span>
         </div>
         
       </div>
