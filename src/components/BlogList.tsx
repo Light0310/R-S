@@ -4,6 +4,7 @@
  */
 
 import React, { useState, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { BlogPost, Language, TranslationDictionary } from '../types';
 import { Search, Calendar, Clock, ArrowRight, Tag } from 'lucide-react';
 
@@ -135,10 +136,10 @@ export default function BlogList({ posts, lang, t, onNavigate }: BlogListProps) 
               : '/redstream_blog_cover.svg';
 
             return (
-              <article 
+              <Link 
+                to={`/${lang}/blog/${post.slug}`}
                 key={post.slug}
-                onClick={() => onNavigate('post', post.slug)}
-                className="group bg-[#141414] border border-white/5 rounded-2xl overflow-hidden cursor-pointer hover:border-[#FF1E27]/30 transition-all duration-300 flex flex-col hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#FF1E27]/5"
+                className="group bg-[#141414] border border-white/5 rounded-2xl overflow-hidden cursor-pointer hover:border-[#FF1E27]/30 transition-all duration-300 flex flex-col hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#FF1E27]/5 block"
               >
                 {/* Image Wrap */}
                 <div className="aspect-[16/10] relative overflow-hidden bg-gray-950">
@@ -192,7 +193,7 @@ export default function BlogList({ posts, lang, t, onNavigate }: BlogListProps) 
                     <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
-              </article>
+              </Link>
             );
           })}
         </div>
