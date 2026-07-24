@@ -153,6 +153,17 @@ Sitemap: ${baseUrl}/sitemap.xml
     res.send(content);
   });
 
+  // Simple ping endpoint to keep Render awake
+  app.get('/api/ping', (req, res) => {
+    res.status(200).send('pong');
+  });
+
+  // Self-ping interval to prevent Render free tier sleep (every 14 minutes)
+  setInterval(() => {
+    const host = process.env.RENDER_EXTERNAL_URL || `http://localhost:${PORT}`;
+    fetch(`${host}/api/ping`).catch(() => {});
+  }, 14 * 60 * 1000);
+
   // Vite middleware for development
   if (process.env.NODE_ENV !== 'production') {
     const vite = await createViteServer({
@@ -162,8 +173,22 @@ Sitemap: ${baseUrl}/sitemap.xml
     app.use(vite.middlewares);
   } else {
     const distPath = path.join(process.cwd(), 'dist');
-    app.use(express.static(distPath));
+    
+    // Aggressive caching for static assets
+    app.use(express.static(distPath, {
+      maxAge: '1y',
+      setHeaders: (res, path) => {
+        // Cache HTML aggressively at the CDN edge (Cloudflare) but not in the user's browser,
+        // so the CDN always serves instantly even if Render is asleep (stale-while-revalidate).
+        if (path.endsWith('.html')) {
+          res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=86400, stale-while-revalidate=2592000');
+        }
+      }
+    }));
+    
+    // Fallback for SPA routing with edge caching
     app.get('*', (req, res) => {
+      res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=86400, stale-while-revalidate=2592000');
       res.sendFile(path.join(distPath, 'index.html'));
     });
   }
