@@ -406,6 +406,9 @@ export default function App() {
         <Route path="/admin" element={<SecretSeoAdmin />} />
         <Route path="/secret-seo-admin" element={<Navigate to="/admin" replace />} />
         
+        {/* Root Route without redirect */}
+        <Route path="/" element={<LangManager><HomeRoute /></LangManager>} />
+        
         {/* Language Routes */}
         <Route path="/:lang" element={<LangManager><Outlet /></LangManager>}>
           {/* Home doesn't use the standard Header/Footer layout */}
@@ -420,8 +423,8 @@ export default function App() {
           </Route>
         </Route>
         
-        {/* Catch-all redirect mapped to default language */}
-        <Route path="*" element={<Navigate to="/en/home" replace />} />
+        {/* Catch-all redirect mapped to root */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </div>
   );
