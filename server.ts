@@ -17,6 +17,25 @@ async function startServer() {
   const app = express();
   const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 5000;
 
+  // SEO Strict Redirection Middleware (Force HTTPS and WWW)
+  app.use((req, res, next) => {
+    // Only redirect in production environments, not localhost/Render default URLs for dev
+    const host = req.get('host') || '';
+    
+    // Check if the request is for the actual production domain without www
+    if (host === 'red-stream.store' || host === 'redstream-iptv.com') {
+      return res.redirect(301, `https://www.red-stream.store${req.url}`);
+    }
+    
+    // Force HTTPS if hitting via HTTP (if handled by proxy, check x-forwarded-proto)
+    const protocol = req.get('x-forwarded-proto') || req.protocol;
+    if (protocol === 'http' && host.includes('red-stream.store')) {
+      return res.redirect(301, `https://${host}${req.url}`);
+    }
+    
+    next();
+  });
+
   // Critically implement cors middleware to allow cross-origin requests
   app.use(cors({
     origin: '*',
@@ -49,11 +68,13 @@ async function startServer() {
 
       // 1. Core structural home and blog index URLs for all SEO languages
       languages.forEach((lang) => {
-        urls.push({
-          loc: `${baseUrl}/${lang}/home`,
-          changefreq: 'daily',
-          priority: '1.0',
-        });
+        if (lang !== 'en') {
+          urls.push({
+            loc: `${baseUrl}/${lang}/home`,
+            changefreq: 'daily',
+            priority: '1.0',
+          });
+        }
         urls.push({
           loc: `${baseUrl}/${lang}/blog`,
           changefreq: 'daily',

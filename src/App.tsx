@@ -363,10 +363,18 @@ function LangManager({ children }: { children: React.ReactNode }) {
 
     const baseUrl = 'https://www.red-stream.store';
     
+    // Normalize path to prevent keyword cannibalization on root/home
+    let normalizedPath = location.pathname;
+    if (normalizedPath === '/en/home' || normalizedPath === '/en' || normalizedPath === '/en/') {
+      normalizedPath = '/';
+    } else if (normalizedPath.endsWith('/') && normalizedPath.length > 1) {
+      normalizedPath = normalizedPath.slice(0, -1); // Remove trailing slash
+    }
+
     // Create new canonical tag (Self-referencing)
     const canonicalLink = document.createElement('link');
     canonicalLink.setAttribute('rel', 'canonical');
-    canonicalLink.setAttribute('href', `${baseUrl}${location.pathname}`);
+    canonicalLink.setAttribute('href', `${baseUrl}${normalizedPath}`);
     document.head.appendChild(canonicalLink);
 
     // Create hreflang tags for all valid languages
@@ -374,7 +382,14 @@ function LangManager({ children }: { children: React.ReactNode }) {
       const alternateLink = document.createElement('link');
       alternateLink.setAttribute('rel', 'alternate');
       alternateLink.setAttribute('hreflang', l);
-      const newPath = location.pathname.replace(/^\/[^\/]+/, `/${l}`);
+      
+      let newPath = '';
+      if (normalizedPath === '/') {
+        newPath = l === 'en' ? '/' : `/${l}/home`;
+      } else {
+        newPath = location.pathname.replace(/^\/[^\/]+/, `/${l}`);
+      }
+      
       alternateLink.setAttribute('href', `${baseUrl}${newPath}`);
       document.head.appendChild(alternateLink);
     });
@@ -383,8 +398,8 @@ function LangManager({ children }: { children: React.ReactNode }) {
     const xDefault = document.createElement('link');
     xDefault.setAttribute('rel', 'alternate');
     xDefault.setAttribute('hreflang', 'x-default');
-    const defaultPath = location.pathname.replace(/^\/[^\/]+/, '/en');
-    xDefault.setAttribute('href', `${baseUrl}${defaultPath}`);
+    const xDefaultPath = normalizedPath === '/' ? '/' : location.pathname.replace(/^\/[^\/]+/, '/en');
+    xDefault.setAttribute('href', `${baseUrl}${xDefaultPath}`);
     document.head.appendChild(xDefault);
 
   }, [currentLang, location.pathname]);
