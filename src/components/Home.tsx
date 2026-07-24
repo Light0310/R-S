@@ -42,6 +42,150 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
 
+  // Inject Product and FAQ Schema Markup only on the Home page
+  useEffect(() => {
+    const schema = {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Product",
+          "@id": "https://www.red-stream.store/#product",
+          "url": "https://www.red-stream.store/",
+          "name": "RedStream™ Premium IPTV Subscription",
+          "image": "https://www.red-stream.store/whatsapp_order_preview.png",
+          "description": "Stream over 20,000+ live premium TV channels and 60,000+ blockbuster movies & VOD in stunning Ultra HD 4K with Anti-Freeze 9.0 Technology.",
+          "sku": "REDSTREAM-PREMIUM",
+          "mpn": "RS-PREMIUM-01",
+          "brand": {
+            "@id": "https://www.red-stream.store/#organization"
+          },
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "reviewCount": "15340",
+            "bestRating": "5",
+            "worstRating": "1"
+          },
+          "review": [
+            {
+              "@type": "Review",
+              "author": {
+                "@type": "Person",
+                "name": "David M."
+              },
+              "datePublished": "2026-06-12",
+              "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5",
+                "bestRating": "5",
+                "worstRating": "1"
+              },
+              "reviewBody": "Best IPTV service I have used. 4K streams load instantly and zero buffering during live sports."
+            }
+          ],
+          "offers": {
+            "@type": "AggregateOffer",
+            "priceCurrency": "EUR",
+            "lowPrice": "2.00",
+            "highPrice": "49.00",
+            "offerCount": "4",
+            "offers": [
+              {
+                "@type": "Offer",
+                "name": "24 Hours Trial",
+                "price": "2.00",
+                "priceCurrency": "EUR",
+                "availability": "https://schema.org/InStock",
+                "priceValidUntil": "2027-12-31",
+                "url": "https://www.red-stream.store/"
+              },
+              {
+                "@type": "Offer",
+                "name": "1 Month Premium Plan",
+                "price": "12.00",
+                "priceCurrency": "EUR",
+                "availability": "https://schema.org/InStock",
+                "priceValidUntil": "2027-12-31",
+                "url": "https://www.red-stream.store/"
+              },
+              {
+                "@type": "Offer",
+                "name": "6 Months Premium Plan",
+                "price": "29.00",
+                "priceCurrency": "EUR",
+                "availability": "https://schema.org/InStock",
+                "priceValidUntil": "2027-12-31",
+                "url": "https://www.red-stream.store/"
+              },
+              {
+                "@type": "Offer",
+                "name": "12 Months Premium Plan",
+                "price": "49.00",
+                "priceCurrency": "EUR",
+                "availability": "https://schema.org/InStock",
+                "priceValidUntil": "2027-12-31",
+                "url": "https://www.red-stream.store/"
+              }
+            ]
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How do I activate my RedStream IPTV subscription?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Once you purchase a plan or request a trial, contact our WhatsApp support team with your order details. We will provide you with your personalized login credentials (M3U link, Xtream Codes, or Portal URL) within 10 minutes."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is the server stable and freeze-free?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes! We use cutting-edge Anti-Freeze 9.0 Technology and multi-location load balancing. This ensures a 99.9% uptime and a buffer-free streaming experience, even during peak traffic and major sporting events."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Which devices are supported by RedStream?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Our service works on virtually any device: Smart TVs (Samsung, LG, Android TV), Firestick, Apple TV, MAG boxes, Android/iOS smartphones, Windows/Mac computers, and dedicated IPTV apps like IboPro, Smarters Pro, and Set IPTV."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Do you offer customer support if I run into issues?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Absolutely. Our engineering team is available 24/7 on WhatsApp to help you with activation, device setup, troubleshooting, or general questions. We do not use bots—you talk to real human experts."
+              }
+            }
+          ]
+        }
+      ]
+    };
+
+    let script = document.getElementById('home-page-schema') as HTMLScriptElement;
+    if (!script) {
+      script = document.createElement('script');
+      script.id = 'home-page-schema';
+      script.type = 'application/ld+json';
+      document.head.appendChild(script);
+    }
+    script.textContent = JSON.stringify(schema);
+
+    return () => {
+      const existingScript = document.getElementById('home-page-schema');
+      if (existingScript && document.head.contains(existingScript)) {
+        document.head.removeChild(existingScript);
+      }
+    };
+  }, []);
+
   useEffect(() => {
     // 2. Smooth scroll offset adjustment for sticky header
     const handleHashChange = () => {
