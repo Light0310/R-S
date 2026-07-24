@@ -411,6 +411,9 @@ export default function App() {
         
         {/* Language Routes */}
         <Route path="/:lang" element={<LangManager><Outlet /></LangManager>}>
+          {/* Default to home when accessing /:lang directly */}
+          <Route index element={<Navigate to="home" replace />} />
+          
           {/* Home doesn't use the standard Header/Footer layout */}
           <Route path="home" element={<HomeRoute />} />
           
