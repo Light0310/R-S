@@ -138,7 +138,24 @@ async function startServer() {
       let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
       xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
 
-      urls.forEach((url) => {
+      // STRICT CANONICAL FILTER (Requested by User)
+      // Only include URLs that are 100% canonical and match the React <link rel="canonical"> logic
+      const canonicalUrls = urls.filter(url => {
+        try {
+          const urlObj = new URL(url.loc);
+          let path = urlObj.pathname;
+          
+          // Match the App.tsx canonical rewrite logic
+          if (path === '/en/home' || path === '/en' || path === '/en/') return false;
+          if (path.endsWith('/') && path.length > 1) return false;
+          
+          return true; // Keep strictly canonical links
+        } catch(e) {
+          return false;
+        }
+      });
+
+      canonicalUrls.forEach((url) => {
         xml += '  <url>\n';
         xml += `    <loc>${url.loc}</loc>\n`;
         if (url.lastmod) {
@@ -210,7 +227,30 @@ Sitemap: ${baseUrl}/sitemap.xml
     // Fallback for SPA routing with edge caching
     app.get('*', (req, res) => {
       res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=86400, stale-while-revalidate=2592000');
-      res.sendFile(path.join(distPath, 'index.html'));
+      
+      const baseUrl = 'https://www.red-stream.store';
+      let normalizedPath = req.path;
+      if (normalizedPath === '/en/home' || normalizedPath === '/en' || normalizedPath === '/en/') {
+        normalizedPath = '/';
+      } else if (normalizedPath.endsWith('/') && normalizedPath.length > 1) {
+        normalizedPath = normalizedPath.slice(0, -1);
+      }
+      const canonicalUrl = `${baseUrl}${normalizedPath}`;
+      
+      fs.readFile(path.join(distPath, 'index.html'), 'utf8', (err, data) => {
+        if (err) {
+          return res.sendFile(path.join(distPath, 'index.html'));
+        }
+        
+        // Dynamically inject the correct canonical URL into the static HTML 
+        // to prevent Ahrefs from seeing all pages pointing to '/'
+        const modifiedHtml = data.replace(
+          /<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/gi,
+          `<link rel="canonical" href="${canonicalUrl}" />`
+        );
+        
+        res.send(modifiedHtml);
+      });
     });
   }
 
