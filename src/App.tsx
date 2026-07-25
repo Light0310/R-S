@@ -16,6 +16,7 @@ import Home from './components/Home';
 import BlogList from './components/BlogList';
 import BlogPostComponent from './components/BlogPost';
 import SecretSeoAdmin from './pages/SecretSeoAdmin';
+import HtmlSitemap from './pages/HtmlSitemap';
 
 const languageNames: Record<Language, { native: string; flag: string; label: string }> = {
   en: { native: 'English', flag: '🇬🇧', label: 'EN' },
@@ -77,18 +78,18 @@ function MainLayout() {
 
           {/* Navigation Center Links */}
           <nav className="hidden md:flex items-center gap-2">
-            <button
-              onClick={() => handleNavigate('home')}
+            <Link
+              to={`/${currentLang}/home`}
               className="px-4 py-2 rounded-lg text-sm font-semibold transition-all hover:text-[#FF1E27] text-gray-300 cursor-pointer"
             >
               {t.navHome}
-            </button>
-            <button
-              onClick={() => handleNavigate('blog')}
+            </Link>
+            <Link
+              to={`/${currentLang}/blog`}
               className="px-4 py-2 rounded-lg text-sm font-semibold transition-all text-[#FF1E27] bg-[#FF1E27]/10 cursor-pointer"
             >
               {t.navBlog}
-            </button>
+            </Link>
           </nav>
 
           {/* Language Selector Dropdown & CTA Button */}
@@ -158,19 +159,19 @@ function MainLayout() {
 
       {/* Mobile Bottom Navigation Helper Bar */}
       <div className="md:hidden sticky top-16 z-30 bg-[#0c0c0c]/90 border-b border-white/5 flex justify-center py-2.5 px-4 gap-4 text-xs font-bold text-gray-400">
-        <button 
-           onClick={() => handleNavigate('home')}
+        <Link 
+           to={`/${currentLang}/home`}
           className="hover:text-white cursor-pointer"
         >
           {t.navHome}
-        </button>
+        </Link>
         <span>•</span>
-        <button 
-           onClick={() => handleNavigate('blog')}
+        <Link 
+           to={`/${currentLang}/blog`}
           className={`hover:text-white cursor-pointer ${isBlogActive ? 'text-[#FF1E27]' : ''}`}
         >
           {t.navBlog}
-        </button>
+        </Link>
       </div>
 
       {/* Main Container Content */}
@@ -193,6 +194,18 @@ function MainLayout() {
             <span className="font-extrabold text-white">RedStream IPTV</span>
           </div>
           
+          <div className="flex items-center gap-4 text-gray-400 font-medium">
+            <Link to={`/${currentLang}/home`} className="hover:text-white transition-colors">
+              {t.navHome}
+            </Link>
+            <Link to={`/${currentLang}/blog`} className="hover:text-white transition-colors">
+              {t.navBlog}
+            </Link>
+            <Link to="/sitemap" className="hover:text-white transition-colors">
+              Sitemap
+            </Link>
+          </div>
+
           <p className="text-gray-400 font-light flex items-center gap-4">
             <span>{t.footerDesc}</span>
             <Link to="/admin" className="text-transparent hover:text-white/20 transition-colors select-none" aria-label="Admin Dashboard" title="Admin">
@@ -441,6 +454,11 @@ export default function App() {
           </Route>
         </Route>
         
+        {/* HTML Sitemap Route */}
+        <Route element={<MainLayout />}>
+          <Route path="/sitemap" element={<HtmlSitemap />} />
+        </Route>
+
         {/* Catch-all redirect mapped to root */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

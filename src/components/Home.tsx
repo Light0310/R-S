@@ -741,7 +741,10 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
       <FAQSection currentLang={currentLang} />
 
       {/* Footer and Bottom Floating Widgets */}
-      <div dangerouslySetInnerHTML={{ __html: getTranslatedLandingHTML(LANDING_HTML_BOTTOM, currentLang).replace('href="/privacy.html"', `href="/privacy.html"`) }} />
+      <div dangerouslySetInnerHTML={{ __html: getTranslatedLandingHTML(LANDING_HTML_BOTTOM, currentLang)
+        .replace('href="/privacy.html"', `href="/privacy.html"`)
+        .replace('href="/en/blog"', `href="/${currentLang}/blog"`) 
+      }} />
     </>
   );
 }
@@ -1576,6 +1579,8 @@ const LANDING_HTML_BOTTOM = `
           <li><a href="#features">Features</a></li>
           <li><a href="#pricing">Pricing</a></li>
           <li><a href="#faq">FAQ</a></li>
+          <li><a href="/en/blog">Blog</a></li>
+          <li><a href="/sitemap">Sitemap</a></li>
           <li><a href="https://wa.me/212694843943" target="_blank" rel="noopener noreferrer">Contact</a></li>
           <li><a href="/privacy.html">Privacy Policy</a></li>
         </ul>

@@ -5,6 +5,7 @@
 
 import React, { useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
+import { Link } from 'react-router-dom';
 import { BlogPost, Language, TranslationDictionary } from '../types';
 import { ArrowLeft, Calendar, User, Clock, ChevronRight, MessageCircle } from 'lucide-react';
 
@@ -148,13 +149,13 @@ export default function BlogPostComponent({ post, lang, t, onBack }: BlogPostPro
         `}</style>
 
         {/* Back Button */}
-        <button
-          onClick={onBack}
+        <Link
+          to={`/${lang}/blog`}
           className="inline-flex items-center gap-2 text-gray-400 hover:text-white mb-8 group transition-colors cursor-pointer text-sm font-semibold"
         >
           <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
           <span>{t.backToBlog}</span>
-        </button>
+        </Link>
 
         {/* Hero Meta Header */}
         <div className="mb-10 text-center md:text-left">
