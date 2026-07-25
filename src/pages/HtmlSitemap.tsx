@@ -41,7 +41,7 @@ export default function HtmlSitemap() {
             <ul className="space-y-2 text-gray-300">
               {validLanguages.map((lang) => (
                 <li key={lang}>
-                  <Link to={`/${lang}/home`} className="hover:text-white transition-colors">
+                  <Link to={`/${lang}`} className="hover:text-white transition-colors">
                     Home ({lang.toUpperCase()})
                   </Link>
                 </li>
