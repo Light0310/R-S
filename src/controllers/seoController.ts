@@ -163,20 +163,38 @@ For maximum speed, flawless 4K quality, and zero buffering, pair your IPTV playe
     }
 
     
-    // One-time migration to remove misleading anchor texts
+            // Comprehensive migration to remove misleading anchor texts in both Markdown and HTML
     try {
-      const updateRes = await pool.query(`
+      let totalFixed = 0;
+      
+      // Generic Fix: Unwrap Markdown Links pointing exactly to root / or /en
+      const updateMdRes = await pool.query(`
         UPDATE blog_posts
         SET content = regexp_replace(
           content,
-          '<(?:a|Link)[^>]*>(how modern smart TV boxes are revolutionizing entertainment)</(?:a|Link)>',
+          '\\[([^\]]+)\\]\\(\\/(?:en\\/?)?\\)',
           '\\1',
           'gi'
         )
-        WHERE content ~* '<(?:a|Link)[^>]*>how modern smart TV boxes are revolutionizing entertainment</(?:a|Link)>';
+        WHERE content ~* '\\[[^\]]+\\]\\(\\/(?:en\\/?)?\\)';
       `);
-      if (updateRes && updateRes.rowCount && updateRes.rowCount > 0) {
-        console.log(`[Database] Fixed ${updateRes.rowCount} blog posts containing the misleading anchor text.`);
+      if (updateMdRes && updateMdRes.rowCount) totalFixed += updateMdRes.rowCount;
+
+      // Generic Fix: Unwrap HTML Links pointing exactly to root / or /en
+      const updateHtmlRes = await pool.query(`
+        UPDATE blog_posts
+        SET content = regexp_replace(
+          content,
+          '<(?:a|Link)[^>]*(?:href|to)=[''"]\\/(?:en\\/?)?[''"][^>]*>([^<]+)</(?:a|Link)>',
+          '\\1',
+          'gi'
+        )
+        WHERE content ~* '<(?:a|Link)[^>]*(?:href|to)=[''"]\\/(?:en\\/?)?[''"][^>]*>[^<]+</(?:a|Link)>';
+      `);
+      if (updateHtmlRes && updateHtmlRes.rowCount) totalFixed += updateHtmlRes.rowCount;
+
+      if (totalFixed > 0) {
+        console.log(`[Database] Fixed ${totalFixed} blog posts containing the misleading anchor text in Markdown/HTML.`);
       }
     } catch (fixErr: any) {
       console.error('[Database] Error applying anchor text fix:', fixErr.message);

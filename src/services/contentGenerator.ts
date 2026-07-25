@@ -46,6 +46,7 @@ Strict Content Generation & Safety Rules:
 4. LSI Keywords: Use LSI keywords and synonyms naturally instead of robotic repetition.
 5. CTA Integration: Smoothly integrate the RedStream IPTV Call to Action (CTA) naturally at the conclusion or within context. Do not be overly aggressive.
 6. Dynamic Interlinking Protocol:${recentArticlesContext ? ` Insert 1 to 2 contextual internal links pointing to these recent articles using descriptive anchor texts relevant to the paragraph:${recentArticlesContext}` : ' (No recent articles available to interlink right now).'}
+7. STRICT URL CONSTRAINT: NEVER create internal links pointing to the root homepage ("/", "/en", "/en/"). ALL internal links MUST point strictly to specific blog posts (e.g., "/blog/slug").
 
 Context from top search results:
 ${snippetsContext}

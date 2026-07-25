@@ -223,6 +223,32 @@ function MainLayout() {
   );
 }
 
+let globalDynamicPostsCache: any[] | null = null;
+let globalDynamicPostsPromise: Promise<any> | null = null;
+
+export const prefetchDynamicPosts = () => {
+  if (globalDynamicPostsPromise) return globalDynamicPostsPromise;
+  
+  const baseUrl = "https://r-s-3lw3.onrender.com";
+  const endpoint = baseUrl 
+    ? `${baseUrl.replace(/\/$/, '')}/api/seo/blog-posts` 
+    : '/api/seo/blog-posts';
+
+  globalDynamicPostsPromise = fetch(endpoint)
+    .then(r => r.json())
+    .then(data => {
+      globalDynamicPostsCache = data.posts || [];
+      return globalDynamicPostsCache;
+    })
+    .catch(err => {
+      console.error('[Prefetch] Error loading dynamic posts:', err);
+      globalDynamicPostsPromise = null;
+      return [];
+    });
+    
+  return globalDynamicPostsPromise;
+};
+
 function BlogListRoute() {
   const { lang } = useParams<{ lang: string }>();
   const currentLang = (validLanguages.includes(lang as Language) ? lang : 'en') as Language;
@@ -231,24 +257,12 @@ function BlogListRoute() {
   const [dynamicPosts, setDynamicPosts] = useState<any[]>([]);
 
   useEffect(() => {
-    const fetchDynamicPosts = async () => {
-      try {
-        const baseUrl = "https://r-s-3lw3.onrender.com";
-        const endpoint = baseUrl 
-          ? `${baseUrl.replace(/\/$/, '')}/api/seo/blog-posts` 
-          : '/api/seo/blog-posts';
-
-        const response = await fetch(endpoint);
-        if (response.ok) {
-          const data = await response.json();
-          setDynamicPosts(data.posts || []);
-        }
-      } catch (err) {
-        console.error('[BlogList] Error loading dynamic posts:', err);
-      }
-    };
-
-    fetchDynamicPosts();
+    if (globalDynamicPostsCache) {
+      setDynamicPosts(globalDynamicPostsCache);
+    }
+    prefetchDynamicPosts().then(posts => {
+      setDynamicPosts(posts);
+    });
   }, []);
 
   const combinedPosts = useMemo(() => {

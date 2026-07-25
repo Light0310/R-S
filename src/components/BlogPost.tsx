@@ -207,7 +207,11 @@ export default function BlogPostComponent({ post, lang, t, onBack }: BlogPostPro
                   h1: ({ node, ...props }) => <h2 {...props} />,
                 }}
               >
-                {post.content}
+                {post.content
+                  ? post.content
+                      .replace(/\[([^\]]+)\]\(\/(?:en\/?)?\)/gi, '$1')
+                      .replace(/<(?:a|Link)[^>]*(?:href|to)=['"]\/(?:en\/?)?['"][^>]*>([^<]+)<\/(?:a|Link)>/gi, '$1')
+                  : ''}
               </ReactMarkdown>
             </div>
           </main>
