@@ -624,7 +624,12 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
       {/* Navigation Header */}
       <header>
         <div className="container nav-container">
-          <a href="#" className="logo" id="logo-anchor" onClick={(e) => { e.preventDefault(); window.scrollTo({top: 0, behavior: "smooth"}); }}>
+          <a href={currentLang === 'en' ? '/' : `/${currentLang}`} className="logo" id="logo-anchor" onClick={(e) => { 
+            if(window.location.pathname === '/' || window.location.pathname === `/${currentLang}`) {
+              e.preventDefault(); 
+              window.scrollTo({top: 0, behavior: "smooth"});
+            }
+          }}>
             {/* Modern Premium RedStream Logo SVG */}
             <svg className="custom-logo-icon" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" style={{ width: '28px', height: '28px', filter: 'drop-shadow(0 0 5px var(--color-primary-glow))' }}>
               <g transform="translate(16, 16) scale(0.93)">
@@ -638,7 +643,17 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
           {/* Desktop Nav links */}
           <nav style={{ display: 'flex', alignItems: 'center' }}>
             <ul className={`nav-links ${isMobileMenuOpen ? 'active' : ''}`} id="nav-menu">
-              <li><a href="#" id="link-home" onClick={(e) => { e.preventDefault(); setIsMobileMenuOpen(false); window.scrollTo({top: 0, behavior: "smooth"}); }}>{navTranslations[currentLang].home}</a></li>
+              <li>
+                <a href={currentLang === 'en' ? '/' : `/${currentLang}`} id="link-home" onClick={(e) => { 
+                  if(window.location.pathname === '/' || window.location.pathname === `/${currentLang}`) {
+                    e.preventDefault(); 
+                    setIsMobileMenuOpen(false); 
+                    window.scrollTo({top: 0, behavior: "smooth"});
+                  }
+                }}>
+                  {navTranslations[currentLang].home}
+                </a>
+              </li>
               <li><a href="#features" id="link-features" onClick={() => setIsMobileMenuOpen(false)}>{navTranslations[currentLang].features}</a></li>
               <li><a href="#pricing" id="link-pricing" onClick={() => setIsMobileMenuOpen(false)}>{navTranslations[currentLang].pricing}</a></li>
               <li><a href="#faq" id="link-faq" onClick={() => setIsMobileMenuOpen(false)}>{navTranslations[currentLang].faq}</a></li>

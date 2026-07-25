@@ -66,7 +66,7 @@ function MainLayout() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between">
           
           {/* Brand Logo */}
-          <Link to={`/${currentLang}`} className="flex items-center gap-2 cursor-pointer select-none">
+          <Link to={currentLang === 'en' ? '/' : `/${currentLang}`} className="flex items-center gap-2 cursor-pointer select-none">
             <svg className="w-7 h-7 filter drop-shadow(0 0 5px rgba(255,30,39,0.5))" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
               <g transform="translate(16, 16) scale(0.93)">
                 <path d="M 120 140 L 340 140 A 75 75 0 0 1 415 215 A 75 75 0 0 1 340 290 L 280 290 L 400 380 L 330 380 L 225 300 L 150 380 L 105 380 L 205 300 L 245 250 L 340 250 A 35 35 0 0 0 375 215 A 35 35 0 0 0 340 180 L 160 180 Z" fill="#FF1E27" />
@@ -80,7 +80,7 @@ function MainLayout() {
           {/* Navigation Center Links */}
           <nav className="hidden md:flex items-center gap-2">
             <Link
-              to={`/${currentLang}`}
+              to={currentLang === 'en' ? '/' : `/${currentLang}`}
               className="px-4 py-2 rounded-lg text-sm font-semibold transition-all hover:text-[#FF1E27] text-gray-300 cursor-pointer"
             >
               {t.navHome}
@@ -196,7 +196,7 @@ function MainLayout() {
           </div>
           
           <div className="flex items-center gap-4 text-gray-400 font-medium">
-            <Link to={`/${currentLang}`} className="hover:text-white transition-colors">
+            <Link to={currentLang === 'en' ? '/' : `/${currentLang}`} className="hover:text-white transition-colors">
               {t.navHome}
             </Link>
             <Link to={`/${currentLang}/blog`} className="hover:text-white transition-colors">
