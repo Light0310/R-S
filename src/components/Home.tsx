@@ -62,7 +62,7 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
           "aggregateRating": {
             "@type": "AggregateRating",
             "ratingValue": "4.9",
-            "reviewCount": "15340",
+            "reviewCount": "375",
             "bestRating": "5",
             "worstRating": "1"
           },
@@ -857,7 +857,7 @@ const LANDING_HTML_TOP = `
     <div class="container">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-gray-800/50">
         <div class="flex flex-col items-center pt-4 md:pt-0">
-          <span class="text-3xl font-bold text-white tracking-tight mb-1">15,000+</span>
+          <span class="text-3xl font-bold text-white tracking-tight mb-1">375+</span>
           <span class="text-sm text-gray-400 font-medium uppercase tracking-wider">Happy Clients</span>
         </div>
         <div class="flex flex-col items-center pt-4 md:pt-0">
