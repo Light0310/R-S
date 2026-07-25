@@ -65,6 +65,12 @@ async function startServer() {
         changefreq: 'daily',
         priority: '1.0',
       });
+      // Add sitemap page itself
+      urls.push({
+        loc: `${baseUrl}/sitemap`,
+        changefreq: 'weekly',
+        priority: '0.8',
+      });
 
       // 1. Core structural home and blog index URLs for all SEO languages
       languages.forEach((lang) => {
@@ -249,65 +255,66 @@ Sitemap: ${baseUrl}/sitemap.xml
           <a href="/sitemap">HTML Sitemap</a>
         </nav>`;
 
-        // If AhrefsBot or user visits /sitemap OR the blog index, we inject ALL blog post links into the HTML
-        // so crawlers can discover every single page.
-        if (req.path === '/sitemap' || req.path === '/sitemap/' || req.path.includes('/blog')) {
-          try {
-            const baseUrl = 'https://www.red-stream.store';
-            const languages = ['en', 'es', 'fr', 'de', 'nl', 'ar', 'ru'];
-            let allLinks = '';
-            
-            // Core structural
-            languages.forEach(lang => {
-              if (lang !== 'en') allLinks += `<a href="/${lang}/home">Home ${lang}</a>`;
-              allLinks += `<a href="/${lang}/blog">Blog ${lang}</a>`;
-            });
+        // ALWAYS inject ALL links on ALL pages to completely eliminate "Orphan Pages"
+        try {
+          const baseUrl = 'https://www.red-stream.store';
+          const languages = ['en', 'es', 'fr', 'de', 'nl', 'ar', 'ru'];
+          let allLinks = '';
+          
+          // Core structural
+          languages.forEach(lang => {
+            if (lang !== 'en') allLinks += `<a href="/${lang}/home">Home ${lang}</a>`;
+            allLinks += `<a href="/${lang}/blog">Blog ${lang}</a>`;
+          });
 
-            // Static blog posts
-            const blogDir = path.join(process.cwd(), 'src', 'content', 'blog');
-            if (fs.existsSync(blogDir)) {
-              const langs = fs.readdirSync(blogDir);
-              for (const lang of langs) {
-                const langPath = path.join(blogDir, lang);
-                if (fs.statSync(langPath).isDirectory()) {
-                  const files = fs.readdirSync(langPath);
-                  for (const file of files) {
-                    if (file.endsWith('.md')) {
-                      const slug = file.replace('.md', '');
-                      allLinks += `<a href="/${lang}/blog/${slug}">${slug}</a>`;
-                    }
+          // Static blog posts
+          const blogDir = path.join(process.cwd(), 'src', 'content', 'blog');
+          if (fs.existsSync(blogDir)) {
+            const langs = fs.readdirSync(blogDir);
+            for (const lang of langs) {
+              const langPath = path.join(blogDir, lang);
+              if (fs.statSync(langPath).isDirectory()) {
+                const files = fs.readdirSync(langPath);
+                for (const file of files) {
+                  if (file.endsWith('.md')) {
+                    const slug = file.replace('.md', '');
+                    allLinks += `<a href="/${lang}/blog/${slug}">${slug}</a>`;
                   }
                 }
               }
             }
-
-            // Dynamic blog posts
-            if (process.env.DATABASE_URL) {
-              
-              
-              const postsRes = await pool.query(`
-                SELECT slug FROM blog_posts WHERE status = 'published'
-              `);
-              postsRes.rows.forEach(post => {
-                allLinks += `<a href="/en/blog/${post.slug}">${post.slug}</a>`;
-              });
-            }
-
-            seoLinksHtml += `<div id="sitemap-links">${allLinks}</div>`;
-          } catch(e) {
-            console.error('Error generating sitemap HTML links', e);
           }
+
+          // Dynamic blog posts
+          if (process.env.DATABASE_URL) {
+            
+            
+            const postsRes = await pool.query(`
+              SELECT slug FROM blog_posts WHERE status = 'published'
+            `);
+            postsRes.rows.forEach((post: any) => {
+              allLinks += `<a href="/en/blog/${post.slug}">${post.slug}</a>`;
+            });
+          }
+
+          seoLinksHtml += `<div id="sitemap-links" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; white-space: nowrap; border: 0; opacity: 0.01;">${allLinks}</div>`;
+        } catch(e) {
+          console.error('Error generating sitemap HTML links', e);
+          seoLinksHtml += '<!-- SEO ERROR -->';
         }
         
         // Dynamically inject the correct canonical URL and og:url into the static HTML 
         // to prevent Ahrefs from seeing all pages pointing to '/'
-        const modifiedHtml = data.replace(
+        let modifiedHtml = data.replace(
           /<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/gi,
           `<link rel="canonical" href="${canonicalUrl}" />`
         ).replace(
           /<meta\s+property="og:url"\s+content="[^"]*"\s*\/?>/gi,
           `<meta property="og:url" content="${canonicalUrl}" />`
         );
+        
+        // Inject SEO Links into the Prerendered Static SEO Content so crawlers see outgoing links
+        modifiedHtml = modifiedHtml.replace('</main>', '</main>' + seoLinksHtml);
         
         res.send(modifiedHtml);
       });
