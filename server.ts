@@ -237,9 +237,66 @@ Sitemap: ${baseUrl}/sitemap.xml
       }
       const canonicalUrl = `${baseUrl}${normalizedPath}`;
       
-      fs.readFile(path.join(distPath, 'index.html'), 'utf8', (err, data) => {
+      fs.readFile(path.join(distPath, 'index.html'), 'utf8', async (err, data) => {
         if (err) {
           return res.sendFile(path.join(distPath, 'index.html'));
+        }
+
+        // Dynamically generate SEO links for the current page
+        let seoLinksHtml = `<nav aria-label="SEO Navigation" style="display: flex; gap: 1rem; padding: 2rem;">
+          <a href="/">Home</a>
+          <a href="/en/blog">Blog</a>
+          <a href="/sitemap">HTML Sitemap</a>
+        </nav>`;
+
+        // If AhrefsBot or user visits /sitemap, we inject ALL blog post links into the HTML
+        // so crawlers can discover every single page.
+        if (req.path === '/sitemap' || req.path === '/sitemap/') {
+          try {
+            const baseUrl = 'https://www.red-stream.store';
+            const languages = ['en', 'es', 'fr', 'de', 'nl', 'ar', 'ru'];
+            let allLinks = '';
+            
+            // Core structural
+            languages.forEach(lang => {
+              if (lang !== 'en') allLinks += `<a href="/${lang}/home">Home ${lang}</a>`;
+              allLinks += `<a href="/${lang}/blog">Blog ${lang}</a>`;
+            });
+
+            // Static blog posts
+            const blogDir = path.join(process.cwd(), 'src', 'content', 'blog');
+            if (fs.existsSync(blogDir)) {
+              const langs = fs.readdirSync(blogDir);
+              for (const lang of langs) {
+                const langPath = path.join(blogDir, lang);
+                if (fs.statSync(langPath).isDirectory()) {
+                  const files = fs.readdirSync(langPath);
+                  for (const file of files) {
+                    if (file.endsWith('.md')) {
+                      const slug = file.replace('.md', '');
+                      allLinks += `<a href="/${lang}/blog/${slug}">${slug}</a>`;
+                    }
+                  }
+                }
+              }
+            }
+
+            // Dynamic blog posts
+            if (process.env.DATABASE_URL) {
+              
+              
+              const postsRes = await pool.query(`
+                SELECT slug FROM blog_posts WHERE status = 'published'
+              `);
+              postsRes.rows.forEach(post => {
+                allLinks += `<a href="/en/blog/${post.slug}">${post.slug}</a>`;
+              });
+            }
+
+            seoLinksHtml += `<div id="sitemap-links">${allLinks}</div>`;
+          } catch(e) {
+            console.error('Error generating sitemap HTML links', e);
+          }
         }
         
         // Dynamically inject the correct canonical URL and og:url into the static HTML 
