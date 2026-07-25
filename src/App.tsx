@@ -405,6 +405,15 @@ function LangManager({ children }: { children: React.ReactNode }) {
     canonicalLink.setAttribute('href', `${baseUrl}${normalizedPath}`);
     document.head.appendChild(canonicalLink);
 
+    // Synchronize og:url meta tag with canonical URL
+    let ogUrlTag = document.querySelector('meta[property="og:url"]');
+    if (!ogUrlTag) {
+      ogUrlTag = document.createElement('meta');
+      ogUrlTag.setAttribute('property', 'og:url');
+      document.head.appendChild(ogUrlTag);
+    }
+    ogUrlTag.setAttribute('content', `${baseUrl}${normalizedPath}`);
+
     // Create hreflang tags for all valid languages
     validLanguages.forEach((l) => {
       const alternateLink = document.createElement('link');

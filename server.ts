@@ -242,11 +242,14 @@ Sitemap: ${baseUrl}/sitemap.xml
           return res.sendFile(path.join(distPath, 'index.html'));
         }
         
-        // Dynamically inject the correct canonical URL into the static HTML 
+        // Dynamically inject the correct canonical URL and og:url into the static HTML 
         // to prevent Ahrefs from seeing all pages pointing to '/'
         const modifiedHtml = data.replace(
           /<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/gi,
           `<link rel="canonical" href="${canonicalUrl}" />`
+        ).replace(
+          /<meta\s+property="og:url"\s+content="[^"]*"\s*\/?>/gi,
+          `<meta property="og:url" content="${canonicalUrl}" />`
         );
         
         res.send(modifiedHtml);
