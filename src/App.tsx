@@ -236,7 +236,7 @@ let globalDynamicPostsPromise: Promise<any> | null = null;
 export const prefetchDynamicPosts = () => {
   if (globalDynamicPostsPromise) return globalDynamicPostsPromise;
   
-  const baseUrl = "https://r-s-3lw3.onrender.com";
+  const baseUrl = "";
   const endpoint = baseUrl 
     ? `${baseUrl.replace(/\/$/, '')}/api/seo/blog-posts` 
     : '/api/seo/blog-posts';
@@ -318,7 +318,7 @@ function BlogPostRoute() {
       
       setLoading(true);
       try {
-        const baseUrl = "https://r-s-3lw3.onrender.com";
+        const baseUrl = "";
         const endpoint = baseUrl 
           ? `${baseUrl.replace(/\/$/, '')}/api/seo/blog-posts/${slug}` 
           : `/api/seo/blog-posts/${slug}`;

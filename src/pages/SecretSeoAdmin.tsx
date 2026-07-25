@@ -128,7 +128,7 @@ export default function SecretSeoAdmin() {
     setDataLoading(true);
     setDataError('');
     try {
-      const baseUrl = "https://r-s-3lw3.onrender.com"; 
+      const baseUrl = ""; 
 
 
 
@@ -192,7 +192,7 @@ export default function SecretSeoAdmin() {
     setMessage('');
 
     try {
-      const baseUrl = "https://r-s-3lw3.onrender.com"; 
+      const baseUrl = ""; 
 
 
 
@@ -265,7 +265,7 @@ export default function SecretSeoAdmin() {
     setLoading(true);
     setActionError('');
     try {
-      const baseUrl = "https://r-s-3lw3.onrender.com";
+      const baseUrl = "";
       const endpoint = baseUrl 
         ? `${baseUrl.replace(/\/$/, '')}/api/seo/blog-posts/${editingPost.id}`
         : `/api/seo/blog-posts/${editingPost.id}`;
@@ -295,7 +295,7 @@ export default function SecretSeoAdmin() {
     setDeletingPostId(id);
     setActionError('');
     try {
-      const baseUrl = "https://r-s-3lw3.onrender.com";
+      const baseUrl = "";
       const endpoint = baseUrl 
         ? `${baseUrl.replace(/\/$/, '')}/api/seo/blog-posts/${id}`
         : `/api/seo/blog-posts/${id}`;
@@ -329,7 +329,7 @@ export default function SecretSeoAdmin() {
     setMessage('');
 
     try {
-      const baseUrl = "https://r-s-3lw3.onrender.com"; 
+      const baseUrl = ""; 
 
 
 
@@ -376,7 +376,7 @@ export default function SecretSeoAdmin() {
     setMessage('');
 
     try {
-      const baseUrl = "https://r-s-3lw3.onrender.com"; 
+      const baseUrl = ""; 
 
 
 

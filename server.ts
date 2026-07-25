@@ -249,9 +249,9 @@ Sitemap: ${baseUrl}/sitemap.xml
           <a href="/sitemap">HTML Sitemap</a>
         </nav>`;
 
-        // If AhrefsBot or user visits /sitemap, we inject ALL blog post links into the HTML
+        // If AhrefsBot or user visits /sitemap OR the blog index, we inject ALL blog post links into the HTML
         // so crawlers can discover every single page.
-        if (req.path === '/sitemap' || req.path === '/sitemap/') {
+        if (req.path === '/sitemap' || req.path === '/sitemap/' || req.path.includes('/blog')) {
           try {
             const baseUrl = 'https://www.red-stream.store';
             const languages = ['en', 'es', 'fr', 'de', 'nl', 'ar', 'ru'];

@@ -11,7 +11,7 @@ export default function HtmlSitemap() {
   useEffect(() => {
     const fetchDynamicPosts = async () => {
       try {
-        const baseUrl = "https://r-s-3lw3.onrender.com";
+        const baseUrl = "";
         const endpoint = baseUrl 
           ? `${baseUrl.replace(/\/$/, '')}/api/seo/blog-posts` 
           : '/api/seo/blog-posts';
