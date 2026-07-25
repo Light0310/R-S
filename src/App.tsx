@@ -91,6 +91,12 @@ function MainLayout() {
             >
               {t.navBlog}
             </Link>
+            <Link
+              to="/sitemap"
+              className="px-4 py-2 rounded-lg text-sm font-semibold transition-all hover:text-[#FF1E27] text-gray-300 cursor-pointer"
+            >
+              Sitemap
+            </Link>
           </nav>
 
           {/* Language Selector Dropdown & CTA Button */}
@@ -122,9 +128,10 @@ function MainLayout() {
                       className="absolute right-0 rtl:right-auto rtl:left-0 mt-2 w-40 rounded-xl border border-white/10 bg-[#141414] p-1 shadow-2xl z-40 overflow-hidden"
                     >
                       {Object.entries(languageNames).map(([key, value]) => (
-                        <button
+                        <Link
                           key={key}
-                          onClick={() => changeLanguage(key as Language)}
+                          to={location.pathname === '/' && key !== 'en' ? `/${key}/home` : location.pathname.replace(new RegExp(`^/(${validLanguages.join('|')})`), `/${key}`)}
+                          onClick={() => setLangDropdownOpen(false)}
                           className={`w-full text-start flex items-center justify-between px-3 py-2 text-xs rounded-lg transition-colors cursor-pointer ${
                             currentLang === key
                               ? 'bg-[#FF1E27]/10 text-[#FF1E27] font-bold'
@@ -136,7 +143,7 @@ function MainLayout() {
                             <span>{value.native}</span>
                           </span>
                           {currentLang === key && <CheckCircle2 size={13} className="text-[#FF1E27]" />}
-                        </button>
+                        </Link>
                       ))}
                     </motion.div>
                   </>

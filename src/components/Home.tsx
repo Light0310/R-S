@@ -658,6 +658,7 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
               <li><a href="#pricing" id="link-pricing" onClick={() => setIsMobileMenuOpen(false)}>{navTranslations[currentLang].pricing}</a></li>
               <li><a href="#faq" id="link-faq" onClick={() => setIsMobileMenuOpen(false)}>{navTranslations[currentLang].faq}</a></li>
               <li><a href={`/${currentLang}/blog`} id="link-blog" style={{ color: '#FF1E27', fontWeight: 800 }} onClick={(e) => { e.preventDefault(); setIsMobileMenuOpen(false); if(onNavigate) onNavigate(`/${currentLang}/blog`); }}>{navTranslations[currentLang].blog}</a></li>
+              <li><a href="/sitemap" id="link-sitemap" onClick={(e) => { e.preventDefault(); setIsMobileMenuOpen(false); if(onNavigate) onNavigate(`/sitemap`); }}>Sitemap</a></li>
             </ul>
             <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20want%20to%20get%20a%20free%20IPTV%20trial." target="_blank" rel="noopener noreferrer" className="nav-cta" id="nav-cta-trial">{navTranslations[currentLang].cta}</a>
             
@@ -701,9 +702,11 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
                     }}
                   >
                     {Object.entries(languageNames).map(([key, value]) => (
-                      <button
+                      <a
                         key={key}
-                        onClick={() => {
+                        href={key === 'en' ? '/' : `/${key}/home`}
+                        onClick={(e) => {
+                          e.preventDefault();
                           onChangeLanguage && onChangeLanguage(key as Language);
                           setLangDropdownOpen(false);
                         }}
@@ -721,12 +724,12 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
                           color: currentLang === key ? '#FF1E27' : '#d1d5db',
                           fontWeight: currentLang === key ? 'bold' : 'normal',
                           cursor: 'pointer',
-                          transition: 'background-color 0.2s, color 0.2s',
+                          textDecoration: 'none'
                         }}
                       >
                         <span style={{ fontSize: '14px' }}>{value.flag}</span>
                         <span>{value.native}</span>
-                      </button>
+                      </a>
                     ))}
                   </div>
                 </>
