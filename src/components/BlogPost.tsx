@@ -209,8 +209,8 @@ export default function BlogPostComponent({ post, lang, t, onBack }: BlogPostPro
               >
                 {post.content
                   ? post.content
-                      .replace(/\[([^\]]+)\]\(\/(?:en\/?)?\)/gi, '$1')
-                      .replace(/<(?:a|Link)[^>]*(?:href|to)=['"]\/(?:en\/?)?['"][^>]*>([^<]+)<\/(?:a|Link)>/gi, '$1')
+                      .replace(/\[([^\]]+)\]\(\/[^\)]*\)/gi, '$1')
+                      .replace(/<(?:a|Link)[^>]*(?:href|to)=['"]\/[^'"]*['"][^>]*>([^<]+)<\/(?:a|Link)>/gi, '$1')
                   : ''}
               </ReactMarkdown>
             </div>

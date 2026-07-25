@@ -172,11 +172,11 @@ For maximum speed, flawless 4K quality, and zero buffering, pair your IPTV playe
         UPDATE blog_posts
         SET content = regexp_replace(
           content,
-          '\\[([^\]]+)\\]\\(\\/(?:en\\/?)?\\)',
+          '\\[([^\]]+)\\]\\(\\/[^)]*\\)',
           '\\1',
           'gi'
         )
-        WHERE content ~* '\\[[^\]]+\\]\\(\\/(?:en\\/?)?\\)';
+        WHERE content ~* '\\[[^\]]+\\]\\(\\/[^)]*\\)';
       `);
       if (updateMdRes && updateMdRes.rowCount) totalFixed += updateMdRes.rowCount;
 
@@ -185,11 +185,11 @@ For maximum speed, flawless 4K quality, and zero buffering, pair your IPTV playe
         UPDATE blog_posts
         SET content = regexp_replace(
           content,
-          '<(?:a|Link)[^>]*(?:href|to)=[''"]\\/(?:en\\/?)?[''"][^>]*>([^<]+)</(?:a|Link)>',
+          '<(?:a|Link)[^>]*(?:href|to)=[''"]\\/[^''"]*[''"][^>]*>([^<]+)</(?:a|Link)>',
           '\\1',
           'gi'
         )
-        WHERE content ~* '<(?:a|Link)[^>]*(?:href|to)=[''"]\\/(?:en\\/?)?[''"][^>]*>[^<]+</(?:a|Link)>';
+        WHERE content ~* '<(?:a|Link)[^>]*(?:href|to)=[''"]\\/[^''"]*[''"][^>]*>[^<]+</(?:a|Link)>';
       `);
       if (updateHtmlRes && updateHtmlRes.rowCount) totalFixed += updateHtmlRes.rowCount;
 
