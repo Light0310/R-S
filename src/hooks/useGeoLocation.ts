@@ -13,7 +13,8 @@ export function useGeoLocation() {
           geoEl.innerText = `The Best IPTV in ${data.country}`;
         }
       } catch (error) {
-        console.error('Failed to fetch geolocation', error);
+        // Silently fail if geolocation is blocked by adblocker or network
+        console.warn('Geolocation fetch failed, defaulting to general text.');
       }
     }
     
