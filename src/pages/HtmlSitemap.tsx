@@ -11,10 +11,7 @@ export default function HtmlSitemap() {
   useEffect(() => {
     const fetchDynamicPosts = async () => {
       try {
-        const baseUrl = "";
-        const endpoint = baseUrl 
-          ? `${baseUrl.replace(/\/$/, '')}/api/seo/blog-posts` 
-          : '/api/seo/blog-posts';
+        const endpoint = '/api/seo/blog-posts';
         const response = await fetch(endpoint);
         if (response.ok) {
           const data = await response.json();

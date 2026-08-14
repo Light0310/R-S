@@ -15,7 +15,7 @@ async function startServer() {
   initCronScheduler();
 
   const app = express();
-  const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 5000;
+  const PORT = 3000;
 
   // SEO Strict Redirection Middleware (Force HTTPS and WWW)
   app.use((req, res, next) => {

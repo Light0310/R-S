@@ -209,9 +209,6 @@ function MainLayout() {
             <Link to={`/${currentLang}/blog`} className="hover:text-white transition-colors">
               {t.navBlog}
             </Link>
-            <Link to="/sitemap" className="hover:text-white transition-colors">
-              Sitemap
-            </Link>
           </div>
 
           <p className="text-gray-400 font-light flex items-center gap-4">
@@ -236,10 +233,7 @@ let globalDynamicPostsPromise: Promise<any> | null = null;
 export const prefetchDynamicPosts = () => {
   if (globalDynamicPostsPromise) return globalDynamicPostsPromise;
   
-  const baseUrl = "";
-  const endpoint = baseUrl 
-    ? `${baseUrl.replace(/\/$/, '')}/api/seo/blog-posts` 
-    : '/api/seo/blog-posts';
+  const endpoint = '/api/seo/blog-posts';
 
   globalDynamicPostsPromise = fetch(endpoint)
     .then(r => r.json())
@@ -274,17 +268,21 @@ function BlogListRoute() {
 
   const combinedPosts = useMemo(() => {
     const staticPosts = loadBlogPosts().filter((post) => post.lang === currentLang);
-    const convertedDynamic = dynamicPosts.map((dp: any) => ({
-      slug: dp.slug,
-      lang: 'en' as Language, // default dynamic articles to English as they are generated for SEO
-      title: dp.title,
-      date: new Date(dp.created_at).toISOString().split('T')[0],
-      author: 'RedStream Admin',
-      tags: dp.tags || [],
-      description: dp.description || '',
-      content: dp.content,
-      readingTime: Math.max(1, Math.ceil((dp.content || '').split(/\s+/).length / 200)),
-    }));
+    const staticSlugs = new Set(staticPosts.map(p => p.slug));
+
+    const convertedDynamic = dynamicPosts
+      .filter((dp: any) => !staticSlugs.has(dp.slug))
+      .map((dp: any) => ({
+        slug: dp.slug,
+        lang: 'en' as Language, // default dynamic articles to English as they are generated for SEO
+        title: dp.title,
+        date: dp.date || (dp.created_at ? new Date(dp.created_at).toISOString().split('T')[0] : new Date().toISOString().split('T')[0]),
+        author: dp.author || 'RedStream Expert',
+        tags: dp.tags || [],
+        description: dp.description || '',
+        content: dp.content,
+        readingTime: Math.max(1, Math.ceil((dp.content || '').split(/\s+/).length / 200)),
+      }));
     return [...staticPosts, ...convertedDynamic];
   }, [currentLang, dynamicPosts]);
 
@@ -318,10 +316,7 @@ function BlogPostRoute() {
       
       setLoading(true);
       try {
-        const baseUrl = "";
-        const endpoint = baseUrl 
-          ? `${baseUrl.replace(/\/$/, '')}/api/seo/blog-posts/${slug}` 
-          : `/api/seo/blog-posts/${slug}`;
+        const endpoint = `/api/seo/blog-posts/${slug}`;
 
         const response = await fetch(endpoint);
         if (response.ok) {
