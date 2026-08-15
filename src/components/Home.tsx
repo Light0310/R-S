@@ -337,48 +337,6 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
     };
     window.addEventListener('scroll', handleScroll);
 
-    // Countdown timer
-    const THREE_DAYS_IN_MS = 3 * 24 * 60 * 60 * 1000;
-    let targetTime = localStorage.getItem('redstream_promo_end_3days');
-    const now = new Date().getTime();
-
-    if (!targetTime || parseInt(targetTime) < now) {
-      targetTime = (now + THREE_DAYS_IN_MS).toString();
-      localStorage.setItem('redstream_promo_end_3days', targetTime);
-    }
-
-    const updateTimer = () => {
-      const currentTime = new Date().getTime();
-      let timeLeft = parseInt(targetTime!) - currentTime;
-
-      if (timeLeft <= 0) {
-        const newEnd = currentTime + THREE_DAYS_IN_MS;
-        localStorage.setItem('redstream_promo_end_3days', newEnd.toString());
-        targetTime = newEnd.toString();
-        timeLeft = THREE_DAYS_IN_MS;
-      }
-
-      const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-
-      const dEl = document.getElementById('cd-val-d');
-      const hEl = document.getElementById('cd-val-h');
-      const mEl = document.getElementById('cd-val-m');
-      const sEl = document.getElementById('cd-val-s');
-      
-      if (dEl) dEl.innerText = days.toString().padStart(2, '0');
-      if (hEl) hEl.innerText = hours.toString().padStart(2, '0');
-      if (mEl) mEl.innerText = minutes.toString().padStart(2, '0');
-      if (sEl) sEl.innerText = seconds.toString().padStart(2, '0');
-    };
-    
-    updateTimer(); // Prevent initial flash
-    const timerInterval = setInterval(updateTimer, 1000);
-
-
-
     // Testimonials slider
     const testimonialsTrack = document.getElementById('testimonials-track');
     const testimonialsPrevBtn = document.getElementById('testimonials-prev');
@@ -527,7 +485,6 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
       window.removeEventListener('hashchange', handleHashChange);
       
       window.removeEventListener('scroll', handleScroll);
-      clearInterval(timerInterval);
                         
       if (testimonialsPrevBtn) testimonialsPrevBtn.removeEventListener('click', handleTestimonialsPrev);
       if (testimonialsNextBtn) testimonialsNextBtn.removeEventListener('click', handleTestimonialsNext);
@@ -788,32 +745,6 @@ const LANDING_HTML_TOP = `
     <p id="hero-subheading">
       Stream over 20,000+ live premium TV channels and 60,000+ blockbuster movies & VOD in stunning Ultra HD 4K. Zero freezing, smart loading, and instant instant activation.
     </p>
-
-    <!-- Conversion Countdown Timer -->
-    <div class="countdown-timer-container" id="countdown-timer-box">
-      <span class="countdown-timer-title text-gray-400 font-medium text-sm mb-2" style="text-transform: none; letter-spacing: normal; color: #a3a3a3;">Limited time offer ends in:</span>
-      <div class="countdown-timer" dir="ltr">
-        <div class="countdown-unit">
-          <span class="countdown-number" id="cd-val-d">00</span>
-          <span class="countdown-label">days</span>
-        </div>
-        <span class="countdown-separator">:</span>
-        <div class="countdown-unit">
-          <span class="countdown-number" id="cd-val-h">00</span>
-          <span class="countdown-label">hours</span>
-        </div>
-        <span class="countdown-separator">:</span>
-        <div class="countdown-unit">
-          <span class="countdown-number" id="cd-val-m">00</span>
-          <span class="countdown-label">mins</span>
-        </div>
-        <span class="countdown-separator">:</span>
-        <div class="countdown-unit">
-          <span class="countdown-number" id="cd-val-s">00</span>
-          <span class="countdown-label">secs</span>
-        </div>
-      </div>
-    </div>
 
     <!-- CTA Actions Container -->
     <div class="flex flex-col items-center gap-5 w-full">
