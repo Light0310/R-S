@@ -230,8 +230,8 @@ function MainLayout() {
 let globalDynamicPostsCache: any[] | null = null;
 let globalDynamicPostsPromise: Promise<any> | null = null;
 
-export const prefetchDynamicPosts = () => {
-  if (globalDynamicPostsPromise) return globalDynamicPostsPromise;
+export const prefetchDynamicPosts = (forceRefresh = false) => {
+  if (globalDynamicPostsPromise && !forceRefresh) return globalDynamicPostsPromise;
   
   const endpoint = '/api/seo/blog-posts';
 
@@ -261,7 +261,7 @@ function BlogListRoute() {
     if (globalDynamicPostsCache) {
       setDynamicPosts(globalDynamicPostsCache);
     }
-    prefetchDynamicPosts().then(posts => {
+    prefetchDynamicPosts(true).then(posts => {
       setDynamicPosts(posts);
     });
   }, []);
