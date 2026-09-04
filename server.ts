@@ -313,6 +313,115 @@ Sitemap: ${baseUrl}/sitemap.xml
           `<meta property="og:url" content="${canonicalUrl}" />`
         );
         
+        // --- SERVER-SIDE META INJECTION START ---
+        // If it's a blog post, extract metadata from markdown or DB and inject it
+        const blogMatch = normalizedPath.match(/^\/([a-z]{2})\/blog\/([^\/]+)$/);
+        if (blogMatch) {
+          const lang = blogMatch[1];
+          const slug = blogMatch[2];
+          let blogTitle = null;
+          let blogDesc = null;
+          let blogImage = null;
+
+          // 1. Check static markdown files first
+          const mdPath = path.join(process.cwd(), 'src', 'content', 'blog', lang, `${slug}.md`);
+          if (fs.existsSync(mdPath)) {
+            try {
+              const mdContent = fs.readFileSync(mdPath, 'utf-8');
+              const titleMatch = mdContent.match(/title:\s*"([^"]+)"/);
+              const descMatch = mdContent.match(/description:\s*"([^"]+)"/);
+              const imgMatch = mdContent.match(/coverImage:\s*"([^"]+)"/);
+              
+              if (titleMatch) blogTitle = titleMatch[1];
+              if (descMatch) blogDesc = descMatch[1];
+              if (imgMatch) blogImage = imgMatch[1];
+            } catch(e) {
+              console.error('Error reading markdown for meta injection', e);
+            }
+          } else if (process.env.DATABASE_URL) {
+            // 2. Fallback to Database if no static file exists
+            try {
+              const postRes = await pool.query(
+                `SELECT title, excerpt as description, cover_image FROM blog_posts WHERE slug = $1 AND status = 'published'`,
+                [slug]
+              );
+              if (postRes.rows.length > 0) {
+                blogTitle = postRes.rows[0].title;
+                blogDesc = postRes.rows[0].description;
+                blogImage = postRes.rows[0].cover_image;
+              }
+            } catch(e) {
+              console.error('Error querying DB for meta injection', e);
+            }
+          }
+
+          // Inject extracted metadata or defaults
+          if (blogTitle) {
+            modifiedHtml = modifiedHtml.replace(
+              /<title>.*?<\/title>/gi,
+              `<title>${blogTitle} | RedStream™ IPTV</title>`
+            ).replace(
+              /<meta\s+property="og:title"\s+content="[^"]*"\s*\/?>/gi,
+              `<meta property="og:title" content="${blogTitle} | RedStream™ IPTV" />`
+            ).replace(
+              /<meta\s+property="twitter:title"\s+content="[^"]*"\s*\/?>/gi,
+              `<meta property="twitter:title" content="${blogTitle} | RedStream™ IPTV" />`
+            );
+          }
+          
+          if (blogDesc) {
+            modifiedHtml = modifiedHtml.replace(
+              /<meta\s+name="description"\s+content="[^"]*"\s*\/?>/gi,
+              `<meta name="description" content="${blogDesc}" />`
+            ).replace(
+              /<meta\s+property="og:description"\s+content="[^"]*"\s*\/?>/gi,
+              `<meta property="og:description" content="${blogDesc}" />`
+            ).replace(
+              /<meta\s+property="twitter:description"\s+content="[^"]*"\s*\/?>/gi,
+              `<meta property="twitter:description" content="${blogDesc}" />`
+            );
+          }
+
+          if (blogImage) {
+            const fullImageUrl = blogImage.startsWith('http') ? blogImage : `${baseUrl}${blogImage}`;
+            modifiedHtml = modifiedHtml.replace(
+              /<meta\s+property="og:image"\s+content="[^"]*"\s*\/?>/gi,
+              `<meta property="og:image" content="${fullImageUrl}" />`
+            ).replace(
+              /<meta\s+property="twitter:image"\s+content="[^"]*"\s*\/?>/gi,
+              `<meta property="twitter:image" content="${fullImageUrl}" />`
+            );
+          }
+          
+          // Inject Article Structured Data
+          const articleSchema = {
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            "mainEntityOfPage": {
+              "@type": "WebPage",
+              "@id": canonicalUrl
+            },
+            "headline": blogTitle || "RedStream IPTV Blog",
+            "description": blogDesc || "",
+            "image": blogImage ? (blogImage.startsWith('http') ? blogImage : `${baseUrl}${blogImage}`) : `${baseUrl}/whatsapp_order_preview.png`,
+            "author": {
+              "@type": "Organization",
+              "name": "RedStream Expert"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "RedStream™",
+              "logo": {
+                "@type": "ImageObject",
+                "url": `${baseUrl}/logo.png`
+              }
+            }
+          };
+          
+          modifiedHtml = modifiedHtml.replace('</head>', `\n<script type="application/ld+json">\n${JSON.stringify(articleSchema)}\n</script>\n</head>`);
+        }
+        // --- SERVER-SIDE META INJECTION END ---
+        
         // Inject SEO Links into the Prerendered Static SEO Content so crawlers see outgoing links
         modifiedHtml = modifiedHtml.replace('</main>', '</main>' + seoLinksHtml);
         
