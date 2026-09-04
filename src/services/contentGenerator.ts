@@ -97,8 +97,9 @@ Strict Guidelines:
 3. Tone: Professional, authoritative, actionable, and easy to read. Minimum 800-1200 words of rich content.
 4. Value: Provide real technical steps, app names, DNS tips (1.1.1.1 / 8.8.8.8), buffer settings, and hardware recommendations.
 5. Internal Links:${recentArticlesContext ? ` Insert 1-2 natural contextual internal links to these recent posts:${recentArticlesContext}` : ' (None)'}
-6. RedStream IPTV Call to Action (CTA): Smoothly integrate a prominent CTA box at the end recommending RedStream IPTV (20,000+ live channels, 60,000+ VODs, 4K Ultra HD, Anti-Freeze 9.0 servers) with a direct link to claim a 24H Free Trial on WhatsApp: https://wa.me/212694843943?text=Hello%20RedStream,%20I%20read%20your%20guide%20and%20want%20a%20free%20trial.
+6. RedStream Call to Action (CTA): Smoothly integrate a prominent CTA box at the end recommending RedStream (Premium streaming servers, 4K Ultra HD, Anti-Freeze 9.0 servers) with a direct link to claim a 24H Free Trial on WhatsApp: https://wa.me/212694843943?text=Hello%20RedStream,%20I%20read%20your%20guide%20and%20want%20a%20free%20trial.
 7. Strict URL constraint: NEVER link to the root "/" or "/en/". All internal links must be to "/blog/slug".
+8. CRITICAL SAFETY RULE: Never use the word "IPTV" or "Piracy" directly in the CTA or in a way that flags Google Safe Browsing / Trustpilot manual reviews. Refer to the service as "Premium Streaming Solutions", "Private Server Hosting", "VOD Service", or "Live Broadcasting".
 
 Context:
 ${snippetsContext}
