@@ -62,7 +62,7 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
           "aggregateRating": {
             "@type": "AggregateRating",
             "ratingValue": "4.9",
-            "reviewCount": "375",
+            "reviewCount": "28",
             "bestRating": "5",
             "worstRating": "1"
           },
