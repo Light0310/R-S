@@ -246,7 +246,7 @@ export async function executeAutoContentGeneration(customQuery?: string): Promis
     let queryId: number | null = null;
 
     // If no custom query provided, attempt to pick from database
-    if (!targetQuery && process.env.DATABASE_URL) {
+    if (!targetQuery && process.env.SQL_HOST) {
       try {
         const client = await pool.connect();
         try {

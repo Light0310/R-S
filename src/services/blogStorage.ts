@@ -191,7 +191,7 @@ export async function getAllBlogPosts(): Promise<BlogPostItem[]> {
   }
 
   // 3. Load from PostgreSQL if available
-  if (process.env.DATABASE_URL) {
+  if (process.env.SQL_HOST) {
     try {
       const client = await pool.connect();
       try {
@@ -302,7 +302,7 @@ export async function saveBlogPost(post: {
   }
 
   // 3. Save to PostgreSQL if connected
-  if (process.env.DATABASE_URL) {
+  if (process.env.SQL_HOST) {
     try {
       const client = await pool.connect();
       try {
@@ -399,7 +399,7 @@ export async function updateBlogPost(
   }
 
   // 3. Update PostgreSQL
-  if (process.env.DATABASE_URL) {
+  if (process.env.SQL_HOST) {
     try {
       const client = await pool.connect();
       try {
@@ -462,7 +462,7 @@ export async function deleteBlogPost(idOrSlug: string | number): Promise<boolean
   }
 
   // 3. Delete from PostgreSQL
-  if (process.env.DATABASE_URL) {
+  if (process.env.SQL_HOST) {
     try {
       const client = await pool.connect();
       try {

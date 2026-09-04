@@ -88,7 +88,7 @@ XCIPTV features a modern, media-centric layout with built-in ExoPlayer and VLC P
 
 ---
 
-## How to Get the Best Performance with RedStream IPTV
+## How to Get the Best Performance with RedStream Premium Streaming
 
 No matter which player you choose, pairing it with a high-bandwidth, anti-freezing server is essential for crystal-clear 4K streaming.
 

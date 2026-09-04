@@ -53,7 +53,7 @@ router.post('/add-query', adminAuthMiddleware, async (req: Request, res: Respons
   }
   
   try {
-    if (process.env.DATABASE_URL) {
+    if (process.env.SQL_HOST) {
       const insertRes = await pool.query(`
         INSERT INTO search_queries (query_string, status)
         VALUES ($1, 'pending')

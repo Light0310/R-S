@@ -5,15 +5,18 @@ import axios from 'axios';
 // Initialize PostgreSQL connection pool
 // In a production architecture, this pool is typically exported from a dedicated /db/config.ts file
 export const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  host: process.env.SQL_HOST,
+  user: process.env.SQL_USER,
+  password: process.env.SQL_PASSWORD,
+  database: process.env.SQL_DB_NAME,
 });
 
 /**
  * Automatically initializes database tables and seeds sample data if empty.
  */
 export const initializeDatabase = async () => {
-  if (!process.env.DATABASE_URL) {
-    console.warn('[Database] DATABASE_URL is missing. Database tables will not be automatically initialized.');
+  if (!process.env.SQL_HOST) {
+    console.warn('[Database] SQL_HOST is missing. Database tables will not be automatically initialized.');
     return;
   }
 
@@ -213,8 +216,8 @@ For maximum speed, flawless 4K quality, and zero buffering, pair your IPTV playe
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export const executeSearchIntegration = async (req: Request, res: Response) => {
-  if (!process.env.DATABASE_URL) {
-    return res.status(500).json({ message: 'No DATABASE_URL configured' });
+  if (!process.env.SQL_HOST) {
+    return res.status(500).json({ message: 'No SQL_HOST configured' });
   }
   try {
     const queryRes = await pool.query(
@@ -308,7 +311,7 @@ export const executeSearchIntegration = async (req: Request, res: Response) => {
  * Controller to fetch all stored SEO results (link targets and queries) from the database.
  */
 export const getStoredSeoResults = async (req: Request, res: Response) => {
-  if (!process.env.DATABASE_URL) {
+  if (!process.env.SQL_HOST) {
     return res.status(200).json({ links: [], queries: [] });
   }
   try {
