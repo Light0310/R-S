@@ -18,7 +18,7 @@ interface BlogPostProps {
 
 export default function BlogPostComponent({ post, lang, t, onBack }: BlogPostProps) {
   useEffect(() => {
-    document.title = `${post.title} | RedStream™ Premium IPTV`;
+    document.title = `${post.title} | RedStream™ Premium Streaming`;
     let metaDescription = document.querySelector('meta[name="description"]');
     if (!metaDescription) {
       metaDescription = document.createElement('meta');
@@ -29,16 +29,16 @@ export default function BlogPostComponent({ post, lang, t, onBack }: BlogPostPro
     
     // Cleanup on unmount
     return () => {
-      document.title = 'RedStream™ | Premium IPTV Subscription - Fast & Stable Server';
+      document.title = 'RedStream™ | Premium Streaming Subscription - Fast & Stable Server';
       metaDescription?.setAttribute('content', 'Stream over 20,000+ live premium TV channels and 60,000+ blockbuster movies & VOD in stunning Ultra HD 4K.');
     };
   }, [post]);
 
   // Find Cover Image based on slug
   const coverImage = post.slug.includes('samsung') 
-    ? '/samsung_iptv_guide.svg' 
+    ? '/samsung_streaming_guide.svg' 
     : post.slug.includes('setup')
-    ? '/ultimate_iptv_setup_guide.svg'
+    ? '/ultimate_streaming_setup_guide.svg'
     : post.slug.includes('future')
     ? '/future_streaming_trends_2026.svg'
     : '/redstream_blog_cover.svg';
