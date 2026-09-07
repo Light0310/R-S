@@ -509,12 +509,12 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
       >
         <h1>
           {currentLang === 'ar' 
-            ? 'RedStream™ IPTV متميز - أفضل خدمة اشتراك IPTV مستقرة لعام 2026' 
+            ? 'RedStream™ المتميز - أفضل خدمة بث مباشر مستقرة لعام 2026' 
             : currentLang === 'es' 
-            ? 'RedStream™ IPTV Premium - El Mejor Servicio de Suscripción IPTV Estable de 2026'
+            ? 'RedStream™ Premium - El Mejor Servicio de Transmisión Estable de 2026'
             : currentLang === 'nl'
-            ? 'RedStream™ Premium IPTV - Beste Stabiele IPTV-abonnement Service 2026'
-            : 'RedStream™ Premium IPTV - Ultimate 4K IPTV Service 2026'}
+            ? 'RedStream™ Premium - Beste Stabiele Streaming Service 2026'
+            : 'RedStream™ Premium - Ultimate 4K Streaming Service 2026'}
         </h1>
         <h2 className="text-white">
           {currentLang === 'ar'
@@ -1508,7 +1508,7 @@ const LANDING_HTML_BOTTOM = `
 
       <!-- Legal & copyright -->
       <div class="footer-bottom-info">
-        <div id="footer-copy">© 2026 RedStream™ IPTV. All rights reserved.</div>
+        <div id="footer-copy">© 2026 RedStream™ Premium. All rights reserved.</div>
         <ul class="footer-links" id="footer-links-list">
           <li><a href="#features">Features</a></li>
           <li><a href="#pricing">Pricing</a></li>
@@ -1527,7 +1527,7 @@ const LANDING_HTML_BOTTOM = `
   </footer>
 
   <!-- Floating Pulsing WhatsApp Button Widget -->
-  <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20am%20on%20your%20website%20and%20would%20like%20to%20get%20a%20premium%20IPTV%20trial." class="whatsapp-floating" target="_blank" rel="noopener noreferrer" id="floating-whatsapp-btn" aria-label="Chat with our sales agent on WhatsApp">
+  <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20am%20on%20your%20website%20and%20would%20like%20to%20get%20a%20premium%20streaming%20trial." class="whatsapp-floating" target="_blank" rel="noopener noreferrer" id="floating-whatsapp-btn" aria-label="Chat with our sales agent on WhatsApp">
     <div class="whatsapp-pulse"></div>
     <!-- Clean WhatsApp SVG -->
     <svg viewBox="0 0 24 24" width="34" height="34" fill="white" xmlns="http://www.w3.org/2000/svg" style="margin: auto; display: block;">

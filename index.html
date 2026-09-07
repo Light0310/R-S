@@ -162,16 +162,16 @@
   <style>
     /* Reset & CSS variables */
     :root {
-      --color-black: #000000;
+      --color-black: #050505;
       --color-dark-gray: #000000;
-      --color-card-bg: #0a0a0a;
-      --color-border: #1f1f1f;
-      --color-primary: #ff0000;
-      --color-primary-hover: #cc0000;
-      --color-primary-glow: rgba(255, 0, 0, 0.6);
-      --color-text-white: #ffffff;
-      --color-text-gray: #9ca3af;
-      --color-text-dim: #6b7280;
+      --color-card-bg: #09090b;
+      --color-border: #27272a;
+      --color-primary: #e50914;
+      --color-primary-hover: #b91c1c;
+      --color-primary-glow: rgba(229, 9, 20, 0.3);
+      --color-text-white: #fafafa;
+      --color-text-gray: #a1a1aa;
+      --color-text-dim: #71717a;
       --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
       --font-display: 'Outfit', sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
@@ -188,7 +188,7 @@
 
     body {
       background-color: var(--color-black);
-      background-image: radial-gradient(circle at 80% 20%, #200404 0%, #0a0a0a 50%, #050505 100%);
+      background-image: radial-gradient(circle at 50% 0%, #1a0a0a 0%, #050505 60%, #050505 100%);
       background-attachment: fixed;
       color: var(--color-text-white);
       font-family: var(--font-sans);
@@ -565,19 +565,16 @@
 
     /* Highlighted / Best Value Card Style */
     .pricing-card.popular {
-      background: linear-gradient(180deg, #111111 0%, #1a0505 100%);
+      background: var(--color-card-bg);
       position: relative;
-      border: 2px solid transparent;
+      border: 1px solid var(--color-primary);
       background-clip: padding-box;
-      border-image: linear-gradient(45deg, #e50914, #ff4500, #e50914) 1;
-      animation: border-glow 3s linear infinite; 
-      transform: scale(1.08) perspective(1000px) translateZ(20px);
-      box-shadow: 0 15px 30px rgba(0,0,0,0.9), 0 0 40px rgba(255, 0, 0, 0.2);
+      transform: scale(1.05);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5), 0 0 20px rgba(229, 9, 20, 0.1);
       z-index: 2;
     } 
-    @keyframes border-glow { 0% { border-image-source: linear-gradient(0deg, #e50914, #ff4500, #e50914); } 100% { border-image-source: linear-gradient(360deg, #e50914, #ff4500, #e50914); } }
-
-    .pricing-card.popular:hover {  transform: scale(1.12) translateY(-10px) perspective(1000px) translateZ(30px);  border-color: #ff0000;  box-shadow: 0 25px 50px rgba(0,0,0,0.9), 0 0 60px rgba(255, 0, 0, 0.4); }
+    
+    .pricing-card.popular:hover {  transform: scale(1.07) translateY(-5px);  border-color: #ff0000;  box-shadow: 0 15px 50px rgba(0,0,0,0.6), 0 0 30px rgba(229, 9, 20, 0.2); }
 
     .pricing-tag {
       position: absolute;
@@ -713,10 +710,15 @@
     .pricing-card.popular .plan-cta {
       background-color: var(--color-primary);
       border: none;
-      box-shadow: 0 0 15px rgba(229, 9, 20, 0.3);
-      box-shadow: 0 6px 0 #8b0000, 0 10px 20px rgba(229, 9, 20, 0.5);  transform: translateY(0);  transition: all 0.2s ease;}
-
-    .pricing-card.popular .plan-cta:hover {  background-color: var(--color-primary-hover);  box-shadow: 0 3px 0 #5e0000, 0 5px 15px rgba(229, 9, 20, 0.5);  transform: translateY(3px);}
+      box-shadow: 0 4px 14px rgba(229, 9, 20, 0.4);
+      transform: translateY(0);
+      transition: all 0.2s ease;
+    }
+    .pricing-card.popular .plan-cta:hover {
+      background-color: var(--color-primary-hover);
+      box-shadow: 0 6px 20px rgba(229, 9, 20, 0.6);
+      transform: translateY(-2px);
+    }
 
     /* FAQ Section */
     .faq {
@@ -1047,19 +1049,8 @@
     /* Dynamic Plan Highlight CSS */
     .pricing-card.highlighted-plan-card {
       border-color: var(--color-primary) !important;
-      box-shadow: 0 0 35px var(--color-primary-glow) !important;
-      
-      animation: cardPulse 2s infinite ease-in-out;
+      box-shadow: 0 0 35px rgba(229, 9, 20, 0.15) !important;
       z-index: 10;
-    }
-
-    @keyframes cardPulse {
-      0%, 100% {
-        box-shadow: 0 0 25px rgba(229, 9, 20, 0.45);
-      }
-      50% {
-        box-shadow: 0 0 45px rgba(229, 9, 20, 0.75);
-      }
     }
 
     /* Scroll Progress Bar CSS */
@@ -1605,7 +1596,7 @@
         flex-direction: column;
         min-height: 100vh;
         background-color: #0a0a0a;
-        background-image: radial-gradient(circle at 80% 20%, #200404 0%, #0a0a0a 50%, #050505 100%);
+        background-image: radial-gradient(circle at 50% 0%, #1a0a0a 0%, #050505 60%, #050505 100%);
         z-index: 99999;
       }
       .skel-header {
