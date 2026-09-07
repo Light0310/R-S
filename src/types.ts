@@ -31,6 +31,7 @@ export interface BlogPost {
   description: string;
   content: string;
   readingTime: number; // in minutes
+  cover_image?: string;
 }
 
 export interface TranslationDictionary {

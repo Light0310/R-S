@@ -91,12 +91,6 @@ function MainLayout() {
             >
               {t.navBlog}
             </Link>
-            <Link
-              to="/sitemap"
-              className="px-4 py-2 rounded-lg text-sm font-semibold transition-all hover:text-[#FF1E27] text-gray-300 cursor-pointer"
-            >
-              Sitemap
-            </Link>
           </nav>
 
           {/* Language Selector Dropdown & CTA Button */}

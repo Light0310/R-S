@@ -13,6 +13,7 @@ export interface BlogPostItem {
   date?: string;
   status: 'published' | 'draft';
   created_at: string;
+  cover_image?: string;
 }
 
 const BLOG_DIR = path.join(process.cwd(), 'src', 'content', 'blog', 'en');
@@ -196,7 +197,7 @@ export async function getAllBlogPosts(): Promise<BlogPostItem[]> {
       const client = await pool.connect();
       try {
         const res = await client.query(`
-          SELECT id, title, content, slug, status, description, tags, created_at
+          SELECT id, title, content, slug, status, description, tags, created_at, cover_image
           FROM blog_posts
           ORDER BY created_at DESC
         `);
@@ -213,7 +214,8 @@ export async function getAllBlogPosts(): Promise<BlogPostItem[]> {
               author: 'RedStream Expert',
               date: new Date(row.created_at).toISOString().split('T')[0],
               status: row.status || 'published',
-              created_at: new Date(row.created_at).toISOString()
+              created_at: new Date(row.created_at).toISOString(),
+              cover_image: row.cover_image
             });
           } else if (existing && !existing.id) {
             existing.id = row.id;
@@ -255,8 +257,10 @@ export async function saveBlogPost(post: {
   author?: string;
   date?: string;
   status?: 'published' | 'draft';
+  cover_image?: string;
 }): Promise<BlogPostItem> {
   ensureDirectories();
+
   const date = post.date || new Date().toISOString().split('T')[0];
   const author = post.author || 'RedStream Expert';
   const status = post.status || 'published';
@@ -272,7 +276,8 @@ export async function saveBlogPost(post: {
     author,
     date,
     status,
-    created_at: new Date().toISOString()
+    created_at: new Date().toISOString(),
+    cover_image: post.cover_image
   };
 
   // 1. Write to Disk Markdown File
@@ -283,7 +288,8 @@ export async function saveBlogPost(post: {
       author: fullPost.author!,
       tags: fullPost.tags,
       description: fullPost.description,
-      content: fullPost.content
+      content: fullPost.content,
+      coverImage: fullPost.cover_image
     });
     const filePath = path.join(BLOG_DIR, `${cleanSlug}.md`);
     fs.writeFileSync(filePath, mdContent, 'utf-8');
@@ -307,10 +313,10 @@ export async function saveBlogPost(post: {
       const client = await pool.connect();
       try {
         const insertRes = await client.query(`
-          INSERT INTO blog_posts (title, content, slug, status, description, tags)
-          VALUES ($1, $2, $3, $4, $5, $6)
+          INSERT INTO blog_posts (title, content, slug, status, description, tags, cover_image)
+          VALUES ($1, $2, $3, $4, $5, $6, $7)
           ON CONFLICT (slug) DO UPDATE 
-          SET title = EXCLUDED.title, content = EXCLUDED.content, description = EXCLUDED.description, tags = EXCLUDED.tags, status = EXCLUDED.status
+          SET title = EXCLUDED.title, content = EXCLUDED.content, description = EXCLUDED.description, tags = EXCLUDED.tags, status = EXCLUDED.status, cover_image = EXCLUDED.cover_image
           RETURNING id, title, slug, status, created_at
         `, [
           fullPost.title,
@@ -318,7 +324,8 @@ export async function saveBlogPost(post: {
           fullPost.slug,
           fullPost.status,
           fullPost.description,
-          fullPost.tags
+          fullPost.tags,
+          fullPost.cover_image
         ]);
         if (insertRes.rows.length > 0) {
           fullPost.id = insertRes.rows[0].id;

@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Link } from 'react-router-dom';
 import { BlogPost, Language, TranslationDictionary } from '../types';
-import { ArrowLeft, Calendar, User, Clock, ChevronRight, MessageCircle } from 'lucide-react';
+import { ArrowLeft, Calendar, User, Clock, ChevronRight, MessageCircle, List } from 'lucide-react';
 
 interface BlogPostProps {
   post: BlogPost;
@@ -35,13 +35,36 @@ export default function BlogPostComponent({ post, lang, t, onBack }: BlogPostPro
   }, [post]);
 
   // Find Cover Image based on slug
-  const coverImage = post.slug.includes('samsung') 
+  const coverImage = post.cover_image 
+    ? post.cover_image
+    : post.slug.includes('samsung') 
     ? '/samsung_streaming_guide.svg' 
     : post.slug.includes('setup')
     ? '/ultimate_streaming_setup_guide.svg'
     : post.slug.includes('future')
     ? '/future_streaming_trends_2026.svg'
     : '/redstream_blog_cover.svg';
+
+  const tableOfContents = useMemo(() => {
+    if (!post.content) return [];
+    
+    // Extract headers (e.g. ## Header or ### Header)
+    const headerRegex = /^(#{2,3})\s+(.*)$/gm;
+    const toc = [];
+    let match;
+    while ((match = headerRegex.exec(post.content)) !== null) {
+      const level = match[1].length;
+      const text = match[2].trim();
+      const id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+      toc.push({ level, text, id });
+    }
+    return toc;
+  }, [post.content]);
+
+  const generateId = (children: React.ReactNode) => {
+    const text = React.Children.toArray(children).join('').replace(/<[^>]+>/g, '');
+    return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  };
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white py-12 px-4 sm:px-6 lg:px-8">
@@ -146,6 +169,16 @@ export default function BlogPostComponent({ post, lang, t, onBack }: BlogPostPro
             margin: 2rem 0;
             border: 1px solid rgba(255,255,255,0.05);
           }
+          .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+          }
+          .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+          }
+          .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+          }
         `}</style>
 
         {/* Back Button */}
@@ -205,6 +238,8 @@ export default function BlogPostComponent({ post, lang, t, onBack }: BlogPostPro
               <ReactMarkdown
                 components={{
                   h1: ({ node, ...props }) => <h2 {...props} />,
+                  h2: ({ node, children, ...props }) => <h2 id={generateId(children)} style={{ scrollMarginTop: '100px' }} {...props}>{children}</h2>,
+                  h3: ({ node, children, ...props }) => <h3 id={generateId(children)} style={{ scrollMarginTop: '100px' }} {...props}>{children}</h3>,
                 }}
               >
                 {post.content
@@ -221,6 +256,35 @@ export default function BlogPostComponent({ post, lang, t, onBack }: BlogPostPro
             
             {/* Sticky Container */}
             <div className="sticky top-24 space-y-8">
+
+              {/* Table of Contents */}
+              {tableOfContents.length > 0 && (
+                <div className="bg-[#141414] border border-white/5 rounded-2xl p-6 hidden lg:block">
+                  <div className="flex items-center gap-2 mb-4 pb-3 border-b border-white/5">
+                    <List size={18} className="text-[#FF1E27]" />
+                    <h4 className="text-sm font-extrabold text-white uppercase tracking-wider">
+                      {lang === 'fr' ? 'Table des matières' : lang === 'ar' ? 'فهرس المحتويات' : 'Table of Contents'}
+                    </h4>
+                  </div>
+                  <nav className="flex flex-col gap-2.5 max-h-[40vh] overflow-y-auto pr-2 custom-scrollbar">
+                    {tableOfContents.map((item, index) => (
+                      <a
+                        key={index}
+                        href={`#${item.id}`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' });
+                        }}
+                        className={`text-sm text-gray-400 hover:text-[#FF1E27] transition-colors leading-tight ${
+                          item.level === 3 ? 'pl-4 text-xs opacity-80' : 'font-medium'
+                        }`}
+                      >
+                        {item.text}
+                      </a>
+                    ))}
+                  </nav>
+                </div>
+              )}
               
               {/* Promotion trial box */}
               <div className="bg-[#141414] border border-[#FF1E27]/20 rounded-2xl p-6 shadow-xl">

@@ -55,9 +55,17 @@ export const initializeDatabase = async () => {
         status VARCHAR(50) DEFAULT 'published' NOT NULL,
         description TEXT,
         tags TEXT[] DEFAULT '{}',
+        cover_image TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
     `);
+    
+    // Attempt to add cover_image column if it doesn't exist (for existing databases)
+    try {
+      await pool.query(`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS cover_image TEXT;`);
+    } catch (e) {
+      // Ignore if it already exists or errors
+    }
 
     // 1. Clear/delete any existing dummy queries (like 'vibe coding') from the table on startup
     console.log('[Database] Cleaning up old dummy search queries...');

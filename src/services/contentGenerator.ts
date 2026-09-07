@@ -132,12 +132,43 @@ Output strictly valid JSON according to the schema.`;
         const dataStr = response.text?.trim() || '';
         const articleData = JSON.parse(dataStr);
         
+        // --- Generate Image Feature ---
+        let base64Image = undefined;
+        try {
+          console.log(`[Content Generator] Generating cover image for: ${articleData.title}`);
+          const imageResponse = await ai.models.generateContent({
+            model: 'gemini-3.1-flash-image',
+            contents: {
+              parts: [{ text: `A highly realistic, photorealistic, unedited, cinematic 4k stock photography of: ${queryString}. Do NOT include any text, letters, or illustrations.` }]
+            },
+            config: {
+              imageConfig: {
+                aspectRatio: "16:9",
+                imageSize: "1K"
+              }
+            }
+          });
+          
+          if (imageResponse.candidates && imageResponse.candidates[0]?.content?.parts) {
+            for (const part of imageResponse.candidates[0].content.parts) {
+              if (part.inlineData) {
+                base64Image = `data:${part.inlineData.mimeType || 'image/jpeg'};base64,${part.inlineData.data}`;
+                console.log(`[Content Generator] Image generated successfully.`);
+                break;
+              }
+            }
+          }
+        } catch (imgErr: any) {
+          console.warn(`[Content Generator] Image generation failed:`, imgErr.message);
+        }
+        
         return {
           title: articleData.title || `Ultimate Guide: ${queryString}`,
           content: articleData.content || generateFallbackContent(queryString, snippets),
           slug: (articleData.slug || cleanSlug).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
           description: articleData.description || `Comprehensive guide on ${queryString}. Learn tips, tricks, and setup steps for uninterrupted 4K IPTV streaming.`,
-          tags: articleData.tags && articleData.tags.length > 0 ? articleData.tags : ['iptv', 'streaming', 'guide', '4k']
+          tags: articleData.tags && articleData.tags.length > 0 ? articleData.tags : ['iptv', 'streaming', 'guide', '4k'],
+          cover_image: base64Image
         };
       } catch (error: any) {
         console.error(`[Content Generator] Gemini API error on attempt ${retries + 1}:`, error.message);
@@ -332,7 +363,8 @@ export async function executeAutoContentGeneration(customQuery?: string): Promis
       description: generated.description,
       tags: generated.tags,
       author: 'RedStream Expert',
-      status: 'published'
+      status: 'published',
+      cover_image: (generated as any).cover_image,
     });
 
     return {
