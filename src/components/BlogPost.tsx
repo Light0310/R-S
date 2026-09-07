@@ -27,16 +27,27 @@ export default function BlogPostComponent({ post, lang, t, onBack }: BlogPostPro
     }
     metaDescription.setAttribute('content', post.description || post.title);
     
+    // SEO Image Tags
+    let metaOgImage = document.querySelector('meta[property="og:image"]');
+    if (!metaOgImage) {
+      metaOgImage = document.createElement('meta');
+      metaOgImage.setAttribute('property', 'og:image');
+      document.head.appendChild(metaOgImage);
+    }
+    const ogImageSrc = post.cover_image ? `${window.location.origin}/api/seo/images/${post.slug}.jpg` : `${window.location.origin}/redstream_blog_cover.svg`;
+    metaOgImage.setAttribute('content', ogImageSrc);
+    
     // Cleanup on unmount
     return () => {
       document.title = 'RedStream™ | Premium Streaming Subscription - Fast & Stable Server';
       metaDescription?.setAttribute('content', 'Stream over 20,000+ live premium TV channels and 60,000+ blockbuster movies & VOD in stunning Ultra HD 4K.');
+      metaOgImage?.setAttribute('content', `${window.location.origin}/whatsapp_order_preview.png`);
     };
   }, [post]);
 
   // Find Cover Image based on slug
   const coverImage = post.cover_image 
-    ? post.cover_image
+    ? `/api/seo/images/${post.slug}.jpg`
     : post.slug.includes('samsung') 
     ? '/samsung_streaming_guide.svg' 
     : post.slug.includes('setup')
@@ -224,14 +235,16 @@ export default function BlogPostComponent({ post, lang, t, onBack }: BlogPostPro
           {/* Main Article Content */}
           <main className="lg:col-span-8">
             {/* Main Cover Banner */}
-            <div className="aspect-[16/9] w-full rounded-2xl overflow-hidden bg-gray-950 mb-10 border border-white/5 shadow-2xl">
+            <figure className="aspect-[16/9] w-full rounded-2xl overflow-hidden bg-gray-950 mb-10 border border-white/5 shadow-2xl relative">
               <img 
                 src={coverImage} 
-                alt={post.title} 
+                alt={`${post.title} - Ultimate Guide`} 
+                title={post.title}
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover" 
               />
-            </div>
+              <figcaption className="sr-only">{post.title} - IPTV Streaming Guide</figcaption>
+            </figure>
 
             {/* Rendered Markdown Body */}
             <div className="markdown-container">

@@ -128,7 +128,7 @@ export default function BlogList({ posts, lang, t, onNavigate }: BlogListProps) 
           {filteredPosts.map(post => {
             // Find Cover Image or fallback to standard coverImagePath
             const coverImage = post.cover_image 
-              ? post.cover_image
+              ? `/api/seo/images/${post.slug}.jpg`
               : post.slug.includes('samsung') 
               ? '/samsung_iptv_guide.svg' 
               : post.slug.includes('setup')
@@ -147,8 +147,10 @@ export default function BlogList({ posts, lang, t, onNavigate }: BlogListProps) 
                 <div className="aspect-[16/10] relative overflow-hidden bg-gray-950">
                   <img 
                     src={coverImage}
-                    alt={post.title}
+                    alt={`Thumbnail for ${post.title}`}
+                    title={post.title}
                     referrerPolicy="no-referrer"
+                    loading="lazy"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#141414] via-transparent to-transparent opacity-80" />

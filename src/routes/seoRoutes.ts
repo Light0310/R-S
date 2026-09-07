@@ -107,6 +107,34 @@ router.get('/blog-posts/:slug', async (req: Request, res: Response) => {
   }
 });
 
+// GET /images/:slug.jpg - Public endpoint to serve SEO-friendly dynamic generated cover images
+router.get('/images/:slug.jpg', async (req: Request, res: Response) => {
+  const { slug } = req.params;
+  try {
+    const post = await getBlogPostBySlug(slug);
+    if (!post || !post.cover_image) {
+      // Return 404 if no image exists
+      res.status(404).send('Image not found');
+      return;
+    }
+
+    // Convert base64 data to binary
+    const base64Data = post.cover_image.replace(/^data:image\/\w+;base64,/, '');
+    const imgBuffer = Buffer.from(base64Data, 'base64');
+    
+    // Set headers for SEO & caching
+    res.writeHead(200, {
+      'Content-Type': 'image/jpeg',
+      'Content-Length': imgBuffer.length,
+      'Cache-Control': 'public, max-age=31536000' // Cache for 1 year
+    });
+    res.end(imgBuffer);
+  } catch (error: any) {
+    console.error('[SEO Routes] Error serving dynamic image:', error.message);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 // PUT /blog-posts/:id - Protected endpoint to edit a blog post (syncs to disk + DB)
 router.put('/blog-posts/:id', adminAuthMiddleware, async (req: Request, res: Response) => {
   const { id } = req.params;
