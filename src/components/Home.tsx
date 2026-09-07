@@ -51,7 +51,7 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
           "@type": "Product",
           "@id": "https://www.red-stream.store/#product",
           "url": "https://www.red-stream.store/",
-          "name": "RedStream™ Premium IPTV Subscription",
+          "name": "RedStream™ Premium Streaming Subscription",
           "image": "https://www.red-stream.store/whatsapp_order_preview.png",
           "description": "Stream over 20,000+ live premium TV channels and 60,000+ blockbuster movies & VOD in stunning Ultra HD 4K with Anti-Freeze 9.0 Technology.",
           "sku": "REDSTREAM-PREMIUM",
@@ -80,7 +80,7 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
                 "bestRating": "5",
                 "worstRating": "1"
               },
-              "reviewBody": "Best IPTV service I have used. 4K streams load instantly and zero buffering during live sports."
+              "reviewBody": "Best Streaming service I have used. 4K streams load instantly and zero buffering during live sports."
             }
           ],
           "offers": {
@@ -134,7 +134,7 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
           "mainEntity": [
             {
               "@type": "Question",
-              "name": "How do I activate my RedStream IPTV subscription?",
+              "name": "How do I activate my RedStream Streaming subscription?",
               "acceptedAnswer": {
                 "@type": "Answer",
                 "text": "Once you purchase a plan or request a trial, contact our WhatsApp support team with your order details. We will provide you with your personalized login credentials (M3U link, Xtream Codes, or Portal URL) within 10 minutes."
@@ -153,7 +153,7 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
               "name": "Which devices are supported by RedStream?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Our service works on virtually any device: Smart TVs (Samsung, LG, Android TV), Firestick, Apple TV, MAG boxes, Android/iOS smartphones, Windows/Mac computers, and dedicated IPTV apps like IboPro, Smarters Pro, and Set IPTV."
+                "text": "Our service works on virtually any device: Smart TVs (Samsung, LG, Android TV), Firestick, Apple TV, MAG boxes, Android/iOS smartphones, Windows/Mac computers, and dedicated Streaming apps like IboPro, Smarters Pro, and Set Streaming."
               }
             },
             {
@@ -268,7 +268,7 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
           planName = 'Free Trial Request';
         } else if (buttonId === 'hero-main-cta') {
           sourceName = 'Hero Main CTA Button';
-          planName = 'IPTV Subscription Inquiry';
+          planName = 'Streaming Subscription Inquiry';
         } else if (buttonId === 'btn-trial-order') {
           sourceName = 'Pricing Card Order Button';
           planName = '24 Hours Trial (2€)';
@@ -522,7 +522,7 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
             : currentLang === 'es'
             ? 'Por Qué RedStream es el Proveedor Premium N.º 1'
             : currentLang === 'nl'
-            ? 'Waarom RedStream de #1 Premium IPTV-aanbieder is'
+            ? 'Waarom RedStream de #1 Premium Streaming-aanbieder is'
             : 'Why RedStream is the #1 Premium Provider'}
         </h2>
         <h2 className="text-white">
@@ -602,7 +602,7 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
               <li><a href={`/${currentLang}/blog`} id="link-blog" style={{ color: '#FF1E27', fontWeight: 800 }} onClick={(e) => { e.preventDefault(); setIsMobileMenuOpen(false); if(onNavigate) onNavigate(`/${currentLang}/blog`); }}>{navTranslations[currentLang].blog}</a></li>
               <li><a href="/sitemap" id="link-sitemap" onClick={(e) => { e.preventDefault(); setIsMobileMenuOpen(false); if(onNavigate) onNavigate(`/sitemap`); }}>Sitemap</a></li>
             </ul>
-            <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20want%20to%20get%20a%20free%20IPTV%20trial." target="_blank" rel="noopener noreferrer" className="nav-cta" id="nav-cta-trial">{navTranslations[currentLang].cta}</a>
+            <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20want%20to%20get%20a%20free%20Streaming%20trial." target="_blank" rel="noopener noreferrer" className="nav-cta" id="nav-cta-trial">{navTranslations[currentLang].cta}</a>
             
             {/* Elegant Language Switcher inside header */}
             <div className="lang-switcher-wrapper" style={{ position: 'relative', display: 'inline-block', marginLeft: '12px' }}>
@@ -718,13 +718,13 @@ const LANDING_HTML_TOP = `
           <circle cx="6" cy="6" r="4"/>
         </svg>
       </span>
-      Premium 4K IPTV Service 2026
+      Premium 4K Streaming Service 2026
     </div>
     
     <h1 id="hero-title" style="position: relative; margin-bottom: 8px;">
       <span>Experience Ultimate TV with</span><br>
-      <span class="highlight">RedStream™ Premium IPTV</span>
-      <span id="geo-hidden-text" class="block text-[11px] md:text-sm text-gray-400/90 uppercase tracking-[0.2em] mt-5 md:mt-6 font-semibold" style="user-select: none;">The Best Premium IPTV</span>
+      <span class="highlight">RedStream™ Premium Streaming</span>
+      <span id="geo-hidden-text" class="block text-[11px] md:text-sm text-gray-400/90 uppercase tracking-[0.2em] mt-5 md:mt-6 font-semibold" style="user-select: none;">The Best Premium Streaming</span>
     </h1>
     
     <p id="hero-subheading">
@@ -734,7 +734,7 @@ const LANDING_HTML_TOP = `
     <!-- CTA Actions Container -->
     <div class="flex flex-col items-center gap-5 w-full">
       <!-- WhatsApp CTA -->
-      <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20would%20like%20to%20activate%20a%20premium%20IPTV%20subscription." target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center gap-3 bg-[#e50914] hover:bg-[#b80710] text-white text-base sm:text-lg font-bold py-4 px-8 rounded-xl w-full max-w-sm mx-auto transition-all duration-300 transform hover:-translate-y-1 shadow-[0_8px_20px_rgba(229,9,20,0.25)] hover:shadow-[0_12px_25px_rgba(229,9,20,0.4)]" id="hero-main-cta">
+      <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20would%20like%20to%20activate%20a%20premium%20Streaming%20subscription." target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center gap-3 bg-[#e50914] hover:bg-[#b80710] text-white text-base sm:text-lg font-bold py-4 px-8 rounded-xl w-full max-w-sm mx-auto transition-all duration-300 transform hover:-translate-y-1 shadow-[0_8px_20px_rgba(229,9,20,0.25)] hover:shadow-[0_12px_25px_rgba(229,9,20,0.4)]" id="hero-main-cta">
         <!-- WhatsApp Icon -->
         <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
@@ -743,13 +743,13 @@ const LANDING_HTML_TOP = `
       </a>
       
       <!-- Secondary CTA -->
-      <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20would%20like%20to%20request%20my%202-Hour%20Free%20Trial." target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors text-sm font-medium underline underline-offset-4 decoration-gray-600 hover:decoration-white" id="hero-secondary-cta">
+      <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20would%20like%20to%20request%20my%202-Hour%20Free%20Trial." target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors text-sm font-medium underline underline-offset-4 decoration-gray-600 hover:decoration-white mt-2 mb-4" id="hero-secondary-cta">
         Or request a 2-Hour Free Trial
       </a>
     </div>
 
     <!-- Sleek Trust Signals -->
-    <div class="flex flex-col items-center gap-4 mt-8 opacity-70">
+    <div class="flex flex-col items-center gap-6 mt-6 opacity-70">
       <!-- Minimalist Features -->
       <div class="flex flex-wrap justify-center gap-4 text-xs font-medium tracking-wide text-gray-400 uppercase">
         <span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-[#e50914]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg> Instant Setup</span>
@@ -759,29 +759,32 @@ const LANDING_HTML_TOP = `
         <span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-[#e50914]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/></svg> 24/7 Support</span>
       </div>
 
-      <!-- Payment Icons (Tiny & Clean) -->
-      <div class="flex items-center gap-3 grayscale opacity-60">
-        <svg style="height: 16px;" viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg" role="img"><path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"></path><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"></path><path d="M28.3 10.1H28c-.4 1-.7 1.5-1 3h1.9c-.3-1.5-.3-2.2-.6-3zm2.9 5.9h-1.7c-.1 0-.1 0-.2-.1l-.2-.9-.1-.2h-2.4c-.1 0-.2 0-.2.2l-.3.9c0 .1-.1.1-.1.1h-2.1l.2-.5L27 8.7c0-.5.3-.7.8-.7h1.5c.1 0 .2 0 .2.2l1.4 6.5c.1.4.2.7.2 1.1.1.1.1.1.1.2zm-13.4-.3l.4-1.8c.1 0 .2.1.2.1.7.3 1.4.5 2.1.4.2 0 .5-.1.7-.2.5-.2.5-.7.1-1.1-.2-.2-.5-.3-.8-.5-.4-.2-.8-.4-1.1-.7-1.2-1-.8-2.4-.1-3.1.6-.4.9-.8 1.7-.8 1.2 0 2.5 0 3.1.2h.1c-.1.6-.2 1.1-.4 1.7-.5-.2-1-.4-1.5-.4-.3 0-.6 0-.9.1-.2 0-.3.1-.4.2-.2.2-.2.5 0 .7l.5.4c.4.2.8.4 1.1.6.5.3 1 .8 1.1 1.4.2.9-.1 1.7-.9 2.3-.5.4-1.1.6-2.1.6-1.1 0-2.5-.2-3.1-.5zm5.4-5.3c-.3 0-.6.3-.7.6l-1.6 6.1c0 .1-.1.1-.2.1h-2.6c-.1 0-.2 0-.2-.2l2.7-8.7c0-.2.3-.3.5-.3h2.6c.1 0 .2.2.2.2l-1 2.2zm-7.6 6.4h-2.6c-.1 0-.2 0-.2-.2L7.3 8.3c0-.1-.1-.1-.2-.2-.2-.1-.7-.3-1.5-.5L5.7 7c.8-.1 1.6-.2 2.3-.2.3 0 .4.1.5.3l1.8 7.3z" fill="#1434CB"></path></svg>
-        <svg style="height: 16px;" viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg" role="img"><path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"></path><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"></path><circle fill="#EB001B" cx="15" cy="12" r="7"></circle><circle fill="#F79E1B" cx="23" cy="12" r="7"></circle><path fill="#FF5F00" d="M22 12c0-2.4-1.2-4.5-3-5.7-1.8 1.2-3 3.3-3 5.7s1.2 4.5 3 5.7c1.8-1.2 3-3.3 3-5.7z"></path></svg>
-        <svg style="height: 16px;" viewBox="0 0 38 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img"><path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"></path><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"></path><path fill="#003087" d="M23.9 8.3c.2-1 0-1.7-.6-2.3-.6-.4-1.6-.7-3.1-.7h-4.7c-.1 0-.2.1-.2.2l-2.7 17.3c0 .1.1.2.2.2h3.2c.1 0 .2-.1.2-.2l1.3-8.2c0-.1.1-.2.2-.2h1.5c4.6 0 6.9-2.3 4.7-6.1z"></path><path fill="#3086C8" d="M23.9 8.3c-1.1 5.4-4.8 6.1-8 6.1H15c-.1 0-.2.1-.2.2l-1.3 8.2c0 .1.1.2.2.2h3.2c.1 0 .2-.1.2-.2l.9-5.9c0-.1.1-.2.2-.2h1.5c3.8 0 6.3-1.6 7-4.6 1-4.1-1.6-4.5-2.8-4.2z"></path><path fill="#012169" d="M23.3 8.1c-.1-.1-.2-.1-.3-.1-.1 0-.2 0-.3-.1-.3-.1-.7-.1-1.1-.1h-3c-.1 0-.2.1-.2.2l-2.7 17.3c0 .1.1.2.2.2h3.2c.1 0 .2-.1.2-.2l.6-4c0-.1.1-.2.2-.2h1.5c3.2 0 5.4-1.3 6-3.8.7-3 .2-5.4-1.4-6.8-.7-.6-1.5-1.1-2.9-1.3z"></path></svg>
+      <!-- Payment Icons (Clean & Visible) -->
+      <div class="flex items-center gap-4 mt-2 mb-8">
+        <svg style="height: 26px;" viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg" role="img"><path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"></path><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"></path><path d="M28.3 10.1H28c-.4 1-.7 1.5-1 3h1.9c-.3-1.5-.3-2.2-.6-3zm2.9 5.9h-1.7c-.1 0-.1 0-.2-.1l-.2-.9-.1-.2h-2.4c-.1 0-.2 0-.2.2l-.3.9c0 .1-.1.1-.1.1h-2.1l.2-.5L27 8.7c0-.5.3-.7.8-.7h1.5c.1 0 .2 0 .2.2l1.4 6.5c.1.4.2.7.2 1.1.1.1.1.1.1.2zm-13.4-.3l.4-1.8c.1 0 .2.1.2.1.7.3 1.4.5 2.1.4.2 0 .5-.1.7-.2.5-.2.5-.7.1-1.1-.2-.2-.5-.3-.8-.5-.4-.2-.8-.4-1.1-.7-1.2-1-.8-2.4-.1-3.1.6-.4.9-.8 1.7-.8 1.2 0 2.5 0 3.1.2h.1c-.1.6-.2 1.1-.4 1.7-.5-.2-1-.4-1.5-.4-.3 0-.6 0-.9.1-.2 0-.3.1-.4.2-.2.2-.2.5 0 .7l.5.4c.4.2.8.4 1.1.6.5.3 1 .8 1.1 1.4.2.9-.1 1.7-.9 2.3-.5.4-1.1.6-2.1.6-1.1 0-2.5-.2-3.1-.5zm5.4-5.3c-.3 0-.6.3-.7.6l-1.6 6.1c0 .1-.1.1-.2.1h-2.6c-.1 0-.2 0-.2-.2l2.7-8.7c0-.2.3-.3.5-.3h2.6c.1 0 .2.2.2.2l-1 2.2zm-7.6 6.4h-2.6c-.1 0-.2 0-.2-.2L7.3 8.3c0-.1-.1-.1-.2-.2-.2-.1-.7-.3-1.5-.5L5.7 7c.8-.1 1.6-.2 2.3-.2.3 0 .4.1.5.3l1.8 7.3z" fill="#1434CB"></path></svg>
+        <svg style="height: 26px;" viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg" role="img"><path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"></path><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"></path><circle fill="#EB001B" cx="15" cy="12" r="7"></circle><circle fill="#F79E1B" cx="23" cy="12" r="7"></circle><path fill="#FF5F00" d="M22 12c0-2.4-1.2-4.5-3-5.7-1.8 1.2-3 3.3-3 5.7s1.2 4.5 3 5.7c1.8-1.2 3-3.3 3-5.7z"></path></svg>
+        <svg style="height: 26px;" viewBox="0 0 38 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img"><path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"></path><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"></path><path fill="#003087" d="M23.9 8.3c.2-1 0-1.7-.6-2.3-.6-.4-1.6-.7-3.1-.7h-4.7c-.1 0-.2.1-.2.2l-2.7 17.3c0 .1.1.2.2.2h3.2c.1 0 .2-.1.2-.2l1.3-8.2c0-.1.1-.2.2-.2h1.5c4.6 0 6.9-2.3 4.7-6.1z"></path><path fill="#3086C8" d="M23.9 8.3c-1.1 5.4-4.8 6.1-8 6.1H15c-.1 0-.2.1-.2.2l-1.3 8.2c0 .1.1.2.2.2h3.2c.1 0 .2-.1.2-.2l.9-5.9c0-.1.1-.2.2-.2h1.5c3.8 0 6.3-1.6 7-4.6 1-4.1-1.6-4.5-2.8-4.2z"></path><path fill="#012169" d="M23.3 8.1c-.1-.1-.2-.1-.3-.1-.1 0-.2 0-.3-.1-.3-.1-.7-.1-1.1-.1h-3c-.1 0-.2.1-.2.2l-2.7 17.3c0 .1.1.2.2.2h3.2c.1 0 .2-.1.2-.2l.6-4c0-.1.1-.2.2-.2h1.5c3.2 0 5.4-1.3 6-3.8.7-3 .2-5.4-1.4-6.8-.7-.6-1.5-1.1-2.9-1.3z"></path></svg>
       </div>
     </div>
   </section>
 
   <!-- Live Stats (Moved outside hero, minimalist design) -->
-  <section class="border-y border-gray-800/50 bg-black/50 py-8">
+  <section class="border-y border-gray-800/50 bg-black/50 py-10">
     <div class="container">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-gray-800/50">
-        <div class="flex flex-col items-center pt-4 md:pt-0">
-          <span class="text-3xl font-bold text-white tracking-tight mb-1">375+</span>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-y-12 md:gap-y-0 text-center md:divide-x divide-gray-800/50">
+        <div class="flex flex-col items-center">
+          <span class="text-4xl font-bold text-white tracking-tight mb-2">375+</span>
           <span class="text-sm text-gray-400 font-medium uppercase tracking-wider">Happy Clients</span>
         </div>
-        <div class="flex flex-col items-center pt-4 md:pt-0">
-          <span class="text-3xl font-bold text-[#e50914] tracking-tight mb-1">99.9%</span>
+        <div class="flex flex-col items-center relative">
+          <!-- Add mobile only borders via absolute positioning so it doesn't squish -->
+          <div class="md:hidden absolute -top-6 left-1/4 right-1/4 h-[1px] bg-gray-800/50"></div>
+          <span class="text-4xl font-bold text-[#e50914] tracking-tight mb-2">99.9%</span>
           <span class="text-sm text-gray-400 font-medium uppercase tracking-wider">Server Uptime</span>
+          <div class="md:hidden absolute -bottom-6 left-1/4 right-1/4 h-[1px] bg-gray-800/50"></div>
         </div>
-        <div class="flex flex-col items-center pt-4 md:pt-0">
-          <span class="text-3xl font-bold text-white tracking-tight mb-1">4.9 / 5</span>
+        <div class="flex flex-col items-center">
+          <span class="text-4xl font-bold text-white tracking-tight mb-2">4.9 / 5</span>
           <span class="text-sm text-gray-400 font-medium uppercase tracking-wider">Google Rating</span>
         </div>
       </div>
@@ -1030,7 +1033,7 @@ const LANDING_HTML_TOP = `
                 </div>
               </div>
               <p class="testimonial-content">
-                "RedStream is by far the best IPTV provider. The premium anti-freeze technology works flawlessly. High-quality channels, amazing support, and the VOD library is updated weekly. Highly recommend!"
+                "RedStream is by far the best Streaming provider. The premium anti-freeze technology works flawlessly. High-quality channels, amazing support, and the VOD library is updated weekly. Highly recommend!"
               </p>
               <div class="testimonial-author-info">
                 <div class="testimonial-avatar">T</div>
@@ -1108,7 +1111,7 @@ const LANDING_HTML_TOP = `
             <!-- 1. Past Lives -->
             <div class="showcase-slide">
               <span class="showcase-badge">TOP RATED</span>
-              <img src="/1000148213-iptv-france.webp" alt="Stream Past Lives on IPTV France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148213-streaming-france.webp" alt="Stream Past Lives on Streaming France - Premium Cinema Streaming" loading="lazy">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">Past Lives</h3>
                 <div class="showcase-info">
@@ -1121,7 +1124,7 @@ const LANDING_HTML_TOP = `
             <!-- 2. Road House -->
             <div class="showcase-slide">
               <span class="showcase-badge">ACTION HIT</span>
-              <img src="/1000148217-iptv-france.webp" alt="Stream Road House on IPTV France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148217-streaming-france.webp" alt="Stream Road House on Streaming France - Premium Cinema Streaming" loading="lazy">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">Road House</h3>
                 <div class="showcase-info">
@@ -1134,7 +1137,7 @@ const LANDING_HTML_TOP = `
             <!-- 3. Saltburn -->
             <div class="showcase-slide">
               <span class="showcase-badge">MUST WATCH</span>
-              <img src="/1000148233-iptv-france.webp" alt="Stream Saltburn on IPTV France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148233-streaming-france.webp" alt="Stream Saltburn on Streaming France - Premium Cinema Streaming" loading="lazy">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">Saltburn</h3>
                 <div class="showcase-info">
@@ -1147,7 +1150,7 @@ const LANDING_HTML_TOP = `
             <!-- 4. Killers of the Flower Moon -->
             <div class="showcase-slide">
               <span class="showcase-badge">OSCAR NOMINEE</span>
-              <img src="/1000148230-iptv-france.webp" alt="Stream Killers of the Flower Moon on IPTV France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148230-streaming-france.webp" alt="Stream Killers of the Flower Moon on Streaming France - Premium Cinema Streaming" loading="lazy">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">Killers of the Flower Moon</h3>
                 <div class="showcase-info">
@@ -1160,7 +1163,7 @@ const LANDING_HTML_TOP = `
             <!-- 5. Inception -->
             <div class="showcase-slide">
               <span class="showcase-badge">CLASSIC</span>
-              <img src="/1000148232-iptv-france.webp" alt="Stream Inception on IPTV France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148232-streaming-france.webp" alt="Stream Inception on Streaming France - Premium Cinema Streaming" loading="lazy">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">Inception</h3>
                 <div class="showcase-info">
@@ -1173,7 +1176,7 @@ const LANDING_HTML_TOP = `
             <!-- 6. Shogun -->
             <div class="showcase-slide">
               <span class="showcase-badge">CRITICS CHOICE</span>
-              <img src="/1000148219-iptv-france.webp" alt="Stream Shogun on IPTV France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148219-streaming-france.webp" alt="Stream Shogun on Streaming France - Premium Cinema Streaming" loading="lazy">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">Shogun</h3>
                 <div class="showcase-info">
@@ -1186,7 +1189,7 @@ const LANDING_HTML_TOP = `
             <!-- 7. Poor Things -->
             <div class="showcase-slide">
               <span class="showcase-badge">AWARD WINNER</span>
-              <img src="/1000148223-iptv-france.webp" alt="Stream Poor Things on IPTV France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148223-streaming-france.webp" alt="Stream Poor Things on Streaming France - Premium Cinema Streaming" loading="lazy">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">Poor Things</h3>
                 <div class="showcase-info">
@@ -1199,7 +1202,7 @@ const LANDING_HTML_TOP = `
             <!-- 8. 3 Body Problem -->
             <div class="showcase-slide">
               <span class="showcase-badge">SCI-FI EPIC</span>
-              <img src="/1000148222-iptv-france.webp" alt="Stream 3 Body Problem on IPTV France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148222-streaming-france.webp" alt="Stream 3 Body Problem on Streaming France - Premium Cinema Streaming" loading="lazy">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">3 Body Problem</h3>
                 <div class="showcase-info">
@@ -1212,7 +1215,7 @@ const LANDING_HTML_TOP = `
             <!-- 9. Breaking Bad -->
             <div class="showcase-slide">
               <span class="showcase-badge">ALL-TIME BEST</span>
-              <img src="/1000148214-iptv-france.webp" alt="Stream Breaking Bad on IPTV France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148214-streaming-france.webp" alt="Stream Breaking Bad on Streaming France - Premium Cinema Streaming" loading="lazy">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">Breaking Bad</h3>
                 <div class="showcase-info">
@@ -1225,7 +1228,7 @@ const LANDING_HTML_TOP = `
             <!-- 10. Ghostbusters: Frozen Empire -->
             <div class="showcase-slide">
               <span class="showcase-badge">FAMILY HIT</span>
-              <img src="/1000148218-iptv-france.webp" alt="Stream Ghostbusters: Frozen Empire on IPTV France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148218-streaming-france.webp" alt="Stream Ghostbusters: Frozen Empire on Streaming France - Premium Cinema Streaming" loading="lazy">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">Ghostbusters: Frozen Empire</h3>
                 <div class="showcase-info">
@@ -1238,7 +1241,7 @@ const LANDING_HTML_TOP = `
             <!-- 11. The Holdovers -->
             <div class="showcase-slide">
               <span class="showcase-badge">COMEDY HIT</span>
-              <img src="/1000148228-iptv-france.webp" alt="Stream The Holdovers on IPTV France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148228-streaming-france.webp" alt="Stream The Holdovers on Streaming France - Premium Cinema Streaming" loading="lazy">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">The Holdovers</h3>
                 <div class="showcase-info">
@@ -1251,7 +1254,7 @@ const LANDING_HTML_TOP = `
             <!-- 12. La Sociedad de la Nieve -->
             <div class="showcase-slide">
               <span class="showcase-badge">TOP STREAM</span>
-              <img src="/1000148231-iptv-france.webp" alt="Stream La Sociedad de la Nieve on IPTV France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148231-streaming-france.webp" alt="Stream La Sociedad de la Nieve on Streaming France - Premium Cinema Streaming" loading="lazy">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">La Sociedad de la Nieve</h3>
                 <div class="showcase-info">
@@ -1264,7 +1267,7 @@ const LANDING_HTML_TOP = `
             <!-- 13. Masters of the Air -->
             <div class="showcase-slide">
               <span class="showcase-badge">FULL SERIES</span>
-              <img src="/1000148225-iptv-france.webp" alt="Stream Masters of the Air on IPTV France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148225-streaming-france.webp" alt="Stream Masters of the Air on Streaming France - Premium Cinema Streaming" loading="lazy">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">Masters of the Air</h3>
                 <div class="showcase-info">
@@ -1277,7 +1280,7 @@ const LANDING_HTML_TOP = `
             <!-- 14. Shaitaan -->
             <div class="showcase-slide">
               <span class="showcase-badge">TRENDING</span>
-              <img src="/1000148226-iptv-france.webp" alt="Stream Shaitaan on IPTV France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148226-streaming-france.webp" alt="Stream Shaitaan on Streaming France - Premium Cinema Streaming" loading="lazy">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">Shaitaan</h3>
                 <div class="showcase-info">
@@ -1290,7 +1293,7 @@ const LANDING_HTML_TOP = `
             <!-- 15. 20 Days in Mariupol -->
             <div class="showcase-slide">
               <span class="showcase-badge">DOCUMENTARY</span>
-              <img src="/1000148229-iptv-france.webp" alt="Stream 20 Days in Mariupol on IPTV France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148229-streaming-france.webp" alt="Stream 20 Days in Mariupol on Streaming France - Premium Cinema Streaming" loading="lazy">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">20 Days in Mariupol</h3>
                 <div class="showcase-info">
@@ -1303,7 +1306,7 @@ const LANDING_HTML_TOP = `
             <!-- 16. Avatar: The Last Airbender -->
             <div class="showcase-slide">
               <span class="showcase-badge">NETFLIX HIT</span>
-              <img src="/1000148227-iptv-france.webp" alt="Stream Avatar: The Last Airbender on IPTV France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148227-streaming-france.webp" alt="Stream Avatar: The Last Airbender on Streaming France - Premium Cinema Streaming" loading="lazy">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">The Last Airbender</h3>
                 <div class="showcase-info">
@@ -1316,7 +1319,7 @@ const LANDING_HTML_TOP = `
             <!-- 17. Succession -->
             <div class="showcase-slide">
               <span class="showcase-badge">HBO ORIGINAL</span>
-              <img src="/1000148216-iptv-france.webp" alt="Stream Succession on IPTV France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148216-streaming-france.webp" alt="Stream Succession on Streaming France - Premium Cinema Streaming" loading="lazy">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">Succession</h3>
                 <div class="showcase-info">
@@ -1329,7 +1332,7 @@ const LANDING_HTML_TOP = `
             <!-- 18. The Last of Us -->
             <div class="showcase-slide">
               <span class="showcase-badge">POPULAR</span>
-              <img src="/1000148215-iptv-france.webp" alt="Stream The Last of Us on IPTV France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148215-streaming-france.webp" alt="Stream The Last of Us on Streaming France - Premium Cinema Streaming" loading="lazy">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">The Last of Us</h3>
                 <div class="showcase-info">
@@ -1342,7 +1345,7 @@ const LANDING_HTML_TOP = `
             <!-- 19. The Bear -->
             <div class="showcase-slide">
               <span class="showcase-badge">CRITICS CHOICE</span>
-              <img src="/1000148224-iptv-france.webp" alt="Stream The Bear on IPTV France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148224-streaming-france.webp" alt="Stream The Bear on Streaming France - Premium Cinema Streaming" loading="lazy">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">The Bear</h3>
                 <div class="showcase-info">
@@ -1355,7 +1358,7 @@ const LANDING_HTML_TOP = `
             <!-- 20. Severance -->
             <div class="showcase-slide">
               <span class="showcase-badge">MIND-BENDING</span>
-              <img src="/1000148220-iptv-france.webp" alt="Stream Severance on IPTV France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148220-streaming-france.webp" alt="Stream Severance on Streaming France - Premium Cinema Streaming" loading="lazy">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">Severance</h3>
                 <div class="showcase-info">
@@ -1368,7 +1371,7 @@ const LANDING_HTML_TOP = `
             <!-- 21. Damsel -->
             <div class="showcase-slide">
               <span class="showcase-badge">FANTASY HIT</span>
-              <img src="/1000148216-iptv-france.webp" alt="Stream Damsel on IPTV France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148216-streaming-france.webp" alt="Stream Damsel on Streaming France - Premium Cinema Streaming" loading="lazy">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">Damsel</h3>
                 <div class="showcase-info">
@@ -1381,7 +1384,7 @@ const LANDING_HTML_TOP = `
             <!-- 22. The Gentlemen -->
             <div class="showcase-slide">
               <span class="showcase-badge">GUY RITCHIE</span>
-              <img src="/1000148221-iptv-france.webp" alt="Stream The Gentlemen on IPTV France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148221-streaming-france.webp" alt="Stream The Gentlemen on Streaming France - Premium Cinema Streaming" loading="lazy">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">The Gentlemen</h3>
                 <div class="showcase-info">
@@ -1394,7 +1397,7 @@ const LANDING_HTML_TOP = `
             <!-- 23. The Shawshank Redemption -->
             <div class="showcase-slide">
               <span class="showcase-badge">IMDb #1</span>
-              <img src="/1000148211-iptv-france.webp" alt="Stream The Shawshank Redemption on IPTV France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148211-streaming-france.webp" alt="Stream The Shawshank Redemption on Streaming France - Premium Cinema Streaming" loading="lazy">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">The Shawshank Redemption</h3>
                 <div class="showcase-info">
@@ -1407,7 +1410,7 @@ const LANDING_HTML_TOP = `
             <!-- 24. Fight Club -->
             <div class="showcase-slide">
               <span class="showcase-badge">CULT CLASSIC</span>
-              <img src="/1000148209-iptv-france.webp" alt="Stream Fight Club on IPTV France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148209-streaming-france.webp" alt="Stream Fight Club on Streaming France - Premium Cinema Streaming" loading="lazy">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">Fight Club</h3>
                 <div class="showcase-info">
@@ -1420,7 +1423,7 @@ const LANDING_HTML_TOP = `
             <!-- 25. Joker -->
             <div class="showcase-slide">
               <span class="showcase-badge">MASTERPIECE</span>
-              <img src="/1000148212-iptv-france.webp" alt="Stream Joker on IPTV France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148212-streaming-france.webp" alt="Stream Joker on Streaming France - Premium Cinema Streaming" loading="lazy">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">Joker</h3>
                 <div class="showcase-info">
@@ -1433,7 +1436,7 @@ const LANDING_HTML_TOP = `
             <!-- 26. The Dark Knight -->
             <div class="showcase-slide">
               <span class="showcase-badge">BEST HERO</span>
-              <img src="/1000148210-iptv-france.webp" alt="Stream The Dark Knight on IPTV France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148210-streaming-france.webp" alt="Stream The Dark Knight on Streaming France - Premium Cinema Streaming" loading="lazy">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">The Dark Knight</h3>
                 <div class="showcase-info">
@@ -1516,6 +1519,8 @@ const LANDING_HTML_BOTTOM = `
           <li><a href="/en/blog">Blog</a></li>
           <li><a href="https://wa.me/212694843943" target="_blank" rel="noopener noreferrer">Contact</a></li>
           <li><a href="/privacy.html">Privacy Policy</a></li>
+          <li><a href="/terms.html">Terms of Service</a></li>
+          <li><a href="/refund.html">Refund Policy</a></li>
         </ul>
       </div>
 
