@@ -301,24 +301,9 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
           }
         });
 
-        let trackingBlock = '\n\n---\n[System Order Info]';
-        trackingBlock += `\n• Click Origin: ${sourceName}`;
-        if (planName !== 'None') {
-          trackingBlock += `\n• Plan Selected: ${planName}`;
-        }
+        const baseText = textParam || 'Hello RedStream, I would like to get a premium streaming subscription.';
 
-        if (trackingInfo.length > 0) {
-          trackingBlock += `\n• Campaign Referrer: ${trackingInfo.join(', ')}`;
-        } else {
-          trackingBlock += '\n• Traffic Origin: Organic / Direct';
-        }
-
-        trackingBlock += `\n• Landing URL: ${window.location.origin}${window.location.pathname}`;
-
-        const baseText = textParam || 'Hello RedStream, I would like to get a premium IPTV subscription.';
-        const updatedText = baseText + trackingBlock;
-
-        urlObj.searchParams.set('text', updatedText);
+        urlObj.searchParams.set('text', baseText);
         anchor.setAttribute('href', urlObj.toString());
       } catch (e) {
         console.error('Error in whatsapp tracking', e);
