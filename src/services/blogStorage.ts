@@ -51,7 +51,7 @@ date: "${post.date}"
 author: "${post.author || 'RedStream Expert'}"
 tags: ${tagsFormatted}
 description: "${cleanDesc}"
-coverImage: "${cover}"
+cover_image: "${cover}"
 ---
 
 ${post.content.trim()}
@@ -88,6 +88,7 @@ export function parseMarkdownFile(rawContent: string, slug: string, mtime?: Date
   let author = 'RedStream Expert';
   let description = '';
   let tags: string[] = ['iptv'];
+  let cover_image: string | undefined = undefined;
 
   yamlBlock.split('\n').forEach((line) => {
     const colonIndex = line.indexOf(':');
@@ -103,6 +104,7 @@ export function parseMarkdownFile(rawContent: string, slug: string, mtime?: Date
       if (key === 'date') date = val;
       if (key === 'author') author = val;
       if (key === 'description') description = val;
+      if (key === 'cover_image' || key === 'coverImage') cover_image = val;
       if (key === 'tags') {
         try {
           if (val.startsWith('[') && val.endsWith(']')) {
@@ -127,7 +129,8 @@ export function parseMarkdownFile(rawContent: string, slug: string, mtime?: Date
     author,
     date,
     status: 'published',
-    created_at: mtime ? mtime.toISOString() : new Date(date).toISOString()
+    created_at: mtime ? mtime.toISOString() : new Date(date).toISOString(),
+    cover_image
   };
 }
 

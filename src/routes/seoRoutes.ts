@@ -118,6 +118,11 @@ router.get('/images/:slug.jpg', async (req: Request, res: Response) => {
       return;
     }
 
+    if (!post.cover_image.startsWith('data:image')) {
+       res.redirect(post.cover_image);
+       return;
+    }
+
     // Convert base64 data to binary
     const base64Data = post.cover_image.replace(/^data:image\/\w+;base64,/, '');
     const imgBuffer = Buffer.from(base64Data, 'base64');

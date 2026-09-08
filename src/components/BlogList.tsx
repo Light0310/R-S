@@ -127,8 +127,10 @@ export default function BlogList({ posts, lang, t, onNavigate }: BlogListProps) 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredPosts.map(post => {
             // Find Cover Image or fallback to standard coverImagePath
-            const coverImage = post.cover_image 
+            const coverImage = post.cover_image?.startsWith('data:image') 
               ? `/api/seo/images/${post.slug}.jpg`
+              : post.cover_image
+              ? post.cover_image
               : post.slug.includes('samsung') 
               ? '/samsung_iptv_guide.svg' 
               : post.slug.includes('setup')
