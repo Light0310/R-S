@@ -4,7 +4,7 @@ date: "2026-07-05"
 author: "RedStream Expert"
 tags: ["Samsung", "Smart TV", "Setup"]
 description: "Learn how to easily set up IPTV on your Samsung Smart TV. Get zero-buffering 4K streams with our simple step-by-step guide."
-coverImage: "/1000148211-iptv-france.webp"
+cover_image: "/1000148211-iptv-france.webp"
 ---
 
 # How to Set Up IPTV on Samsung Smart TV (Ultimate 2026 Tutorial)

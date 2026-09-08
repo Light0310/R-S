@@ -275,6 +275,7 @@ function BlogListRoute() {
         tags: dp.tags || [],
         description: dp.description || '',
         content: dp.content,
+        cover_image: dp.cover_image,
         readingTime: Math.max(1, Math.ceil((dp.content || '').split(/\s+/).length / 200)),
       }));
     return [...staticPosts, ...convertedDynamic];

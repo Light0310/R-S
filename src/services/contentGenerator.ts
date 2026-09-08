@@ -140,7 +140,9 @@ Output strictly valid JSON according to the schema.`;
           const encodedPrompt = encodeURIComponent(imagePrompt);
           const imageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=1280&height=720&nologo=true`;
           
-          const imgResponse = await fetch(imageUrl);
+          console.log("Fetching fallback image:", imageUrl);
+    const imgResponse = await fetch(imageUrl, { headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" } });
+    console.log("Fallback image status:", imgResponse.status);
           if (imgResponse.ok) {
             const arrayBuffer = await imgResponse.arrayBuffer();
             const buffer = Buffer.from(arrayBuffer);
@@ -185,14 +187,14 @@ Output strictly valid JSON according to the schema.`;
     const encodedPrompt = encodeURIComponent(imagePrompt);
     const imageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=1280&height=720&nologo=true`;
     
-    const imgResponse = await fetch(imageUrl);
+    const imgResponse = await fetch(imageUrl, { headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" } });
     if (imgResponse.ok) {
       const arrayBuffer = await imgResponse.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
       fallbackImage = `data:image/jpeg;base64,${buffer.toString('base64')}`;
     }
   } catch (imgErr) {
-    // Ignore fallback image errors
+    console.warn('[Content Generator] Fallback image error:', imgErr);
   }
 
   return {

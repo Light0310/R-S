@@ -4,7 +4,7 @@ date: "2026-08-12"
 author: "RedStream Expert"
 tags: ["Live Sports", "Premier League", "Champions League", "4K Football", "UFC"]
 description: "Stream every live match of the UEFA Champions League, Premier League, La Liga, and UFC in 60fps Ultra HD. Complete schedule and IPTV viewing setup guide."
-coverImage: "/ultimate_iptv_setup_guide.svg"
+cover_image: "/ultimate_iptv_setup_guide.svg"
 ---
 
 # How to Watch Live Champions League and Premier League in 4K on IPTV (2026 Guide)

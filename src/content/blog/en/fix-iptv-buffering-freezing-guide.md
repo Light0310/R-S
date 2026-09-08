@@ -4,7 +4,7 @@ date: "2026-08-10"
 author: "RedStream Expert"
 tags: ["Buffering Fix", "Troubleshooting", "Streaming", "Network Guide"]
 description: "Stop IPTV buffering and freezing permanently. Learn how to bypass ISP throttling, configure DNS, optimize buffer sizes, and fix stutter on Firestick & Smart TV."
-coverImage: "/ultimate_iptv_setup_guide.svg"
+cover_image: "/ultimate_iptv_setup_guide.svg"
 ---
 
 # How to Fix IPTV Buffering and Freezing (Ultimate 2026 Guide)

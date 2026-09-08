@@ -4,7 +4,7 @@ date: "2026-08-11"
 author: "RedStream Expert"
 tags: ["IPTV Players", "Firestick", "Android TV", "TiviMate", "Apps"]
 description: "Discover the best IPTV player apps for Amazon Fire TV Stick, Android TV, Google TV, and Smart TVs in 2026. Complete comparison of UI, EPG, recording, and stability."
-coverImage: "/future_streaming_trends_2026.svg"
+cover_image: "/future_streaming_trends_2026.svg"
 ---
 
 # Top 5 Best IPTV Players for Android TV and Firestick (2026 Ranked)

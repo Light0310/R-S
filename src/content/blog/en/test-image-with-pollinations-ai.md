@@ -4,7 +4,7 @@ date: "2026-09-07"
 author: "RedStream Expert"
 tags: ["iptv","streaming guide","troubleshooting","smart tv","firestick"]
 description: "Complete guide on Test Image with Pollinations AI. Discover the top technical solutions, recommended players, and network optimizations for 2026."
-coverImage: "/redstream_blog_cover.svg"
+cover_image: "/redstream_blog_cover.svg"
 ---
 
 # How to Master Test Image with Pollinations AI (Ultimate 2026 Guide)

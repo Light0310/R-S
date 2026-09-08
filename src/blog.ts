@@ -101,6 +101,7 @@ export function loadBlogPosts(): BlogPost[] {
       tags: frontmatter.tags || [],
       description: frontmatter.description || '',
       content,
+      cover_image: frontmatter.cover_image,
       readingTime,
     });
   }
