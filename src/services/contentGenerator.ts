@@ -136,8 +136,17 @@ Output strictly valid JSON according to the schema.`;
         let base64Image = undefined;
         try {
           console.log(`[Content Generator] Generating cover image via Pollinations AI for: ${articleData.title}`);
-          const shortTitle = (articleData.title || queryString).split(':').length > 1 ? (articleData.title || queryString).split(':')[0] : (articleData.title || queryString);
-          const imagePrompt = `A futuristic, ultra high-tech blog cover image. The image MUST prominently feature the exact text: \"${shortTitle}\". The text must be large, glowing, perfectly legible, and centered. The background should be a highly advanced tech environment, featuring glowing neon circuits, fiber optics, sleek server racks, or holographic data streams in a dark cinematic aesthetic. 8k, masterpiece, photorealistic, cyberpunk tech vibe.`;
+          let shortTitle = (articleData.title || queryString).split(':').length > 1 ? (articleData.title || queryString).split(':')[0] : (articleData.title || queryString);
+    // Shorten and filter words for better image generation
+    let words = shortTitle.split(' ').map(w => w.trim()).filter(Boolean);
+    const filler = ['how', 'to', 'optimize', 'the', 'for', 'in', 'and', 'a', 'an', 'is', 'guide', 'complete', 'best', 'setup', 'tutorial', 'ultimate', 'fix', 'free'];
+    let coreWords = words.filter(w => !filler.includes(w.toLowerCase().replace(/[^a-z]/g, '')));
+    if (coreWords.length > 0) {
+      shortTitle = coreWords.slice(0, 4).join(' ');
+    } else {
+      shortTitle = words.slice(0, 3).join(' ');
+    }
+          const imagePrompt = `A digital artwork featuring the EXACT text \"${shortTitle}\" written in massive, bold, glowing neon typography. The text is perfectly centered and highly legible. The background is a dark, cinematic, cyberpunk environment with glowing red accents. Absolutely no extra letters or misspelled words. 8k resolution, masterpiece.`;
           const encodedPrompt = encodeURIComponent(imagePrompt);
           const imageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=1280&height=720&nologo=true`;
           
@@ -184,8 +193,17 @@ Output strictly valid JSON according to the schema.`;
   // --- Generate Image using Free AI API (Pollinations) for Fallback ---
   let fallbackImage = undefined;
   try {
-    const shortTitle = queryString.split(':').length > 1 ? queryString.split(':')[0] : queryString;
-    const imagePrompt = `A futuristic, ultra high-tech blog cover image. The image MUST prominently feature the exact text: \"${shortTitle}\". The text must be large, glowing, perfectly legible, and centered. The background should be a highly advanced tech environment, featuring glowing neon circuits, fiber optics, sleek server racks, or holographic data streams in a dark cinematic aesthetic. 8k, masterpiece, photorealistic, cyberpunk tech vibe.`;
+    let shortTitle = queryString.split(':').length > 1 ? queryString.split(':')[0] : queryString;
+    // Shorten and filter words for better image generation
+    let words = shortTitle.split(' ').map(w => w.trim()).filter(Boolean);
+    const filler = ['how', 'to', 'optimize', 'the', 'for', 'in', 'and', 'a', 'an', 'is', 'guide', 'complete', 'best', 'setup', 'tutorial', 'ultimate', 'fix', 'free'];
+    let coreWords = words.filter(w => !filler.includes(w.toLowerCase().replace(/[^a-z]/g, '')));
+    if (coreWords.length > 0) {
+      shortTitle = coreWords.slice(0, 4).join(' ');
+    } else {
+      shortTitle = words.slice(0, 3).join(' ');
+    }
+    const imagePrompt = `A digital artwork featuring the EXACT text \"${shortTitle}\" written in massive, bold, glowing neon typography. The text is perfectly centered and highly legible. The background is a dark, cinematic, cyberpunk environment with glowing red accents. Absolutely no extra letters or misspelled words. 8k resolution, masterpiece.`;
     const encodedPrompt = encodeURIComponent(imagePrompt);
     const imageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=1280&height=720&nologo=true`;
     
