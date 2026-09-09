@@ -15,5 +15,6 @@ export const blogPosts = pgTable('blog_posts', {
   status: varchar('status', { length: 50 }).notNull().default('published'),
   description: text('description'),
   tags: text('tags').array(),
+  coverImage: text('cover_image'),
   createdAt: timestamp('created_at').defaultNow()
 });
