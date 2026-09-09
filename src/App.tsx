@@ -329,6 +329,7 @@ function BlogPostRoute() {
               tags: data.post.tags || [],
               description: data.post.description || '',
               content: data.post.content,
+              cover_image: data.post.cover_image,
               readingTime: Math.max(1, Math.ceil((data.post.content || '').split(/\s+/).length / 200)),
             });
           }

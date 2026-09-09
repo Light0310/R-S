@@ -169,7 +169,7 @@ router.get('/images/:slug.jpg', async (req: Request, res: Response) => {
 // PUT /blog-posts/:id - Protected endpoint to edit a blog post (syncs to disk + DB)
 router.put('/blog-posts/:id', adminAuthMiddleware, async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { title, content, slug, description, tags, status } = req.body;
+  const { title, content, slug, description, tags, status, cover_image } = req.body;
   try {
     const updated = await updateBlogPost(id, {
       title,
@@ -177,7 +177,8 @@ router.put('/blog-posts/:id', adminAuthMiddleware, async (req: Request, res: Res
       slug,
       description,
       tags,
-      status
+      status,
+      cover_image
     });
     if (!updated) {
       res.status(404).json({ success: false, message: 'Blog post not found' });
