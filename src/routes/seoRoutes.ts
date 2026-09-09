@@ -1,3 +1,4 @@
+import { generateSvgThumbnail } from '../services/imageGenerator';
 import fs from 'fs';
 import path from 'path';
 import { Router, Request, Response, NextFunction } from 'express';
@@ -53,30 +54,8 @@ router.post('/generate-image', adminAuthMiddleware, async (req: Request, res: Re
       res.status(400).json({ success: false, message: 'Missing title' });
       return;
     }
-    let shortTitle = title.split(':').length > 1 ? title.split(':')[0] : title;
-    // Shorten and filter words for better image generation
-    let words = shortTitle.split(' ').map(w => w.trim()).filter(Boolean);
-    const filler = ['how', 'to', 'optimize', 'the', 'for', 'in', 'and', 'a', 'an', 'is', 'guide', 'complete', 'best', 'setup', 'tutorial', 'ultimate', 'fix', 'free'];
-    let coreWords = words.filter(w => !filler.includes(w.toLowerCase().replace(/[^a-z]/g, '')));
-    if (coreWords.length > 0) {
-      shortTitle = coreWords.slice(0, 4).join(' ');
-    } else {
-      shortTitle = words.slice(0, 3).join(' ');
-    }
-    const imagePrompt = `A digital artwork featuring the EXACT text \"${shortTitle}\" written in massive, bold, glowing neon typography. The text is perfectly centered and highly legible. The background is a dark, cinematic, cyberpunk environment with glowing red accents. Absolutely no extra letters or misspelled words. 8k resolution, masterpiece.`;
-    const encodedPrompt = encodeURIComponent(imagePrompt);
-    const imageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=1280&height=720&nologo=true`;
-    
-    const imgResponse = await fetch(imageUrl, { headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" } });
-    
-    if (imgResponse.ok) {
-      const arrayBuffer = await imgResponse.arrayBuffer();
-      const buffer = Buffer.from(arrayBuffer);
-      const base64Image = `data:image/jpeg;base64,${buffer.toString('base64')}`;
-      res.json({ success: true, image: base64Image });
-    } else {
-      res.status(500).json({ success: false, message: 'Failed to generate image' });
-    }
+    let base64Image = generateSvgThumbnail(title);
+    res.json({ success: true, image: base64Image });
   } catch (error: any) {
     console.error('[SEO Routes] Error in generate-image endpoint:', error.message);
     res.status(500).json({ success: false, message: error.message });
