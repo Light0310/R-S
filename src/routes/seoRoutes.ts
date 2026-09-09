@@ -45,6 +45,35 @@ router.post('/generate-content', adminAuthMiddleware, async (req: Request, res: 
   }
 });
 
+// POST /generate-image - Protected endpoint to generate a cover image
+router.post('/generate-image', adminAuthMiddleware, async (req: Request, res: Response) => {
+  try {
+    const { title } = req.body;
+    if (!title) {
+      res.status(400).json({ success: false, message: 'Missing title' });
+      return;
+    }
+    const shortTitle = title.split(':').length > 1 ? title.split(':')[0] : title;
+    const imagePrompt = `A professional, high-end tech blog cover image about "${shortTitle}". Cinematic lighting, sleek dark modern aesthetic with subtle red glowing accents. The image MUST include prominent, bold, highly legible text overlay that perfectly spells EXACTLY: "${shortTitle}". Typography should be clean, large, and centered like a YouTube thumbnail or Medium header. 8k, photorealistic, masterpiece.`;
+    const encodedPrompt = encodeURIComponent(imagePrompt);
+    const imageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=1280&height=720&nologo=true`;
+    
+    const imgResponse = await fetch(imageUrl, { headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" } });
+    
+    if (imgResponse.ok) {
+      const arrayBuffer = await imgResponse.arrayBuffer();
+      const buffer = Buffer.from(arrayBuffer);
+      const base64Image = `data:image/jpeg;base64,${buffer.toString('base64')}`;
+      res.json({ success: true, image: base64Image });
+    } else {
+      res.status(500).json({ success: false, message: 'Failed to generate image' });
+    }
+  } catch (error: any) {
+    console.error('[SEO Routes] Error in generate-image endpoint:', error.message);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
 // POST /add-query - Protected endpoint to manually add a search query to the queue
 router.post('/add-query', adminAuthMiddleware, async (req: Request, res: Response) => {
   const { searchQuery } = req.body;

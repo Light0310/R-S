@@ -292,7 +292,12 @@ export async function saveBlogPost(post: {
     const imgBuffer = Buffer.from(base64Data, 'base64');
     fs.writeFileSync(path.join(process.cwd(), 'src', 'content', 'blog', 'images', `${cleanSlug}.jpg`), imgBuffer);
   }
-  const mdContent = formatMarkdownWithFrontmatter({
+  if (updates.cover_image?.startsWith('data:image')) {
+      const base64Data = updates.cover_image.replace(/^data:image\/\w+;base64,/, '');
+      const imgBuffer = Buffer.from(base64Data, 'base64');
+      fs.writeFileSync(path.join(process.cwd(), 'src', 'content', 'blog', 'images', `${newSlug}.jpg`), imgBuffer);
+    }
+    const mdContent = formatMarkdownWithFrontmatter({
       title: fullPost.title,
       date: fullPost.date!,
       author: fullPost.author!,
@@ -326,7 +331,7 @@ export async function saveBlogPost(post: {
           INSERT INTO blog_posts (title, content, slug, status, description, tags, cover_image)
           VALUES ($1, $2, $3, $4, $5, $6, $7)
           ON CONFLICT (slug) DO UPDATE 
-          SET title = EXCLUDED.title, content = EXCLUDED.content, description = EXCLUDED.description, tags = EXCLUDED.tags, status = EXCLUDED.status, cover_image = EXCLUDED.cover_image
+          SET title = EXCLUDED.title, content = EXCLUDED.content, description = EXCLUDED.description, tags = EXCLUDED.tags, status = EXCLUDED.status, cover_image = EXCLUDED.cover_image, cover_image = EXCLUDED.cover_image
           RETURNING id, title, slug, status, created_at
         `, [
           fullPost.title,
@@ -363,6 +368,7 @@ export async function updateBlogPost(
     description: string;
     tags: string[];
     status?: 'published' | 'draft';
+    cover_image?: string;
   }
 ): Promise<BlogPostItem | null> {
   ensureDirectories();
@@ -383,6 +389,9 @@ export async function updateBlogPost(
   existing.description = updates.description !== undefined ? updates.description : existing.description;
   existing.tags = updates.tags || existing.tags;
   if (updates.status) existing.status = updates.status;
+  if (updates.cover_image !== undefined) {
+    existing.cover_image = updates.cover_image?.startsWith('data:image') ? `/api/seo/images/${newSlug}.jpg` : updates.cover_image;
+  }
 
   // 1. Handle Markdown file
   try {
@@ -393,13 +402,19 @@ export async function updateBlogPost(
       fs.unlinkSync(oldFilePath);
     }
 
+    if (updates.cover_image?.startsWith('data:image')) {
+      const base64Data = updates.cover_image.replace(/^data:image\/\w+;base64,/, '');
+      const imgBuffer = Buffer.from(base64Data, 'base64');
+      fs.writeFileSync(path.join(process.cwd(), 'src', 'content', 'blog', 'images', `${newSlug}.jpg`), imgBuffer);
+    }
     const mdContent = formatMarkdownWithFrontmatter({
       title: existing.title,
       date: existing.date || new Date().toISOString().split('T')[0],
       author: existing.author || 'RedStream Expert',
       tags: existing.tags,
       description: existing.description,
-      content: existing.content
+      content: existing.content,
+      coverImage: existing.cover_image
     });
     fs.writeFileSync(newFilePath, mdContent, 'utf-8');
   } catch (err: any) {
@@ -422,7 +437,7 @@ export async function updateBlogPost(
       try {
         await client.query(`
           UPDATE blog_posts
-          SET title = $1, content = $2, slug = $3, description = $4, tags = $5, status = $6
+          SET title = $1, content = $2, slug = $3, description = $4, tags = $5, status = $6, cover_image = $9
           WHERE id = $7 OR slug = $8
         `, [
           existing.title,
@@ -432,7 +447,8 @@ export async function updateBlogPost(
           existing.tags,
           existing.status,
           isNaN(Number(idOrSlug)) ? -1 : Number(idOrSlug),
-          oldSlug
+          oldSlug,
+          existing.cover_image
         ]);
       } finally {
         client.release();

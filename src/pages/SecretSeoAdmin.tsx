@@ -137,6 +137,46 @@ export default function SecretSeoAdmin() {
     }
   };
 
+  const handleCoverUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !editingPost) return;
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64String = reader.result as string;
+      setEditingPost({ ...editingPost, cover_image: base64String });
+    };
+    reader.readAsDataURL(file);
+    e.target.value = '';
+  };
+
+  const handleGenerateCover = async () => {
+    if (!editingPost || !editingPost.title) {
+      alert("Please provide a title first.");
+      return;
+    }
+    const oldCover = editingPost.cover_image;
+    setEditingPost({ ...editingPost, cover_image: 'generating' });
+    try {
+      const res = await fetch('/api/seo/generate-image', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-admin-token': 'redstream_secret_2026' },
+        body: JSON.stringify({ title: editingPost.title })
+      });
+      const data = await res.json();
+      if (data.success && data.image) {
+        setEditingPost({ ...editingPost, cover_image: data.image });
+      } else {
+        alert(data.message || 'Failed to generate cover image');
+        setEditingPost({ ...editingPost, cover_image: oldCover });
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Error generating cover image');
+      setEditingPost({ ...editingPost, cover_image: oldCover });
+    }
+  };
+
   // Fetch all SEO and blog records
   const fetchSeoData = async (tokenToUse = adminToken) => {
     setDataLoading(true);
@@ -1054,6 +1094,49 @@ export default function SecretSeoAdmin() {
                   })}
                   className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#FF1E27] transition-colors font-mono"
                 />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-gray-400 uppercase tracking-wider block">Cover Image</label>
+                <div className="flex items-center gap-4">
+                  {editingPost.cover_image === 'generating' ? (
+                    <div className="w-24 h-16 bg-[#0a0a0a] border border-white/10 rounded-xl flex items-center justify-center text-gray-500">
+                      <Loader2 className="w-6 h-6 animate-spin text-[#FF1E27]" />
+                    </div>
+                  ) : editingPost.cover_image ? (
+                    <img 
+                      src={editingPost.cover_image} 
+                      alt="Cover" 
+                      className="w-24 h-16 object-cover rounded-xl border border-white/10" 
+                    />
+                  ) : (
+                    <div className="w-24 h-16 bg-[#0a0a0a] border border-white/10 rounded-xl flex items-center justify-center text-gray-500">
+                      <ImagePlus className="w-6 h-6" />
+                    </div>
+                  )}
+                  
+                  <div className="flex flex-col gap-2">
+                    <button
+                      type="button"
+                      onClick={handleGenerateCover}
+                      disabled={editingPost.cover_image === 'generating'}
+                      className="flex items-center gap-2 px-3 py-1.5 bg-[#FF1E27]/10 text-[#FF1E27] rounded-lg text-sm font-bold hover:bg-[#FF1E27]/20 transition-colors disabled:opacity-50"
+                    >
+                      <Sparkles className="w-4 h-4" />
+                      Generate with AI
+                    </button>
+                    <label className="flex items-center gap-2 px-3 py-1.5 bg-white/5 text-gray-300 rounded-lg text-sm font-bold hover:bg-white/10 transition-colors cursor-pointer w-max">
+                      <ImagePlus className="w-4 h-4" />
+                      Upload Custom
+                      <input 
+                        type="file" 
+                        accept="image/*" 
+                        onChange={handleCoverUpload}
+                        className="hidden" 
+                      />
+                    </label>
+                  </div>
+                </div>
               </div>
 
               {previewMode ? (
