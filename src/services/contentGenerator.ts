@@ -137,7 +137,7 @@ Output strictly valid JSON according to the schema.`;
         try {
           console.log(`[Content Generator] Generating cover image via Pollinations AI for: ${articleData.title}`);
           const shortTitle = (articleData.title || queryString).split(':').length > 1 ? (articleData.title || queryString).split(':')[0] : (articleData.title || queryString);
-          const imagePrompt = `A professional, high-end tech blog cover image about "${shortTitle}". Cinematic lighting, sleek dark modern aesthetic with subtle red glowing accents. The image MUST include prominent, bold, highly legible text overlay that perfectly spells EXACTLY: "${shortTitle}". Typography should be clean, large, and centered like a YouTube thumbnail or Medium header. 8k, photorealistic, masterpiece.`;
+          const imagePrompt = `A futuristic, ultra high-tech blog cover image. The image MUST prominently feature the exact text: \"${shortTitle}\". The text must be large, glowing, perfectly legible, and centered. The background should be a highly advanced tech environment, featuring glowing neon circuits, fiber optics, sleek server racks, or holographic data streams in a dark cinematic aesthetic. 8k, masterpiece, photorealistic, cyberpunk tech vibe.`;
           const encodedPrompt = encodeURIComponent(imagePrompt);
           const imageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=1280&height=720&nologo=true`;
           
@@ -185,7 +185,7 @@ Output strictly valid JSON according to the schema.`;
   let fallbackImage = undefined;
   try {
     const shortTitle = queryString.split(':').length > 1 ? queryString.split(':')[0] : queryString;
-    const imagePrompt = `A professional, high-end tech blog cover image about "${shortTitle}". Cinematic lighting, sleek dark modern aesthetic with subtle red glowing accents. The image MUST include prominent, bold, highly legible text overlay that perfectly spells EXACTLY: "${shortTitle}". Typography should be clean, large, and centered like a YouTube thumbnail or Medium header. 8k, photorealistic, masterpiece.`;
+    const imagePrompt = `A futuristic, ultra high-tech blog cover image. The image MUST prominently feature the exact text: \"${shortTitle}\". The text must be large, glowing, perfectly legible, and centered. The background should be a highly advanced tech environment, featuring glowing neon circuits, fiber optics, sleek server racks, or holographic data streams in a dark cinematic aesthetic. 8k, masterpiece, photorealistic, cyberpunk tech vibe.`;
     const encodedPrompt = encodeURIComponent(imagePrompt);
     const imageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=1280&height=720&nologo=true`;
     
