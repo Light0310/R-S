@@ -93,9 +93,9 @@ export async function generateArticle(
 Write a comprehensive, engaging, and in-depth blog post targeting the topic: "${queryString}".
 
 Strict Guidelines:
-1. Title: Catchy, authoritative, and SEO-friendly.
+1. Title: Highly engaging, click-worthy, and SEO-optimized (include power words and year if relevant).
 2. Structure: Use clear Markdown with one # Title, multiple ## Subheadings, ### Step-by-step guides, bullet points, and clean comparison tables where appropriate.
-3. Tone: Professional, authoritative, actionable, and easy to read. Minimum 800-1200 words of rich content.
+3. SEO & Formatting: Professional, authoritative, actionable. Minimum 800-1200 words. Include NLP keywords (e.g., buffering, latency, firestick, 4k, m3u, lag-free). Use bold text for key terms. Add a FAQ section at the end for Google Featured Snippets.
 4. Value: Provide real technical steps, app names, DNS tips (1.1.1.1 / 8.8.8.8), buffer settings, and hardware recommendations.
 5. Internal Links:${recentArticlesContext ? ` Insert 1-2 natural contextual internal links to these recent posts:${recentArticlesContext}` : ' (None)'}
 6. RedStream Call to Action (CTA): Smoothly integrate a prominent CTA box at the end recommending RedStream (Premium streaming servers, 4K Ultra HD, Anti-Freeze 9.0 servers) with a direct link to claim a 24H Free Trial on WhatsApp: https://wa.me/212694843943?text=Hello%20RedStream,%20I%20read%20your%20guide%20and%20want%20a%20free%20trial.
@@ -252,6 +252,33 @@ Even the best configuration cannot compensate for an overloaded or unstable serv
  * Main execution function to generate and permanently save an AI article.
  * Can take a custom keyword/topic or automatically pick from queue / curated topics.
  */
+
+async function generateUniqueSeoTopic(existingTitles: string[]): Promise<string> {
+  try {
+    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+    const prompt = `
+You are an expert SEO strategist in the IPTV, Streaming, and Cord-Cutting niche.
+Your task is to generate a HIGHLY UNIQUE, highly searched, low-competition blog post topic (keyword).
+
+IMPORTANT: You must NOT generate any topic that overlaps with the following existing articles:
+${existingTitles.map(t => '- ' + t).join('\n')}
+
+Return ONLY the topic string, nothing else. Example: "How to fix IPTV buffering on Firestick 2026"
+    `;
+    const response = await ai.models.generateContent({
+      model: 'gemini-2.5-flash',
+      contents: prompt,
+      config: {
+        temperature: 0.9,
+      }
+    });
+    return response.text?.trim() || 'Ultimate Guide to 4K IPTV Streaming 2026';
+  } catch (error) {
+    console.error('Error generating unique topic:', error);
+    return 'Best Streaming Devices for 4K IPTV 2026';
+  }
+}
+
 export async function executeAutoContentGeneration(customQuery?: string): Promise<{
   success: boolean;
   message: string;
@@ -321,17 +348,12 @@ export async function executeAutoContentGeneration(customQuery?: string): Promis
       }
     }
 
-    // If still no target query, pick from curated topics
+    // If no target query, generate a strictly unique SEO topic
     if (!targetQuery) {
       const existingPosts = await getAllBlogPosts();
-      const existingSlugs = new Set(existingPosts.map(p => p.slug));
-      
-      const unusedCurated = CURATED_IPTV_TOPICS.find(t => !existingSlugs.has(t.slug));
-      if (unusedCurated) {
-        targetQuery = unusedCurated.topic;
-      } else {
-        targetQuery = `Best IPTV Setup and Streaming Guide ${new Date().getFullYear()}`;
-      }
+      const existingTitles = existingPosts.map(p => p.title);
+      targetQuery = await generateUniqueSeoTopic(existingTitles);
+      console.log('[Content Generator] Generated unique SEO topic:', targetQuery);
     }
 
     // Get recent articles for interlinking

@@ -615,19 +615,20 @@ export default function SecretSeoAdmin() {
                   </p>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex flex-col gap-2">
                   <button
                     onClick={() => handleGenerateContent()}
-                    disabled={generationLoading}
-                    className="flex items-center gap-2 px-5 py-3 bg-[#FF1E27] hover:bg-[#e0141d] text-white rounded-xl text-xs font-black transition-all shadow-lg shadow-[#FF1E27]/25 disabled:opacity-50 cursor-pointer"
+                    disabled={generationLoading && !customTopic}
+                    className="flex items-center gap-2 px-6 py-4 bg-gradient-to-r from-[#FF1E27] to-[#D01018] hover:from-[#e0141d] hover:to-[#B00D13] text-white rounded-xl text-sm font-black transition-all shadow-xl shadow-[#FF1E27]/30 disabled:opacity-50 cursor-pointer"
                   >
-                    {generationLoading ? (
-                      <Loader2 className="w-4 h-4 animate-spin" />
+                    {generationLoading && !customTopic ? (
+                      <Loader2 className="w-5 h-5 animate-spin" />
                     ) : (
-                      <Zap className="w-4 h-4" />
+                      <Sparkles className="w-5 h-5" />
                     )}
-                    {generationLoading ? 'Writing Article...' : 'Quick Auto-Generate'}
+                    {generationLoading && !customTopic ? 'Synthesizing Unique Topic...' : 'Auto-Generate Unique SEO Article'}
                   </button>
+                  <p className="text-[11px] text-green-400 font-medium">✨ Automatically avoids duplicate topics & optimizes for Google Search.</p>
                 </div>
               </div>
 

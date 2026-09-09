@@ -1,3 +1,5 @@
+import { db } from './firebaseAdmin';
+import { collection, doc, getDocs, setDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import fs from 'fs';
 import path from 'path';
 import { pool } from '../controllers/seoController';
@@ -196,46 +198,35 @@ export async function getAllBlogPosts(): Promise<BlogPostItem[]> {
     }
   }
 
-  // 3. Load from PostgreSQL if available
-  if (process.env.SQL_HOST) {
-    try {
-      const client = await pool.connect();
-      try {
-        const res = await client.query(`
-          SELECT id, title, content, slug, status, description, tags, created_at, cover_image
-          FROM blog_posts
-          ORDER BY created_at DESC
-        `);
-        for (const row of res.rows) {
-          const existing = postsMap.get(row.slug);
-          if (!existing) {
-            postsMap.set(row.slug, {
-              id: row.id,
-              title: row.title,
-              slug: row.slug,
-              content: row.content,
-              description: row.description || '',
-              tags: Array.isArray(row.tags) ? row.tags : (row.tags ? [row.tags] : ['iptv']),
-              author: 'RedStream Expert',
-              date: new Date(row.created_at).toISOString().split('T')[0],
-              status: row.status || 'published',
-              created_at: new Date(row.created_at).toISOString(),
-              cover_image: row.cover_image
-            });
-          } else if (existing && !existing.id) {
-            existing.id = row.id;
-          }
-        }
-      } finally {
-        client.release();
+  // 3. Load from Firestore
+  try {
+    const snapshot = await getDocs(collection(db, 'blog_posts'));
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      const existing = postsMap.get(data.slug);
+      if (!existing) {
+        postsMap.set(data.slug, {
+          id: doc.id,
+          title: data.title,
+          slug: data.slug,
+          content: data.content,
+          description: data.description || '',
+          tags: Array.isArray(data.tags) ? data.tags : (data.tags ? [data.tags] : ['iptv']),
+          author: data.author || 'RedStream Expert',
+          date: data.date || (data.created_at ? new Date(data.created_at).toISOString().split('T')[0] : new Date().toISOString().split('T')[0]),
+          status: data.status || 'published',
+          created_at: data.created_at || new Date().toISOString(),
+          cover_image: data.cover_image || undefined
+        });
+      } else if (existing && !existing.id) {
+        existing.id = doc.id;
       }
-    } catch (dbErr: any) {
-      console.warn('[BlogStorage] Database query warning (using disk storage):', dbErr.message);
-    }
+    });
+  } catch (err) {
+    console.error('[BlogStorage] Error reading from Firestore:', err);
   }
 
   const allPosts = Array.from(postsMap.values());
-  // Sort by date descending
   return allPosts.sort((a, b) => new Date(b.created_at || b.date || 0).getTime() - new Date(a.created_at || a.date || 0).getTime());
 }
 
@@ -321,37 +312,26 @@ export async function saveBlogPost(post: {
     console.error('[BlogStorage] Failed to save to dynamic JSON:', err.message);
   }
 
-  // 3. Save to PostgreSQL if connected
-  if (process.env.SQL_HOST) {
-    try {
-      const client = await pool.connect();
-      try {
-        const insertRes = await client.query(`
-          INSERT INTO blog_posts (title, content, slug, status, description, tags, cover_image)
-          VALUES ($1, $2, $3, $4, $5, $6, $7)
-          ON CONFLICT (slug) DO UPDATE 
-          SET title = EXCLUDED.title, content = EXCLUDED.content, description = EXCLUDED.description, tags = EXCLUDED.tags, status = EXCLUDED.status, cover_image = EXCLUDED.cover_image, cover_image = EXCLUDED.cover_image
-          RETURNING id, title, slug, status, created_at
-        `, [
-          fullPost.title,
-          fullPost.content,
-          fullPost.slug,
-          fullPost.status,
-          fullPost.description,
-          fullPost.tags,
-          fullPost.cover_image
-        ]);
-        if (insertRes.rows.length > 0) {
-          fullPost.id = insertRes.rows[0].id;
-        }
-      } finally {
-        client.release();
-      }
-    } catch (dbErr: any) {
-      console.warn('[BlogStorage] Database insert warning (persisted to disk successfully):', dbErr.message);
-    }
+  // 3. Save to Firestore
+  try {
+    const docRef = doc(db, 'blog_posts', cleanSlug);
+    await setDoc(docRef, {
+      title: fullPost.title,
+      slug: fullPost.slug,
+      content: fullPost.content,
+      description: fullPost.description,
+      tags: fullPost.tags,
+      status: fullPost.status,
+      cover_image: fullPost.cover_image || null,
+      created_at: fullPost.created_at,
+      author: fullPost.author,
+      date: fullPost.date
+    }, { merge: true });
+    fullPost.id = cleanSlug;
+  } catch (err) {
+    console.error('[BlogStorage] Firestore insert error:', err);
   }
-
+  
   return fullPost;
 }
 
@@ -431,34 +411,38 @@ export async function updateBlogPost(
     console.error('[BlogStorage] Error updating JSON:', err.message);
   }
 
-  // 3. Update PostgreSQL
-  if (process.env.SQL_HOST) {
-    try {
-      const client = await pool.connect();
-      try {
-        await client.query(`
-          UPDATE blog_posts
-          SET title = $1, content = $2, slug = $3, description = $4, tags = $5, status = $6, cover_image = $9
-          WHERE id = $7 OR slug = $8
-        `, [
-          existing.title,
-          existing.content,
-          existing.slug,
-          existing.description,
-          existing.tags,
-          existing.status,
-          isNaN(Number(idOrSlug)) ? -1 : Number(idOrSlug),
-          oldSlug,
-          existing.cover_image
-        ]);
-      } finally {
-        client.release();
-      }
-    } catch (dbErr: any) {
-      console.warn('[BlogStorage] Database update warning:', dbErr.message);
+  // 3. Update Firestore
+  try {
+    const docRef = doc(db, 'blog_posts', oldSlug);
+    // If slug changed, we need to create a new doc and delete old
+    if (oldSlug !== newSlug) {
+      await setDoc(doc(db, 'blog_posts', newSlug), {
+        title: existing.title,
+        slug: existing.slug,
+        content: existing.content,
+        description: existing.description,
+        tags: existing.tags,
+        status: existing.status,
+        cover_image: existing.cover_image || null,
+        created_at: existing.created_at,
+        author: existing.author,
+        date: existing.date
+      });
+      await deleteDoc(docRef);
+    } else {
+      await updateDoc(docRef, {
+        title: existing.title,
+        content: existing.content,
+        description: existing.description,
+        tags: existing.tags,
+        status: existing.status,
+        cover_image: existing.cover_image || null
+      });
     }
+  } catch (err) {
+    console.error('[BlogStorage] Firestore update error:', err);
   }
-
+  
   return existing;
 }
 
@@ -495,22 +479,12 @@ export async function deleteBlogPost(idOrSlug: string | number): Promise<boolean
     console.error('[BlogStorage] Error updating JSON on delete:', err.message);
   }
 
-  // 3. Delete from PostgreSQL
-  if (process.env.SQL_HOST) {
-    try {
-      const client = await pool.connect();
-      try {
-        await client.query(`
-          DELETE FROM blog_posts
-          WHERE id = $1 OR slug = $2
-        `, [isNaN(Number(idOrSlug)) ? -1 : Number(idOrSlug), slug]);
-      } finally {
-        client.release();
-      }
-    } catch (dbErr: any) {
-      console.warn('[BlogStorage] Database delete warning:', dbErr.message);
-    }
+  // 3. Delete from Firestore
+  try {
+    await deleteDoc(doc(db, 'blog_posts', slug));
+  } catch (err) {
+    console.error('[BlogStorage] Firestore delete error:', err);
   }
-
+  
   return true;
 }

@@ -7,7 +7,7 @@ import React, { useEffect, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Link } from 'react-router-dom';
 import { BlogPost, Language, TranslationDictionary } from '../types';
-import { ArrowLeft, Calendar, User, Clock, ChevronRight, MessageCircle, List } from 'lucide-react';
+import { ArrowLeft, Calendar, User, Clock, ChevronRight, MessageCircle, List, Share2 } from 'lucide-react';
 
 interface BlogPostProps {
   post: BlogPost;
@@ -228,43 +228,81 @@ export default function BlogPostComponent({ post, lang, t, onBack }: BlogPostPro
           </div>
         </div>
 
-        {/* Grid Body */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+        {/* Forum Style Grid Body */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12">
           
-          {/* Main Article Content */}
+          {/* Main Thread Content */}
           <main className="lg:col-span-8">
-            {/* Main Cover Banner */}
-            <figure className="aspect-[16/9] w-full rounded-2xl overflow-hidden bg-gray-950 mb-10 border border-white/5 shadow-2xl relative">
-              <img 
-                src={coverImage} 
-                alt={`${post.title} - Ultimate Guide`} 
-                title={post.title}
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-cover" 
-              />
-              <figcaption className="sr-only">{post.title} - IPTV Streaming Guide</figcaption>
-            </figure>
+            <div className="bg-[#141414] border border-white/10 rounded-xl overflow-hidden flex flex-col md:flex-row shadow-2xl">
+              
+              {/* Left: User Profile (Forum Style) */}
+              <div className="w-full md:w-56 bg-[#1a1a1a] p-6 border-b md:border-b-0 md:border-r border-white/10 flex flex-col items-center text-center shrink-0">
+                <div className="w-20 h-20 rounded-full overflow-hidden bg-black border-2 border-[#FF1E27] mb-3 shadow-lg">
+                  <img 
+                    src="/admin_profile.png" 
+                    alt="Author Avatar" 
+                    className="w-full h-full object-cover" 
+                  />
+                </div>
+                <div className="font-bold text-white text-lg">{post.author}</div>
+                <div className="text-xs text-[#FF1E27] font-bold mb-4 tracking-widest uppercase bg-[#FF1E27]/10 px-3 py-1 rounded-full mt-2">
+                  Administrator
+                </div>
+                
+                <div className="text-[10px] text-gray-400 space-y-2 w-full text-left bg-black/40 p-3 rounded-lg border border-white/5 uppercase font-mono tracking-wider">
+                   <div className="flex justify-between"><span>Joined:</span><span className="text-white">Sep 2023</span></div>
+                   <div className="flex justify-between"><span>Messages:</span><span className="text-white">2,401</span></div>
+                   <div className="flex justify-between"><span>Trophies:</span><span className="text-white">142</span></div>
+                </div>
+              </div>
 
-            {/* Rendered Markdown Body */}
-            <div className="markdown-container">
-              <ReactMarkdown
-                components={{
-                  h1: ({ node, ...props }) => <h2 {...props} />,
-                  h2: ({ node, children, ...props }) => <h2 id={generateId(children)} style={{ scrollMarginTop: '100px' }} {...props}>{children}</h2>,
-                  h3: ({ node, children, ...props }) => <h3 id={generateId(children)} style={{ scrollMarginTop: '100px' }} {...props}>{children}</h3>,
-                }}
-              >
-                {post.content
-                  ? post.content
-                      .replace(/\[([^\]]+)\]\(\/[^\)]*\)/gi, '$1')
-                      .replace(/<(?:a|Link)[^>]*(?:href|to)=['"]\/[^'"]*['"][^>]*>([^<]+)<\/(?:a|Link)>/gi, '$1')
-                  : ''}
-              </ReactMarkdown>
+              {/* Right: Post Content */}
+              <div className="flex-1 flex flex-col">
+                {/* Post Meta Top bar */}
+                <div className="flex justify-between items-center p-3 md:px-6 text-xs text-gray-500 border-b border-white/5 bg-white/[0.01]">
+                  <span>{post.date}</span>
+                  <div className="flex gap-4">
+                     <span className="hover:text-white transition-colors flex items-center gap-1 cursor-pointer"><Share2 size={12}/> Share</span>
+                     <span className="text-white font-bold">#1</span>
+                  </div>
+                </div>
+
+                {/* Main Content body */}
+                <div className="p-6 md:p-8 text-gray-300 markdown-container min-h-[300px]">
+                  <ReactMarkdown
+                    components={{
+                      h1: ({ node, ...props }) => <h2 {...props} />,
+                      h2: ({ node, children, ...props }) => <h2 id={generateId(children)} style={{ scrollMarginTop: '100px' }} {...props}>{children}</h2>,
+                      h3: ({ node, children, ...props }) => <h3 id={generateId(children)} style={{ scrollMarginTop: '100px' }} {...props}>{children}</h3>,
+                    }}
+                  >
+                    {post.content
+                      ? post.content
+                          .replace(/\[([^\]]+)\]\(\/[^\)]*\)/gi, '$1')
+                          .replace(/<(?:a|Link)[^>]*(?:href|to)=['"]\/[^'"]*['"][^>]*>([^<]+)<\/(?:a|Link)>/gi, '$1')
+                      : ''}
+                  </ReactMarkdown>
+                </div>
+
+                {/* Signature / Bottom */}
+                <div className="mt-auto p-6 pt-4 border-t border-white/5 bg-gradient-to-b from-transparent to-black/20">
+                  <div className="opacity-60 hover:opacity-100 transition-opacity">
+                     <hr className="border-white/10 mb-4 w-12" />
+                     <p className="text-xs text-gray-400 font-serif italic leading-relaxed">
+                       "RedStream IPTV - The ultimate viewing experience. Zero buffering, true 4K."<br/>
+                       <a href="https://wa.me/212694843943" className="text-[#FF1E27] hover:underline font-sans not-italic font-bold mt-1 inline-block" target="_blank" rel="noreferrer">
+                         Request a 24H free trial today
+                       </a>
+                     </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </main>
 
           {/* Sidebar CTA Content */}
           <aside className="lg:col-span-4 space-y-8">
+
             
             {/* Sticky Container */}
             <div className="sticky top-24 space-y-8">
