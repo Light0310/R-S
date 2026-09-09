@@ -264,11 +264,9 @@ function BlogListRoute() {
   }, []);
 
   const combinedPosts = useMemo(() => {
-    const staticPosts = loadBlogPosts().filter((post) => post.lang === currentLang);
-    const staticSlugs = new Set(staticPosts.map(p => p.slug));
+    const rawStaticPosts = loadBlogPosts().filter((post) => post.lang === currentLang);
 
     const convertedDynamic = dynamicPosts
-      .filter((dp: any) => !staticSlugs.has(dp.slug))
       .map((dp: any) => ({
         slug: dp.slug,
         lang: 'en' as Language, // default dynamic articles to English as they are generated for SEO
@@ -281,7 +279,11 @@ function BlogListRoute() {
         cover_image: dp.cover_image,
         readingTime: Math.max(1, Math.ceil((dp.content || '').split(/\s+/).length / 200)),
       }));
-    return [...staticPosts, ...convertedDynamic];
+
+    const dynamicSlugs = new Set(convertedDynamic.map(p => p.slug));
+    const finalStaticPosts = rawStaticPosts.filter(p => !dynamicSlugs.has(p.slug));
+
+    return [...finalStaticPosts, ...convertedDynamic];
   }, [currentLang, dynamicPosts]);
 
   const onNavigate = (view: string, slug?: string) => {
@@ -306,16 +308,9 @@ function BlogPostRoute() {
 
   useEffect(() => {
     const fetchSingleDynamicPost = async () => {
-      const staticPost = loadBlogPosts().find((p) => p.slug === slug && p.lang === currentLang);
-      if (staticPost) {
-        setLoading(false);
-        return;
-      }
-      
       setLoading(true);
       try {
         const endpoint = `/api/seo/blog-posts/${slug}`;
-
         const response = await fetch(endpoint, { credentials: 'include' });
         if (response.ok) {
           const data = await response.json();
@@ -346,7 +341,7 @@ function BlogPostRoute() {
 
   const activePost = useMemo(() => {
     const staticPost = loadBlogPosts().find((p) => p.slug === slug && p.lang === currentLang);
-    return staticPost || dynamicPost;
+    return dynamicPost || staticPost;
   }, [slug, currentLang, dynamicPost]);
 
   if (loading) {

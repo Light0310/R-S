@@ -1,5 +1,20 @@
 [
   {
+    "id": "test-new-blog",
+    "title": "Test New Blog",
+    "slug": "test-new-blog",
+    "content": "content",
+    "description": "desc",
+    "tags": [
+      "tag1"
+    ],
+    "author": "RedStream Expert",
+    "date": "2026-09-09",
+    "status": "published",
+    "created_at": "2026-09-09T05:55:08.028Z",
+    "cover_image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAYEBAQFBAYFBQYJBgUGCQsIBgYICwwKCgsKCgwQDAwMDAwMEAwODxAPDgwTExQUExMcGxsbHCAgICAgICAgICD/2wBDAQcHBw0MDRgQEBgaFREVGh8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx//wAARCAABAAEDASIAAhEBAxEB/8QAFAABAAAAAAAAAAAAAAAAAAAACP/EABQQAQAAAAAAAAAAAAAAAAAAAAD/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AQn//2Q=="
+  },
+  {
     "id": "iptv-buffering-fix-free",
     "title": "How to Optimize iptv buffering fix free: The Complete 2026 Guide",
     "slug": "iptv-buffering-fix-free",

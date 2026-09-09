@@ -287,11 +287,14 @@ export async function saveBlogPost(post: {
 
     // 1. Write to Disk Markdown File
   try {
+    let finalCoverImage = fullPost.cover_image;
     if (post.cover_image?.startsWith('data:image')) {
       const isSvg = post.cover_image.includes('svg+xml');
       const base64Data = post.cover_image.replace(/^data:image\/\w+(\+xml)?;base64,/, '');
       const imgBuffer = Buffer.from(base64Data, 'base64');
       fs.writeFileSync(path.join(process.cwd(), 'src', 'content', 'blog', 'images', `${cleanSlug}.${isSvg ? 'svg' : 'jpg'}`), imgBuffer);
+      finalCoverImage = `/api/seo/images/${cleanSlug}.${isSvg ? 'svg' : 'jpg'}`;
+      fullPost.cover_image = finalCoverImage;
     }
     const mdContent = formatMarkdownWithFrontmatter({
       title: fullPost.title,
@@ -300,7 +303,7 @@ export async function saveBlogPost(post: {
       tags: fullPost.tags,
       description: fullPost.description,
       content: fullPost.content,
-      coverImage: fullPost.cover_image
+      coverImage: finalCoverImage
     });
     const filePath = path.join(BLOG_DIR, `${cleanSlug}.md`);
     fs.writeFileSync(filePath, mdContent, 'utf-8');
@@ -403,6 +406,7 @@ export async function updateBlogPost(
       const base64Data = updates.cover_image.replace(/^data:image\/\w+(\+xml)?;base64,/, '');
       const imgBuffer = Buffer.from(base64Data, 'base64');
       fs.writeFileSync(path.join(process.cwd(), 'src', 'content', 'blog', 'images', `${newSlug}.${isSvg ? 'svg' : 'jpg'}`), imgBuffer);
+      existing.cover_image = `/api/seo/images/${newSlug}.${isSvg ? 'svg' : 'jpg'}`;
     }
     const mdContent = formatMarkdownWithFrontmatter({
       title: existing.title,
