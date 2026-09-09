@@ -132,29 +132,36 @@ router.get('/images/:slug.jpg', async (req: Request, res: Response) => {
   try {
     const post = await getBlogPostBySlug(slug);
     if (!post || !post.cover_image) {
-      // Return 404 if no image exists
       res.status(404).send('Image not found');
       return;
     }
 
-    if (!post.cover_image.startsWith('data:image')) {
-       res.redirect(post.cover_image);
+    let imgData = post.cover_image;
+
+    // If it's the broken infinite loop URL, regenerate the SVG on the fly
+    if (imgData.includes('/api/seo/images/')) {
+       imgData = generateSvgThumbnail(post.title || slug);
+    }
+
+    if (!imgData.startsWith('data:image')) {
+       res.redirect(imgData);
        return;
     }
 
-    // Convert base64 data to binary
-    const base64Data = post.cover_image.replace(/^data:image\/\w+;base64,/, '');
+    const isSvg = imgData.includes('svg+xml');
+    const contentType = isSvg ? 'image/svg+xml' : 'image/jpeg';
+    
+    const base64Data = imgData.replace(/^data:image\/\w+(\+xml)?;base64,/, '');
     const imgBuffer = Buffer.from(base64Data, 'base64');
     
-    // Set headers for SEO & caching
     res.writeHead(200, {
-      'Content-Type': 'image/jpeg',
+      'Content-Type': contentType,
       'Content-Length': imgBuffer.length,
-      'Cache-Control': 'public, max-age=31536000' // Cache for 1 year
+      'Cache-Control': 'public, max-age=31536000'
     });
     res.end(imgBuffer);
-  } catch (error: any) {
-    console.error('[SEO Routes] Error serving dynamic image:', error.message);
+  } catch (error) {
+    console.error('Image route error:', error);
     res.status(500).send('Internal Server Error');
   }
 });

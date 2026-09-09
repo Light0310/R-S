@@ -46,10 +46,7 @@ export default function BlogPostComponent({ post, lang, t, onBack }: BlogPostPro
   }, [post]);
 
   // Find Cover Image based on slug
-  const coverImage = post.cover_image?.startsWith('data:image') 
-    ? `/api/seo/images/${post.slug}.jpg`
-    : post.cover_image 
-    ? post.cover_image
+  const coverImage = post.cover_image ? post.cover_image
     : post.slug.includes('samsung') 
     ? '/samsung_streaming_guide.svg' 
     : post.slug.includes('setup')

@@ -282,7 +282,7 @@ export async function saveBlogPost(post: {
     date,
     status,
     created_at: new Date().toISOString(),
-    cover_image: post.cover_image?.startsWith('data:image') ? `/api/seo/images/${cleanSlug}.${post.cover_image.includes('svg+xml') ? 'svg' : 'jpg'}` : post.cover_image
+    cover_image: post.cover_image
   };
 
     // 1. Write to Disk Markdown File
@@ -386,7 +386,7 @@ export async function updateBlogPost(
   existing.tags = updates.tags || existing.tags;
   if (updates.status) existing.status = updates.status;
   if (updates.cover_image !== undefined) {
-    existing.cover_image = updates.cover_image?.startsWith('data:image') ? `/api/seo/images/${newSlug}.${updates.cover_image.includes('svg+xml') ? 'svg' : 'jpg'}` : updates.cover_image;
+    existing.cover_image = updates.cover_image;
   }
 
   // 1. Handle Markdown file
