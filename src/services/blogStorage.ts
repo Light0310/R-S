@@ -21,6 +21,8 @@ const DYNAMIC_JSON_PATH = path.join(process.cwd(), 'src', 'content', 'dynamic_po
 
 // Ensure directory exists
 function ensureDirectories() {
+  const imagesDir = path.join(process.cwd(), 'src', 'content', 'blog', 'images');
+  if (!fs.existsSync(imagesDir)) fs.mkdirSync(imagesDir, { recursive: true });
   if (!fs.existsSync(BLOG_DIR)) {
     fs.mkdirSync(BLOG_DIR, { recursive: true });
   }
@@ -280,12 +282,17 @@ export async function saveBlogPost(post: {
     date,
     status,
     created_at: new Date().toISOString(),
-    cover_image: post.cover_image
+    cover_image: post.cover_image?.startsWith('data:image') ? `/api/seo/images/${cleanSlug}.jpg` : post.cover_image
   };
 
   // 1. Write to Disk Markdown File
   try {
-    const mdContent = formatMarkdownWithFrontmatter({
+    if (post.cover_image?.startsWith('data:image')) {
+    const base64Data = post.cover_image.replace(/^data:image\/\w+;base64,/, '');
+    const imgBuffer = Buffer.from(base64Data, 'base64');
+    fs.writeFileSync(path.join(process.cwd(), 'src', 'content', 'blog', 'images', `${cleanSlug}.jpg`), imgBuffer);
+  }
+  const mdContent = formatMarkdownWithFrontmatter({
       title: fullPost.title,
       date: fullPost.date!,
       author: fullPost.author!,

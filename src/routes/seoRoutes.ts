@@ -1,3 +1,5 @@
+import fs from 'fs';
+import path from 'path';
 import { Router, Request, Response, NextFunction } from 'express';
 import { executeSearchIntegration, getStoredSeoResults, pool } from '../controllers/seoController';
 import { executeAutoContentGeneration } from '../services/contentGenerator';
