@@ -229,8 +229,11 @@ export const prefetchDynamicPosts = (forceRefresh = false) => {
   
   const endpoint = '/api/seo/blog-posts';
 
-  globalDynamicPostsPromise = fetch(endpoint)
-    .then(r => r.json())
+  globalDynamicPostsPromise = fetch(endpoint, { credentials: 'include' })
+    .then(r => {
+      if (!r.ok) throw new Error('Network response was not ok');
+      return r.json();
+    })
     .then(data => {
       globalDynamicPostsCache = data.posts || [];
       return globalDynamicPostsCache;
@@ -313,7 +316,7 @@ function BlogPostRoute() {
       try {
         const endpoint = `/api/seo/blog-posts/${slug}`;
 
-        const response = await fetch(endpoint);
+        const response = await fetch(endpoint, { credentials: 'include' });
         if (response.ok) {
           const data = await response.json();
           if (data.success && data.post) {

@@ -343,7 +343,7 @@ Sitemap: ${baseUrl}/sitemap.xml
             // 2. Fallback to Database if no static file exists
             try {
               const postRes = await pool.query(
-                `SELECT title, excerpt as description, cover_image FROM blog_posts WHERE slug = $1 AND status = 'published'`,
+                `SELECT title, description, cover_image FROM blog_posts WHERE slug = $1 AND status = 'published'`,
                 [slug]
               );
               if (postRes.rows.length > 0) {
@@ -384,7 +384,7 @@ Sitemap: ${baseUrl}/sitemap.xml
           }
 
           if (blogImage) {
-            const fullImageUrl = blogImage.startsWith('http') ? blogImage : `${baseUrl}${blogImage}`;
+            const fullImageUrl = blogImage.startsWith('http') ? blogImage : blogImage.startsWith('data:image') ? `${baseUrl}/api/seo/images/${slug}.jpg` : `${baseUrl}${blogImage}`;
             modifiedHtml = modifiedHtml.replace(
               /<meta\s+property="og:image"\s+content="[^"]*"\s*\/?>/gi,
               `<meta property="og:image" content="${fullImageUrl}" />`
@@ -404,7 +404,7 @@ Sitemap: ${baseUrl}/sitemap.xml
             },
             "headline": blogTitle || "RedStream IPTV Blog",
             "description": blogDesc || "",
-            "image": blogImage ? (blogImage.startsWith('http') ? blogImage : `${baseUrl}${blogImage}`) : `${baseUrl}/whatsapp_order_preview.png`,
+            "image": blogImage ? (blogImage.startsWith('http') ? blogImage : blogImage.startsWith('data:image') ? `${baseUrl}/api/seo/images/${slug}.jpg` : `${baseUrl}${blogImage}`) : `${baseUrl}/whatsapp_order_preview.png`,
             "author": {
               "@type": "Organization",
               "name": "RedStream Expert"

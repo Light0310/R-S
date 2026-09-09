@@ -158,7 +158,7 @@ export default function SecretSeoAdmin() {
     const oldCover = editingPost.cover_image;
     setEditingPost({ ...editingPost, cover_image: 'generating' });
     try {
-      const res = await fetch('/api/seo/generate-image', {
+      const res = await fetch('/api/seo/generate-image', { credentials: 'include',
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'x-admin-token': 'redstream_secret_2026' },
         body: JSON.stringify({ title: editingPost.title })
@@ -183,7 +183,7 @@ export default function SecretSeoAdmin() {
     setDataError('');
     try {
       // 1. Fetch queries & link targets
-      const resultsResponse = await fetch('/api/seo/results', {
+      const resultsResponse = await fetch('/api/seo/results', { credentials: 'include',
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -198,7 +198,7 @@ export default function SecretSeoAdmin() {
       }
 
       // 2. Fetch all blog posts (disk files + JSON + DB)
-      const blogResponse = await fetch('/api/seo/blog-posts', {
+      const blogResponse = await fetch('/api/seo/blog-posts', { credentials: 'include',
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -226,7 +226,7 @@ export default function SecretSeoAdmin() {
     setLastGeneratedSlug(null);
 
     try {
-      const response = await fetch('/api/seo/generate-content', {
+      const response = await fetch('/api/seo/generate-content', { credentials: 'include',
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -267,7 +267,7 @@ export default function SecretSeoAdmin() {
     setLoading(true);
     setActionError('');
     try {
-      const response = await fetch(`/api/seo/blog-posts/${editingPost.id || editingPost.slug}`, {
+      const response = await fetch(`/api/seo/blog-posts/${editingPost.id || editingPost.slug}`, { credentials: 'include',
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -296,7 +296,7 @@ export default function SecretSeoAdmin() {
     setDeletingPostId(String(idOrSlug));
     setActionError('');
     try {
-      const response = await fetch(`/api/seo/blog-posts/${idOrSlug}`, {
+      const response = await fetch(`/api/seo/blog-posts/${idOrSlug}`, { credentials: 'include',
         method: 'DELETE',
         headers: {
           'x-admin-token': adminToken,
@@ -322,7 +322,7 @@ export default function SecretSeoAdmin() {
     setMessage('');
 
     try {
-      const response = await fetch('/api/seo/run-search', {
+      const response = await fetch('/api/seo/run-search', { credentials: 'include',
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -359,7 +359,7 @@ export default function SecretSeoAdmin() {
     setMessage('');
 
     try {
-      const response = await fetch('/api/seo/add-query', {
+      const response = await fetch('/api/seo/add-query', { credentials: 'include',
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

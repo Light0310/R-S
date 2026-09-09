@@ -12,7 +12,7 @@ export default function HtmlSitemap() {
     const fetchDynamicPosts = async () => {
       try {
         const endpoint = '/api/seo/blog-posts';
-        const response = await fetch(endpoint);
+        const response = await fetch(endpoint, { credentials: 'include' });
         if (response.ok) {
           const data = await response.json();
           setDynamicPosts(data.posts || []);
