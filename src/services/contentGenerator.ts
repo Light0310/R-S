@@ -89,20 +89,21 @@ export async function generateArticle(
           ? `\nRecent Articles to Interlink:\n` + recentArticles.map(a => `- "${a.title}" (URL: /blog/${a.slug})`).join('\n')
           : '';
 
-        const prompt = `You are a World-Class Technical SEO Content Architect and Streaming Specialist.
-Write a comprehensive, engaging, and in-depth blog post targeting the topic: "${queryString}".
+        const prompt = `
+You are a World-Class Technical SEO Content Architect and Streaming Specialist writing for a human audience.
+Write a comprehensive, engaging, and highly unique blog post targeting the topic: "${queryString}".
 
 Strict Guidelines:
-1. Title: Highly engaging, click-worthy, and SEO-optimized (include power words and year if relevant).
-2. Structure: Use clear Markdown with one # Title, multiple ## Subheadings, ### Step-by-step guides, bullet points, and clean comparison tables where appropriate.
-3. SEO & Formatting: Professional, authoritative, actionable. Minimum 800-1200 words. Include NLP keywords (e.g., buffering, latency, firestick, 4k, m3u, lag-free). Use bold text for key terms. Add a FAQ section at the end for Google Featured Snippets.
-4. Value: Provide real technical steps, app names, DNS tips (1.1.1.1 / 8.8.8.8), buffer settings, and hardware recommendations.
-5. Internal Links:${recentArticlesContext ? ` Insert 1-2 natural contextual internal links to these recent posts:${recentArticlesContext}` : ' (None)'}
-6. RedStream Call to Action (CTA): Smoothly integrate a prominent CTA box at the end recommending RedStream (Premium streaming servers, 4K Ultra HD, Anti-Freeze 9.0 servers) with a direct link to claim a 24H Free Trial on WhatsApp: https://wa.me/212694843943?text=Hello%20RedStream,%20I%20read%20your%20guide%20and%20want%20a%20free%20trial.
-7. Strict URL constraint: NEVER link to the root "/" or "/en/". All internal links must be to "/blog/slug".
-8. CRITICAL SAFETY RULE: Never use the word "IPTV" or "Piracy" directly in the CTA or in a way that flags Google Safe Browsing / Trustpilot manual reviews. Refer to the service as "Premium Streaming Solutions", "Private Server Hosting", "VOD Service", or "Live Broadcasting".
+1. Tone & Style: STRICTLY HUMAN, conversational, and relatable. Use first-person plural ("we") or second-person ("you"). Avoid generic AI openings ("In the rapidly evolving world of...", "In today's digital age"). Avoid robotic transitions ("Furthermore", "Moreover", "In conclusion"). Use analogies, storytelling, and real-world scenarios to avoid repeating previous content structures.
+2. Sources & Reliability: Ground your article in REAL facts, current events, true technical specifications, and reliable data. Do not repeat the same generic IPTV advice over and over. Introduce unique angles, recent device updates, and actual networking facts.
+3. Structure: Use clear Markdown with one # Title, multiple ## Subheadings, and ### for deep dives. Include a FAQ section at the end for Google Featured Snippets.
+4. Content Depth: Write at least 800-1200 words. Do NOT repeat the same paragraphs in different words. Each section must provide distinct, actionable value.
+5. Value: Provide real technical steps, app names, DNS tips (1.1.1.1 / 8.8.8.8), buffer settings, and hardware recommendations.
+6. Internal Links:${recentArticlesContext ? ` Insert 1-2 natural contextual internal links to these recent posts:${recentArticlesContext}` : ' (None)'}
+7. RedStream Call to Action (CTA): Smoothly integrate a CTA box at the end recommending RedStream (Premium servers, 4K Ultra HD) with a link to claim a 24H Free Trial on WhatsApp: https://wa.me/212694843943?text=Hello%20RedStream,%20I%20read%20your%20guide%20and%20want%20a%20free%20trial.
+8. Safety: Never use "Piracy" directly. Refer to "Premium Streaming Solutions", "Private Server Hosting".
 
-Context:
+Context (if any):
 ${snippetsContext}
 
 Output strictly valid JSON according to the schema.`;
@@ -111,6 +112,7 @@ Output strictly valid JSON according to the schema.`;
           model: 'gemini-2.5-flash',
           contents: prompt,
           config: {
+            tools: [{ googleSearch: {} }],
             responseMimeType: 'application/json',
             responseSchema: {
               type: Type.OBJECT,
@@ -270,6 +272,7 @@ Return ONLY the topic string, nothing else. Example: "How to fix IPTV buffering 
       contents: prompt,
       config: {
         temperature: 0.9,
+        tools: [{ googleSearch: {} }],
       }
     });
     return response.text?.trim() || 'Ultimate Guide to 4K IPTV Streaming 2026';
