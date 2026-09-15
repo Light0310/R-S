@@ -8,10 +8,13 @@
 }
 
 /* Base Body Styles */
-body {
+html, body {
   font-family: var(--font-sans);
   background-color: #0a0a0a;
   color: #ffffff;
+  overflow-x: hidden;
+  max-width: 100vw;
+  width: 100%;
 }
 
 /* Premium Typography for Markdown Blog Content */

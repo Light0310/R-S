@@ -438,7 +438,7 @@ function LangManager({ children }: { children: React.ReactNode }) {
   }, [currentLang, location.pathname]);
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen overflow-x-hidden w-full max-w-[100vw]">
       <div className="flex-1 flex flex-col">
         {children}
       </div>
@@ -448,7 +448,7 @@ function LangManager({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   return (
-    <div className="bg-[#0a0a0a] min-h-screen text-white font-sans selection:bg-[#FF1E27] selection:text-white transition-colors duration-200">
+    <div className="bg-[#0a0a0a] min-h-screen text-white font-sans selection:bg-[#FF1E27] selection:text-white transition-colors duration-200 overflow-x-hidden w-full max-w-[100vw]">
       <Routes>
         {/* Specific explicit route without the main layout wrapper */}
         <Route path="/admin" element={<SecretSeoAdmin />} />
