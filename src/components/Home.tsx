@@ -854,9 +854,68 @@ const LANDING_HTML_TOP = `
     </div>
   </section>
 
+  <!-- Content Library Grid (Grey Hat: Semantic Spans for SEO, Visuals for Users) -->
+  <section class="content-library py-16 md:py-24 bg-[#050505]" id="library">
+    <div class="container" >
+      <div style="max-width: 800px; margin: 0 auto; text-align: center; margin-bottom: 40px;">
+        <h2 style="font-family: var(--font-sans, sans-serif); font-weight: 800; font-size: 1.8rem; color: #ffffff; text-transform: uppercase; letter-spacing: -0.02em; margin-bottom: 15px;">Endless Entertainment in One Place</h2>
+        <p style="color: #aaaaaa; font-size: 1rem; line-height: 1.6;">Your premium subscription unlocks thousands of live international channels, premium sports networks, and the latest VOD blockbuster releases.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <!-- Live Sports -->
+        <div class="group relative rounded-2xl overflow-hidden bg-[#111] border border-gray-800 p-8 flex flex-col justify-end min-h-[320px] hover:border-[#e50914] transition-all duration-300">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20 z-10"></div>
+          <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?q=80&w=800&auto=format&fit=crop')] bg-cover bg-center opacity-30 group-hover:opacity-40 group-hover:scale-105 transition-all duration-700"></div>
+          <div class="relative z-20">
+            <div class="w-12 h-12 bg-[#e50914] rounded-lg flex items-center justify-center mb-4 text-white shadow-lg shadow-[#e50914]/30">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <span class="block text-2xl font-bold text-white mb-3 uppercase tracking-wide">Live Sports Networks</span>
+            <p class="text-gray-300 text-sm leading-relaxed font-sans">
+              Never miss a match. Catch every live game across <span class="font-semibold text-white">Football (Premier League, Champions League), NBA, NFL, UFC, and Formula 1</span>. VIP coverage in Ultra HD 4K without buffering.
+            </p>
+          </div>
+        </div>
+
+        <!-- Cinema VOD 4K -->
+        <div class="group relative rounded-2xl overflow-hidden bg-[#111] border border-gray-800 p-8 flex flex-col justify-end min-h-[320px] hover:border-[#e50914] transition-all duration-300">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20 z-10"></div>
+          <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=800&auto=format&fit=crop')] bg-cover bg-center opacity-30 group-hover:opacity-40 group-hover:scale-105 transition-all duration-700"></div>
+          <div class="relative z-20">
+            <div class="w-12 h-12 bg-[#e50914] rounded-lg flex items-center justify-center mb-4 text-white shadow-lg shadow-[#e50914]/30">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"></path></svg>
+            </div>
+            <span class="block text-2xl font-bold text-white mb-3 uppercase tracking-wide">Cinema VOD 4K</span>
+            <p class="text-gray-300 text-sm leading-relaxed font-sans">
+              A massive library of <span class="font-semibold text-white">60,000+ Movies and TV Series</span>. From Netflix, Disney+, and HBO originals to the latest cinema releases. Daily VOD updates with subtitles.
+            </p>
+          </div>
+        </div>
+
+        <!-- Global Channels -->
+        <div class="group relative rounded-2xl overflow-hidden bg-[#111] border border-gray-800 p-8 flex flex-col justify-end min-h-[320px] hover:border-[#e50914] transition-all duration-300">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20 z-10"></div>
+          <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?q=80&w=800&auto=format&fit=crop')] bg-cover bg-center opacity-30 group-hover:opacity-40 group-hover:scale-105 transition-all duration-700"></div>
+          <div class="relative z-20">
+            <div class="w-12 h-12 bg-[#e50914] rounded-lg flex items-center justify-center mb-4 text-white shadow-lg shadow-[#e50914]/30">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
+            </div>
+            <span class="block text-2xl font-bold text-white mb-3 uppercase tracking-wide">Global TV Channels</span>
+            <p class="text-gray-300 text-sm leading-relaxed font-sans">
+              Unlock the world with <span class="font-semibold text-white">USA, UK, Canada, French, Arabic, German, Spanish, and Italian channels</span>. News, Documentaries, and regional content without geo-blocking.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- Device Compatibility Logos Section -->
   <section class="compatibility py-16 md:py-24" id="compatibility">
-    <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+    <div class="container" >
       <div style="max-width: 800px; margin: 0 auto; text-align: center;">
         <h2 style="font-family: var(--font-sans, sans-serif); font-weight: 800; font-size: 1.8rem; color: #ffffff; text-transform: uppercase; letter-spacing: -0.02em; margin-bottom: 15px;" class="text-white">Supported Devices</h2>
         <p style="color: #aaaaaa; font-size: 1rem; line-height: 1.6; margin-bottom: 40px;">RedStream™ is fully optimized and 100% compatible with all your favorite smart devices and streaming boxes. Setup takes less than 5 minutes.</p>
@@ -1450,6 +1509,27 @@ const LANDING_HTML_TOP = `
 
         <!-- Pagination Dots -->
         <div class="showcase-dots-container" id="showcase-dots"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Expanded SEO Content Block (Grey Hat: Looks like a sleek trust/about section, packed with semantic LSI keywords) -->
+  <section class="seo-content-block py-16 bg-[#0a0a0a] border-t border-gray-900" id="about-streaming">
+    <div class="container" style="max-width: 900px; margin: 0 auto; padding: 0 20px;">
+      <div class="flex flex-col gap-6">
+        <h2 style="font-family: var(--font-sans, sans-serif); font-size: 1.5rem; color: #ffffff; margin-bottom: 10px; font-weight: 700;">Understanding Our Premium IPTV & Streaming Subscription</h2>
+        
+        <div class="text-gray-400 text-sm leading-relaxed space-y-4" style="font-family: var(--font-sans, sans-serif);">
+          <p>
+            When searching for the <strong>best premium IPTV subscription</strong> or top-rated streaming service, stability and content variety are crucial. RedStream™ leverages proprietary global server networks to deliver <em>Anti-Freeze technology</em>, ensuring that your <span style="color: #ccc;">4K UHD streams, Live TV, and sports events</span> (like Champions League and UFC PPV) run flawlessly without buffering, even during peak weekend traffic.
+          </p>
+          <p>
+            Unlike standard providers, our service is universally compatible. Whether you are using a <strong>Smart TV (Samsung, LG, Android TV)</strong>, a dedicated streaming device like <em>Amazon Firestick, Apple TV, MAG Box, Formuler</em>, or even a smartphone (iOS & Android), setup takes under 5 minutes. We supply secure M3U links, Xtream Codes API, and portal portals compatible with premium apps like <strong>IPTV Smarters Pro, TiviMate, and IBO Player</strong>.
+          </p>
+          <p>
+            Our dedicated VOD (Video on Demand) library acts as your personal cinema. Access over <strong>60,000 titles</strong> updated daily, including full box sets, documentaries, anime, and the latest releases from all major platforms (Netflix, HBO Max, Disney+, Hulu). All content supports multi-language audio tracks and localized subtitles (English, Arabic, French, Spanish, German, Dutch, etc.). Bypass geo-restrictions instantly with our secure, built-in proxy networks—no VPN required for most ISPs.
+          </p>
+        </div>
       </div>
     </div>
   </section>
