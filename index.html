@@ -1082,6 +1082,15 @@
       box-shadow: 0 0 35px rgba(229, 9, 20, 0.15) !important;
       z-index: 10;
     }
+    
+    @keyframes targetGlow {
+      0% { box-shadow: 0 0 0px rgba(229,9,20,0); transform: scale(1.05); }
+      50% { box-shadow: 0 0 40px rgba(229,9,20,0.8); transform: scale(1.08); border-color: #ff4d4d; }
+      100% { box-shadow: 0 10px 30px rgba(229,9,20,0.2); transform: scale(1.05); }
+    }
+    .target-highlight-anim {
+      animation: targetGlow 1.5s ease-out;
+    }
 
     /* Scroll Progress Bar CSS */
     #scroll-progress-bar {

@@ -85,9 +85,27 @@ function MainLayout() {
             >
               {t.navHome}
             </Link>
+            <a
+              href={location.pathname === '/' || location.pathname === `/${currentLang}` ? '#plan-12months' : `/${currentLang}#plan-12months`}
+              onClick={(e) => {
+                if (location.pathname === '/' || location.pathname === `/${currentLang}`) {
+                  e.preventDefault();
+                  const p = document.getElementById('plan-12months');
+                  if (p) {
+                    p.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    p.classList.remove('target-highlight-anim');
+                    void p.offsetWidth;
+                    p.classList.add('target-highlight-anim');
+                  }
+                }
+              }}
+              className="px-4 py-2 rounded-lg text-sm font-semibold transition-all hover:text-[#FF1E27] text-gray-300 cursor-pointer"
+            >
+              Pricing
+            </a>
             <Link
               to={`/${currentLang}/blog`}
-              className="px-4 py-2 rounded-lg text-sm font-semibold transition-all text-[#FF1E27] bg-[#FF1E27]/10 cursor-pointer"
+              className="px-4 py-2 rounded-lg text-sm font-semibold transition-all text-gray-300 hover:text-[#FF1E27] cursor-pointer"
             >
               {t.navBlog}
             </Link>
@@ -96,6 +114,26 @@ function MainLayout() {
           {/* Language Selector Dropdown & CTA Button */}
           <div className="flex items-center gap-4">
             
+            {/* View Plans CTA */}
+            <a
+              href={location.pathname === '/' || location.pathname === `/${currentLang}` ? '#plan-12months' : `/${currentLang}#plan-12months`}
+              onClick={(e) => {
+                if (location.pathname === '/' || location.pathname === `/${currentLang}`) {
+                  e.preventDefault();
+                  const p = document.getElementById('plan-12months');
+                  if (p) {
+                    p.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    p.classList.remove('target-highlight-anim');
+                    void p.offsetWidth;
+                    p.classList.add('target-highlight-anim');
+                  }
+                }
+              }}
+              className="hidden sm:flex items-center justify-center bg-[#e50914] hover:bg-[#b80710] text-white text-xs font-bold px-4 py-2 rounded-lg transition-all shadow-[0_0_10px_rgba(229,9,20,0.3)] hover:shadow-[0_0_15px_rgba(229,9,20,0.5)] whitespace-nowrap cursor-pointer"
+            >
+              Get Premium
+            </a>
+
             {/* Language Switcher */}
             <div className="relative">
               <button

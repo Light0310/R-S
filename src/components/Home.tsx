@@ -733,13 +733,20 @@ const LANDING_HTML_TOP = `
 
     <!-- CTA Actions Container -->
     <div class="flex flex-col items-center gap-5 w-full">
-      <!-- WhatsApp CTA -->
-      <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20would%20like%20to%20activate%20a%20premium%20Streaming%20subscription." target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center gap-3 bg-[#e50914] hover:bg-[#b80710] text-white text-base sm:text-lg font-bold py-4 px-8 rounded-xl w-full max-w-sm mx-auto transition-all duration-300 transform hover:-translate-y-1 shadow-[0_8px_20px_rgba(229,9,20,0.25)] hover:shadow-[0_12px_25px_rgba(229,9,20,0.4)]" id="hero-main-cta">
-        <!-- WhatsApp Icon -->
-        <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-        </svg>
-        <span>Get Started on WhatsApp</span>
+      <!-- Premium UX Pricing CTA -->
+      <a href="#plan-12months" class="group relative flex items-center justify-center gap-3 bg-gradient-to-b from-[#e50914] to-[#99050d] text-white text-base sm:text-lg font-extrabold py-4 px-8 rounded-2xl w-full max-w-sm mx-auto transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.02] shadow-[0_10px_30px_rgba(229,9,20,0.4)] hover:shadow-[0_15px_40px_rgba(229,9,20,0.6)] border border-[#ff4d4d]/30 overflow-hidden" id="hero-main-cta" onclick="const p = document.getElementById('plan-12months'); p.scrollIntoView({behavior: 'smooth', block: 'center'}); p.classList.remove('target-highlight-anim'); void p.offsetWidth; p.classList.add('target-highlight-anim'); return false;">
+        <!-- Subtle Top Gloss -->
+        <div class="absolute inset-x-0 top-0 h-[45%] bg-gradient-to-b from-white/10 to-transparent pointer-events-none"></div>
+        <!-- Sweep Shine Effect -->
+        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-[150%] skew-x-[-20deg] group-hover:translate-x-[150%] transition-transform duration-700 ease-out z-0"></div>
+        
+        <span class="relative z-10 flex items-center gap-2 tracking-wide drop-shadow-md">
+          View Subscription Plans
+          <!-- Arrow Down Icon -->
+          <svg class="w-5 h-5 ml-1 transition-transform duration-300 group-hover:translate-y-1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 5v14M19 12l-7 7-7-7"/>
+          </svg>
+        </span>
       </a>
       
       <!-- Secondary CTA -->
@@ -864,47 +871,56 @@ const LANDING_HTML_TOP = `
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         
-        <!-- Live Sports -->
-        <div class="group relative rounded-2xl overflow-hidden bg-[#111] border border-gray-800 p-8 flex flex-col justify-end min-h-[320px] hover:border-[#e50914] transition-all duration-300">
-          <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20 z-10"></div>
-          <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?q=80&w=800&auto=format&fit=crop')] bg-cover bg-center opacity-30 group-hover:opacity-40 group-hover:scale-105 transition-all duration-700"></div>
-          <div class="relative z-20">
-            <div class="w-12 h-12 bg-[#e50914] rounded-lg flex items-center justify-center mb-4 text-white shadow-lg shadow-[#e50914]/30">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <!-- Live Sports (Pro UX Bento Card) -->
+        <div class="group relative rounded-3xl overflow-hidden bg-[#0a0a0a] border border-white/5 p-8 flex flex-col hover:border-[#e50914]/40 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(229,9,20,0.1)]">
+          <!-- Hover Glow -->
+          <div class="absolute -top-24 -right-24 w-64 h-64 bg-[#e50914] rounded-full mix-blend-screen filter blur-[100px] opacity-0 group-hover:opacity-20 transition-opacity duration-700 pointer-events-none"></div>
+          <!-- Dot Grid Pattern -->
+          <div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="background-image: radial-gradient(white 1px, transparent 1px); background-size: 24px 24px;"></div>
+          
+          <div class="relative z-20 flex-1 flex flex-col items-center text-center">
+            <div class="w-14 h-14 bg-gradient-to-br from-[#e50914] to-[#800000] rounded-2xl flex items-center justify-center mb-6 text-white shadow-lg shadow-[#e50914]/20 ring-1 ring-white/10 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
+              <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             </div>
-            <span class="block text-2xl font-bold text-white mb-3 uppercase tracking-wide">Live Sports Networks</span>
-            <p class="text-gray-300 text-sm leading-relaxed font-sans">
-              Never miss a match. Catch every live game across <span class="font-semibold text-white">Football (Premier League, Champions League), NBA, NFL, UFC, and Formula 1</span>. VIP coverage in Ultra HD 4K without buffering.
+            <span class="block text-xl font-extrabold text-white mb-3 tracking-wide group-hover:text-[#e50914] transition-colors">Premium Live Sports</span>
+            <p class="text-gray-400 text-sm leading-relaxed font-sans">
+              Never miss a match. Catch every live game across <span class="font-semibold text-gray-200">Football (Premier League, Champions League), NBA, NFL, UFC, and Formula 1</span>. VIP coverage in Ultra HD 4K without buffering.
             </p>
           </div>
         </div>
 
-        <!-- Cinema VOD 4K -->
-        <div class="group relative rounded-2xl overflow-hidden bg-[#111] border border-gray-800 p-8 flex flex-col justify-end min-h-[320px] hover:border-[#e50914] transition-all duration-300">
-          <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20 z-10"></div>
-          <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=800&auto=format&fit=crop')] bg-cover bg-center opacity-30 group-hover:opacity-40 group-hover:scale-105 transition-all duration-700"></div>
-          <div class="relative z-20">
-            <div class="w-12 h-12 bg-[#e50914] rounded-lg flex items-center justify-center mb-4 text-white shadow-lg shadow-[#e50914]/30">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"></path></svg>
+        <!-- Cinema VOD 4K (Pro UX Bento Card) -->
+        <div class="group relative rounded-3xl overflow-hidden bg-[#0a0a0a] border border-white/5 p-8 flex flex-col hover:border-[#e50914]/40 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(229,9,20,0.1)]">
+          <!-- Hover Glow -->
+          <div class="absolute -top-24 -right-24 w-64 h-64 bg-[#e50914] rounded-full mix-blend-screen filter blur-[100px] opacity-0 group-hover:opacity-20 transition-opacity duration-700 pointer-events-none"></div>
+          <!-- Dot Grid Pattern -->
+          <div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="background-image: radial-gradient(white 1px, transparent 1px); background-size: 24px 24px;"></div>
+          
+          <div class="relative z-20 flex-1 flex flex-col items-center text-center">
+            <div class="w-14 h-14 bg-gradient-to-br from-[#111] to-[#222] rounded-2xl flex items-center justify-center mb-6 text-white shadow-lg shadow-black/50 ring-1 ring-white/10 group-hover:ring-[#e50914]/50 group-hover:scale-110 group-hover:-rotate-3 transition-all duration-500">
+              <svg class="w-7 h-7 text-[#e50914]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"></path></svg>
             </div>
-            <span class="block text-2xl font-bold text-white mb-3 uppercase tracking-wide">Cinema VOD 4K</span>
-            <p class="text-gray-300 text-sm leading-relaxed font-sans">
-              A massive library of <span class="font-semibold text-white">60,000+ Movies and TV Series</span>. From Netflix, Disney+, and HBO originals to the latest cinema releases. Daily VOD updates with subtitles.
+            <span class="block text-xl font-extrabold text-white mb-3 tracking-wide group-hover:text-[#e50914] transition-colors">Cinema VOD & Series</span>
+            <p class="text-gray-400 text-sm leading-relaxed font-sans">
+              A massive library of <span class="font-semibold text-gray-200">60,000+ Movies and TV Series</span>. From Netflix, Disney+, and HBO originals to the latest cinema releases. Daily VOD updates with multi-language subtitles.
             </p>
           </div>
         </div>
 
-        <!-- Global Channels -->
-        <div class="group relative rounded-2xl overflow-hidden bg-[#111] border border-gray-800 p-8 flex flex-col justify-end min-h-[320px] hover:border-[#e50914] transition-all duration-300">
-          <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20 z-10"></div>
-          <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?q=80&w=800&auto=format&fit=crop')] bg-cover bg-center opacity-30 group-hover:opacity-40 group-hover:scale-105 transition-all duration-700"></div>
-          <div class="relative z-20">
-            <div class="w-12 h-12 bg-[#e50914] rounded-lg flex items-center justify-center mb-4 text-white shadow-lg shadow-[#e50914]/30">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
+        <!-- Global Channels (Pro UX Bento Card) -->
+        <div class="group relative rounded-3xl overflow-hidden bg-[#0a0a0a] border border-white/5 p-8 flex flex-col hover:border-[#e50914]/40 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(229,9,20,0.1)] lg:col-span-1 md:col-span-2">
+          <!-- Hover Glow -->
+          <div class="absolute -top-24 -right-24 w-64 h-64 bg-[#e50914] rounded-full mix-blend-screen filter blur-[100px] opacity-0 group-hover:opacity-20 transition-opacity duration-700 pointer-events-none"></div>
+          <!-- Dot Grid Pattern -->
+          <div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="background-image: radial-gradient(white 1px, transparent 1px); background-size: 24px 24px;"></div>
+          
+          <div class="relative z-20 flex-1 flex flex-col items-center text-center">
+            <div class="w-14 h-14 bg-gradient-to-br from-[#e50914] to-[#800000] rounded-2xl flex items-center justify-center mb-6 text-white shadow-lg shadow-[#e50914]/20 ring-1 ring-white/10 group-hover:scale-110 transition-transform duration-500">
+              <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
             </div>
-            <span class="block text-2xl font-bold text-white mb-3 uppercase tracking-wide">Global TV Channels</span>
-            <p class="text-gray-300 text-sm leading-relaxed font-sans">
-              Unlock the world with <span class="font-semibold text-white">USA, UK, Canada, French, Arabic, German, Spanish, and Italian channels</span>. News, Documentaries, and regional content without geo-blocking.
+            <span class="block text-xl font-extrabold text-white mb-3 tracking-wide group-hover:text-[#e50914] transition-colors">Global TV Channels</span>
+            <p class="text-gray-400 text-sm leading-relaxed font-sans">
+              Unlock the world with <span class="font-semibold text-gray-200">USA, UK, Canada, French, Arabic, German, Spanish, and Italian channels</span>. News, Documentaries, and regional content without geo-blocking.
             </p>
           </div>
         </div>
