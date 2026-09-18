@@ -10,61 +10,61 @@ interface FAQItem {
 const faqTranslations: Record<Language, { title: string; subtitle: string; items: FAQItem[] }> = {
   en: {
     title: "Frequently Asked Questions",
-    subtitle: "Everything you need to know about setting up and streaming with RedStream Streaming.",
+    subtitle: "Everything you need to know about setting up and streaming with RedStream IPTV.",
     items: [
       {
-        question: "What makes RedStream the best premium Streaming subscription on the market?",
-        answer: "Choosing the best premium Streaming subscription is crucial for an optimal home entertainment experience. RedStream stands out as the ultimate choice because we leverage cutting-edge Anti-Freeze server technology paired with state-of-the-art server infrastructure. We do not host cheap, overloaded public streams; instead, we invest heavily in private, high-bandwidth server clusters with dedicated load balancers. This architectural setup guarantees 99.9% uptime and a completely seamless, stutter-free viewing experience. If you are tired of frequent disconnects and low-resolution video, our premium subscription offers crystal-clear 4K streaming and live sports with ultra-low latency, ensuring you never miss a goal or an action-packed movie scene."
+        question: "What makes RedStream the best premium IPTV & Streaming subscription on the market?",
+        answer: "Choosing the best premium IPTV & Streaming subscription is crucial for an optimal home entertainment experience. RedStream stands out as the ultimate choice because we leverage cutting-edge Anti-Freeze 9.0 server technology paired with high-bandwidth infrastructure. We do not host overloaded public streams; instead, we invest heavily in private, dedicated server clusters with load balancers. This architectural setup guarantees 99.9% uptime and a completely seamless, stutter-free viewing experience. Our premium subscription offers crystal-clear 4K streaming and live sports with ultra-low latency, ensuring you never miss a goal or a scene."
       },
       {
-        question: "Which applications do you support, and how do I perform an Streaming Smarters Pro setup or IBO Player activation?",
-        answer: "We pride ourselves on offering universal compatibility across a massive ecosystem of streaming applications. For clients who prefer a simple, feature-rich interface, we provide full support and comprehensive guides for Streaming Smarters Pro setup. Our tech team will walk you through entering your credentials (M3U playlist link or Xtream Codes API parameters) step-by-step. Furthermore, we specialize in high-performance applications; our support agents can assist with instant IBO Player activation or setup on TiviMate, Smart Streaming, and Duplex Play. Once you purchase your subscription, we deliver your credentials via WhatsApp instantly, and our technical engineers remain available 24/7 to ensure your preferred application is fully optimized and ready."
+        question: "Which applications do you support, and how do I perform an IPTV Smarters Pro setup or IBO Player activation?",
+        answer: "We pride ourselves on offering universal compatibility across a massive ecosystem of streaming applications. For clients who prefer a simple, feature-rich interface, we provide full support and comprehensive guides for IPTV Smarters Pro setup. Our tech team will walk you through entering your credentials (M3U playlist link or Xtream Codes API parameters) step-by-step. Furthermore, our support agents assist with instant IBO Player activation, Vu Player Pro, TiviMate, and XCIPTV. Once you purchase your subscription, we deliver your credentials via WhatsApp instantly, and our technical engineers remain available 24/7 to ensure your application is fully optimized."
       },
       {
-        question: "Is RedStream considered the best Streaming for Smart TV platforms?",
-        answer: "Absolutely! RedStream is widely recognized as the best Streaming for Smart TV systems, specifically optimized for Samsung Smart TV (Tizen OS), LG Smart TV (WebOS), and Android-based Smart TVs (including Sony, Philips, and Hisense). While other providers struggle with native Smart TV operating systems, our streaming playlists are compressed and structured using advanced codecs that native TV players can decode effortlessly. This results in ultra-fast channel zapping speeds (under 1 second) and smooth navigation. In addition, our service is fully optimized for Amazon Firestick (Fire OS), Android TV Boxes (Xiaomi Mi Box, Nvidia Shield), Apple TV (tvOS), and MAG devices, providing a unified and incredibly sleek entertainment hub."
+        question: "Is RedStream considered the best IPTV service for Smart TV platforms?",
+        answer: "Absolutely! RedStream is widely recognized as the best IPTV service for Smart TV systems, specifically optimized for Samsung Smart TV (Tizen OS), LG Smart TV (WebOS), and Android-based Smart TVs (including Sony, Philips, and Hisense). While other providers struggle with native Smart TV operating systems, our streaming playlists are compressed and structured using advanced codecs that native TV players decode effortlessly. This results in ultra-fast channel zapping speeds (under 1 second) and smooth navigation across Firestick, Android TV, and Apple TV."
       },
       {
         question: "Will I experience freezing or buffering during live sports broadcasts?",
-        answer: "No! We guarantee a zero buffering experience, specifically engineered for high-traffic live events. Traditional Streaming services buffer constantly during major events because their servers are overwhelmed by sudden spikes in traffic. RedStream solves this issue by deploying our custom-built Anti-Freeze server technology with proactive capacity scaling. We actively monitor server load and route traffic dynamically. Whether you are watching the Champions League, Super Bowl, Formula 1, or pay-per-view boxing, you will enjoy flawless 4K streaming and live sports in real-time, exactly as if you were watching cable TV, but with superior image definition."
+        answer: "No! We guarantee a zero buffering experience, specifically engineered for high-traffic live events. Traditional streaming services buffer constantly during major matches because their servers get overwhelmed. RedStream deploys Anti-Freeze 9.0 technology with proactive capacity scaling. We actively monitor server load and route traffic dynamically. Whether you are watching the Champions League, Premier League, Super Bowl, Formula 1, or UFC, you will enjoy flawless 4K streaming and live sports in real-time."
       },
       {
         question: "How fast is the setup and activation process?",
-        answer: "Setup is virtually instant! We understand that when you buy a premium service, you want to start watching immediately. Once your secure payment is confirmed, our automated system generates your credentials and sends them directly to our dedicated WhatsApp support team. From there, a real human agent will deliver your custom M3U playlist and Xtream Codes login within 10 to 15 minutes. We will then guide you through the setup on your specific device—whether you need help with Streaming Smarters Pro setup, an IBO Player activation code, or configuring your Smart TV application. We stay with you on the chat until your first channel is successfully playing in 4K."
+        answer: "Setup is virtually instant! Once your order is placed, our automated system generates your credentials and sends them directly to our dedicated WhatsApp support team. A real agent will deliver your custom M3U playlist and Xtream Codes login within 5 to 10 minutes. We then guide you through installation on your specific device until your first 4K channel is playing smoothly."
       },
       {
         question: "Can I use my subscription on multiple devices simultaneously?",
-        answer: "Your RedStream subscription can be installed on as many devices as you like, including your Smart TV, smartphone, tablet, computer, and Firestick. However, to maintain server stability and prevent stream degradation, our standard plan supports one active stream at a time. This ensures that you get the maximum possible bandwidth of our premium servers with zero buffering. If you need to watch different channels on multiple devices at the same exact time, please contact our support team on WhatsApp, and we will happily offer you a heavily discounted multi-room package designed to accommodate your entire household's streaming needs."
+        answer: "Your RedStream subscription can be installed on multiple devices (Smart TV, smartphone, tablet, PC, Firestick). However, to guarantee 100% freeze-free streaming, our standard plan supports one active stream at a time. If you need simultaneous multi-screen access for your family, contact our 24/7 WhatsApp support to upgrade to a discounted multi-room connection."
       }
     ]
   },
   fr: {
     title: "Foire Aux Questions",
-    subtitle: "Tout ce que vous devez savoir sur la configuration et la diffusion avec RedStream Streaming.",
+    subtitle: "Tout ce que vous devez savoir sur la configuration et la diffusion avec RedStream IPTV.",
     items: [
       {
-        question: "Qu'est-ce qui fait de RedStream le meilleur abonnement Streaming premium du marché ?",
-        answer: "Choisir le best premium Streaming subscription (meilleur abonnement Streaming premium) est essentiel pour une expérience de divertissement à domicile optimale. RedStream se distingue comme le choix ultime grâce à notre Anti-Freeze server technology (technologie de serveur anti-coupure) de pointe, combinée à une infrastructure de serveurs ultra-moderne. Nous n'hébergeons pas de flux publics surchargés ; nous investissons massivement dans des serveurs privés à large bande passante avec répartiteurs de charge dédiés. Cela garantit une disponibilité de 99,9 % pour une diffusion fluide sans interruptions ni ralentissements. Profitez pleinement de notre service pour le 4K streaming and live sports (streaming 4K et sports en direct) avec une clarté exceptionnelle et une latence ultra-faible."
+        question: "Qu'est-ce qui fait de RedStream le meilleur abonnement IPTV & Streaming premium du marché ?",
+        answer: "Choisir le meilleur abonnement IPTV & Streaming premium est essentiel pour une expérience de divertissement optimale. RedStream se distingue grâce à notre technologie Anti-Freeze 9.0 combinée à une infrastructure de serveurs ultra-moderne. Nous investissons massivement dans des clusters privés avec répartiteurs de charge dédiés pour garantir 99,9% de disponibilité sans coupure ni décalage."
       },
       {
-        question: "Quelles applications supportez-vous et comment faire l'installation de Smarters Pro ou IBO Player ?",
-        answer: "Nous offrons une compatibilité universelle avec les meilleures applications de streaming. Pour les utilisateurs qui préfèrent une interface simple, nous fournissons un guide complet pour l'Streaming Smarters Pro setup (configuration d'Streaming Smarters Pro). Nous vous guidons pas à pas pour saisir vos accès M3U ou Xtream Codes. De plus, nos agents vous aident pour l'IBO Player activation instantanée ainsi que pour la configuration sur TiviMate, Smart Streaming et Duplex Play. Après l'achat, vos identifiants sont envoyés instantanément via WhatsApp, et nos ingénieurs restent disponibles 24h/24 et 7j/7 pour assurer une mise en œuvre parfaite."
+        question: "Quelles applications supportez-vous et comment installer IPTV Smarters Pro ou activer IBO Player ?",
+        answer: "Nous offrons une compatibilité universelle avec les meilleures applications. Nous fournissons des guides pas à pas pour l'installation d'IPTV Smarters Pro, l'activation immédiate d'IBO Player, Vu Player Pro, TiviMate et XCIPTV. Vos identifiants sont envoyés sur WhatsApp et nos techniciens vous accompagnent en direct."
       },
       {
-        question: "RedStream est-il considéré comme le meilleur Streaming pour Smart TV ?",
-        answer: "Absolument ! RedStream est reconnu comme le best Streaming for Smart TV (meilleur Streaming pour Smart TV), spécialement optimisé pour les téléviseurs Samsung (Tizen OS), LG (webOS) et Android TV (Sony, Philips, Hisense). Nos flux utilisent des codecs avancés que les lecteurs natifs décodent sans effort, offrant un zapping ultra-rapide (moins d'une seconde) et une navigation fluide. Notre abonnement est également idéal pour Amazon Firestick (Fire OS), Apple TV (tvOS) et les boîtiers Android, formant un centre multimédia élégant."
+        question: "RedStream est-il considéré comme le meilleur service IPTV pour Smart TV ?",
+        answer: "Absolument ! RedStream est optimisé pour les téléviseurs Samsung (Tizen OS), LG (webOS), Android TV, Amazon Firestick et Apple TV. Nos flux utilisent des codecs légers offrant un zapping instantané en moins d'une seconde et une interface fluide."
       },
       {
         question: "Vais-je rencontrer des ralentissements ou du buffering pendant les matchs en direct ?",
-        answer: "Non ! Nous garantissons une expérience avec zero buffering (zéro mise en mémoire tampon), conçue spécialement pour les événements sportifs à forte audience. Grâce à notre Anti-Freeze server technology et une gestion proactive de la bande passante, les flux restent stables même lors des pics de trafic sur les grands événements mondiaux. Que vous regardiez la Ligue des Champions, la Formule 1, la Liga ou des combats de MMA, vous bénéficierez d'une diffusion fluide en 4K streaming and live sports en temps réel."
+        answer: "Non ! Nous garantissons une expérience sans coupure, conçue spécialement pour les grands événements sportifs à forte audience (Ligue des Champions, Premier League, Formule 1, UFC). Grâce à notre technologie Anti-Freeze 9.0, profitez d'une diffusion fluide en 4K Ultra HD."
       },
       {
-        question: "Combien de temps prend la configuration et l'activation de ma ligne ?",
-        answer: "L'activation est quasi-instantanée ! Dès que votre paiement sécurisé est validé, notre système génère vos accès et les envoie à notre équipe WhatsApp. Vous recevez vos identifiants sous 10 à 15 minutes. Nous vous accompagnons ensuite pour l'Streaming Smarters Pro setup ou l'IBO Player activation étape par étape jusqu'à ce que votre flux fonctionne parfaitement en 4K."
+        question: "Quel est le délai pour la mise en service et l'activation ?",
+        answer: "L'activation prend entre 5 et 10 minutes ! Dès votre commande, notre équipe sur WhatsApp vous envoie vos accès M3U et Xtream Codes et reste avec vous jusqu'à ce que votre première chaîne s'affiche parfaitement."
       },
       {
-        question: "Puis-je utiliser mon abonnement sur plusieurs écrans ou appareils en même temps ?",
-        answer: "Votre abonnement peut être configuré sur tous vos appareils (Smart TV, smartphone, tablette, PC, Firestick). Cependant, pour garantir une bande passante optimale et un flux avec zero buffering, notre offre standard autorise une seule connexion active à la fois. Pour connecter plusieurs écrans en même temps sans perte de qualité, contactez notre support WhatsApp pour bénéficier d'une offre multi-écrans à tarif très réduit."
+        question: "Puis-je utiliser mon abonnement sur plusieurs appareils en même temps ?",
+        answer: "Vous pouvez installer votre compte sur tous vos appareils (TV, mobile, tablette, Firestick). Notre offre standard prend en charge 1 écran simultané pour garantir une bande passante 4K maximale. Pour plusieurs écrans en simultané, contactez notre support WhatsApp pour une offre multi-écrans."
       }
     ]
   },
@@ -246,44 +246,45 @@ export default function FAQSection({ currentLang }: FAQSectionProps) {
   };
 
   return (
-    <section className="faq py-24 bg-[#080808] border-t border-[#1a1a1a] border-b border-[#1a1a1a]" id="faq">
-      <div className="container max-w-[1200px] mx-auto px-6">
-        <div className="text-center mb-16 max-w-[700px] mx-auto">
-          <h2 className="font-sans font-extrabold text-3xl md:text-4xl text-white uppercase tracking-tight italic mb-4">
+    <section className="faq-wrapper" id="faq">
+      <div className="faq-container" dir={isRtl ? "rtl" : "ltr"}>
+        <div className="text-center mb-12 max-w-[650px] mx-auto">
+          <div className="inline-flex items-center gap-2 bg-[#e50914]/15 border border-[#e50914]/30 text-[#ff4d4d] px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-3">
+            <HelpCircle className="w-3.5 h-3.5" />
+            <span>Support &amp; Knowledge Base</span>
+          </div>
+          <h2 className="font-sans font-extrabold text-3xl md:text-4xl text-white uppercase tracking-tight mb-3">
             {t.title}
           </h2>
-          <p className="text-gray-400 text-base md:text-lg">
+          <p className="text-gray-400 text-sm md:text-base leading-relaxed">
             {t.subtitle}
           </p>
         </div>
 
-        <div className="max-w-[850px] mx-auto flex flex-col gap-4" dir={isRtl ? "rtl" : "ltr"}>
+        <div className="flex flex-col gap-3.5">
           {t.items.map((item, index) => {
             const isOpen = openIndex === index;
             return (
               <div
                 key={index}
-                className={`bg-[#0a0a0a] border rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl ${
-                  isOpen 
-                    ? 'border-[#e50914] shadow-[0_10px_30px_rgba(229,9,20,0.15)]' 
-                    : 'border-[#1f2937] hover:border-[rgba(229,9,20,0.4)]'
-                }`}
+                className={`faq-item-card ${isOpen ? 'is-open' : ''}`}
               >
                 <button
-                  className="w-full text-left flex items-center justify-between p-6 md:p-7 gap-4 cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#e50914]/50"
+                  className="faq-header-btn"
                   onClick={() => toggleAccordion(index)}
                   aria-expanded={isOpen}
+                  type="button"
                 >
-                  <div className="flex items-center gap-4 text-left">
-                    {getIcon(index)}
-                    <span className="font-semibold text-white text-base md:text-lg leading-snug hover:text-white transition-colors">
+                  <div className="faq-header-left">
+                    <div className="faq-icon-box">
+                      {getIcon(index)}
+                    </div>
+                    <span className="faq-question-text">
                       {item.question}
                     </span>
                   </div>
                   <ChevronDown
-                    className={`w-5 h-5 text-[#e50914] transition-transform duration-300 shrink-0 ${
-                      isOpen ? 'rotate-180' : 'rotate-0'
-                    }`}
+                    className={`faq-chevron ${isOpen ? 'rotate' : ''}`}
                   />
                 </button>
                 
@@ -293,8 +294,8 @@ export default function FAQSection({ currentLang }: FAQSectionProps) {
                   }`}
                 >
                   <div className="overflow-hidden">
-                    <div className="p-6 md:p-7 pt-0 md:pt-0 text-gray-400 text-sm md:text-base leading-relaxed border-t border-[#1a1a1a]/50 mt-4 mx-6 md:mx-7">
-                      <p className="pt-4">{item.answer}</p>
+                    <div className="faq-body-content">
+                      <p>{item.answer}</p>
                     </div>
                   </div>
                 </div>
