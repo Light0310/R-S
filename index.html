@@ -662,9 +662,126 @@
 
     .pricing-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 24px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
       align-items: stretch;
+      max-width: 1140px;
+      margin: 40px auto 0 auto;
+      width: 100%;
+    }
+
+    /* Bulletproof Process Stepper */
+    .steps-container {
+      position: relative;
+      max-width: 720px;
+      margin: 35px auto 55px auto;
+      padding: 0 16px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .steps-track {
+      position: absolute;
+      top: 24px;
+      left: 60px;
+      right: 60px;
+      height: 3px;
+      background: #27272a;
+      z-index: 1;
+      border-radius: 9999px;
+    }
+
+    .steps-track-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, #e50914 0%, #e50914 70%, rgba(229, 9, 20, 0.4) 100%);
+      border-radius: 9999px;
+    }
+
+    .steps-list {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      position: relative;
+      z-index: 2;
+    }
+
+    .step-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 150px;
+    }
+
+    .step-badge {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #141416;
+      border: 2px solid #3f3f46;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+      transition: all 0.3s ease;
+    }
+
+    .step-badge.highlight {
+      background: #e50914;
+      border-color: #ff3b30;
+      color: #fff;
+      box-shadow: 0 0 25px rgba(229, 9, 20, 0.7);
+    }
+
+    .step-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #d4d4d8;
+      line-height: 1.4;
+      white-space: nowrap;
+    }
+
+    .step-item.highlight .step-title {
+      color: #ffffff;
+      text-shadow: 0 0 10px rgba(229, 9, 20, 0.5);
+    }
+
+    @media (max-width: 640px) {
+      .steps-container {
+        margin: 25px auto 40px auto;
+        padding: 0 8px;
+      }
+      .steps-track {
+        top: 18px;
+        left: 40px;
+        right: 40px;
+        height: 2px;
+      }
+      .step-badge {
+        width: 36px;
+        height: 36px;
+        font-size: 13px;
+        margin-bottom: 8px;
+      }
+      .step-item {
+        width: 95px;
+      }
+      .step-title {
+        font-size: 10px;
+        letter-spacing: 0.02em;
+        white-space: normal;
+        word-break: break-word;
+      }
     }
 
     .pricing-card {
@@ -1079,16 +1196,17 @@
     }
 
     /* Responsive Queries */
-    @media (max-width: 1024px) {
+    @media (max-width: 900px) {
       .pricing-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 30px;
+        grid-template-columns: 1fr;
+        max-width: 440px;
+        gap: 32px;
       }
       .pricing-card.popular {
         transform: none;
       }
       .pricing-card.popular:hover {
-        transform: scale(1.03);
+        transform: scale(1.02);
       }
     }
 

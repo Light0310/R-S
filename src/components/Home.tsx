@@ -846,31 +846,31 @@ const LANDING_HTML_TOP = `
       </div>
 
       
-      <!-- How it Works Section -->
-      <div class="flex flex-row items-start justify-center w-full max-w-3xl mx-auto px-2" style="font-family: var(--font-sans); margin-top: 40px; margin-bottom: 70px;">
-        
-        <div class="flex-1 flex flex-col items-center text-center relative z-10">
-          <div class="w-10 h-10 md:w-14 md:h-14 rounded-full bg-gray-800 flex items-center justify-center text-white font-bold mb-3 shadow-lg text-sm md:text-lg relative z-10">1</div>
-          <span class="text-gray-300 font-medium text-[10px] md:text-sm uppercase tracking-wider leading-tight px-1">Choose a Plan</span>
-          <!-- Connecting Line -->
-          <div class="absolute top-5 md:top-7 left-[50%] w-full h-[2px] bg-gray-800 z-0"></div>
+      <!-- How it Works Stepper -->
+      <div class="steps-container">
+        <div class="steps-track">
+          <div class="steps-track-fill"></div>
         </div>
+        <div class="steps-list">
+          <div class="step-item">
+            <div class="step-badge">1</div>
+            <span class="step-title">Choose a Plan</span>
+          </div>
 
-        <div class="flex-1 flex flex-col items-center text-center relative z-10">
-          <div class="w-10 h-10 md:w-14 md:h-14 rounded-full bg-gray-800 flex items-center justify-center text-white font-bold mb-3 shadow-lg text-sm md:text-lg relative z-10">2</div>
-          <span class="text-gray-300 font-medium text-[10px] md:text-sm uppercase tracking-wider leading-tight px-1">Get via WhatsApp</span>
-          <!-- Connecting Line -->
-          <div class="absolute top-5 md:top-7 left-[50%] w-full h-[2px] bg-gray-800 z-0"></div>
-        </div>
+          <div class="step-item">
+            <div class="step-badge">2</div>
+            <span class="step-title">Get via WhatsApp</span>
+          </div>
 
-        <div class="flex-1 flex flex-col items-center text-center relative z-10">
-          <div class="w-10 h-10 md:w-14 md:h-14 rounded-full bg-[#e50914] flex items-center justify-center text-white font-bold mb-3 shadow-[0_0_20px_rgba(229,9,20,0.6)] text-sm md:text-lg relative z-10">3</div>
-          <span class="text-white font-bold text-[10px] md:text-sm uppercase tracking-wider leading-tight px-1">Start Watching</span>
+          <div class="step-item highlight">
+            <div class="step-badge highlight">3</div>
+            <span class="step-title">Start Watching</span>
+          </div>
         </div>
-        
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto items-stretch mt-10 px-4">
+      <!-- Pricing Grid Cards -->
+      <div class="pricing-grid">
         <!-- Plan 1: 1 Month -->
         <div class="pricing-card w-full flex flex-col justify-between border border-gray-800 bg-gradient-to-b from-gray-900 to-black shadow-lg rounded-xl relative p-6 md:p-8" id="plan-1month">
           <div class="plan-header">
