@@ -146,40 +146,31 @@
           "@type": "AggregateOffer",
           "url": "https://www.red-stream.store/#plan-12months",
           "priceCurrency": "EUR",
-          "lowPrice": "15.00",
+          "lowPrice": "12.00",
           "highPrice": "49.00",
-          "offerCount": "4",
+          "offerCount": "3",
           "offers": [
             {
               "@type": "Offer",
-              "name": "1 Month Premium",
-              "price": "15.00",
+              "name": "1 Month Premium Plan",
+              "price": "12.00",
               "priceCurrency": "EUR",
               "availability": "https://schema.org/InStock",
               "priceValidUntil": "2027-12-31",
-              "url": "https://www.red-stream.store/#pricing"
+              "url": "https://www.red-stream.store/#plan-1month"
             },
             {
               "@type": "Offer",
-              "name": "3 Months Premium",
-              "price": "25.00",
+              "name": "6 Months Premium Plan",
+              "price": "39.00",
               "priceCurrency": "EUR",
               "availability": "https://schema.org/InStock",
               "priceValidUntil": "2027-12-31",
-              "url": "https://www.red-stream.store/#pricing"
+              "url": "https://www.red-stream.store/#plan-6months"
             },
             {
               "@type": "Offer",
-              "name": "6 Months Premium",
-              "price": "35.00",
-              "priceCurrency": "EUR",
-              "availability": "https://schema.org/InStock",
-              "priceValidUntil": "2027-12-31",
-              "url": "https://www.red-stream.store/#pricing"
-            },
-            {
-              "@type": "Offer",
-              "name": "12 Months VIP (Best Value)",
+              "name": "12 Months VIP Plan (Best Value)",
               "price": "49.00",
               "priceCurrency": "EUR",
               "availability": "https://schema.org/InStock",
@@ -696,12 +687,14 @@
       position: relative;
       border: 1px solid var(--color-primary);
       background-clip: padding-box;
-      transform: scale(1.05);
       box-shadow: 0 10px 40px rgba(0,0,0,0.5), 0 0 20px rgba(229, 9, 20, 0.1);
       z-index: 2;
     } 
     
-    .pricing-card.popular:hover {  transform: scale(1.07) translateY(-5px);  border-color: #ff0000;  box-shadow: 0 15px 50px rgba(0,0,0,0.6), 0 0 30px rgba(229, 9, 20, 0.2); }
+    .pricing-card.popular:hover {
+      border-color: #ff0000;
+      box-shadow: 0 15px 50px rgba(0,0,0,0.6), 0 0 30px rgba(229, 9, 20, 0.2);
+    }
 
     .pricing-tag {
       position: absolute;

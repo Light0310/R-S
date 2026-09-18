@@ -870,9 +870,9 @@ const LANDING_HTML_TOP = `
         
       </div>
 
-      <div class="flex flex-wrap justify-center gap-8 md:gap-6 lg:gap-10 mt-10 max-w-5xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto items-stretch mt-10 px-4">
         <!-- Plan 1: 1 Month -->
-        <div class="pricing-card w-full sm:w-[calc(50%-16px)] lg:w-[calc(33.333%-24px)] max-w-[340px] flex flex-col border border-gray-800 bg-gradient-to-b from-gray-900 to-black shadow-lg rounded-xl relative" id="plan-1month">
+        <div class="pricing-card w-full flex flex-col justify-between border border-gray-800 bg-gradient-to-b from-gray-900 to-black shadow-lg rounded-xl relative p-6 md:p-8" id="plan-1month">
           <div class="plan-header">
             <h3 class="plan-name">1 Month</h3>
             <div class="plan-price-wrapper">
@@ -883,7 +883,7 @@ const LANDING_HTML_TOP = `
             <p class="plan-desc text-gray-400 font-normal normal-case not-italic">Flexible month-by-month premium access. Cancel anytime.</p>
           </div>
           <div class="plan-divider"></div>
-          <ul class="plan-features">
+          <ul class="plan-features my-4 space-y-3">
             <li><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 20,000+ Live Channels</li>
             <li><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 60,000+ VOD Movies</li>
             <li><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 4K / Ultra HD Quality</li>
@@ -892,7 +892,7 @@ const LANDING_HTML_TOP = `
         </div>
 
         <!-- Plan 2: 6 Months (Decoy) -->
-        <div class="pricing-card w-full sm:w-[calc(50%-16px)] lg:w-[calc(33.333%-24px)] max-w-[340px] flex flex-col border border-gray-800 bg-gradient-to-b from-gray-900 to-black shadow-lg rounded-xl relative" id="plan-6months">
+        <div class="pricing-card w-full flex flex-col justify-between border border-gray-800 bg-gradient-to-b from-gray-900 to-black shadow-lg rounded-xl relative p-6 md:p-8" id="plan-6months">
           <div class="plan-header">
             <h3 class="plan-name">6 Months</h3>
             <div class="plan-price-wrapper" style="margin-bottom: 4px;">
@@ -904,7 +904,7 @@ const LANDING_HTML_TOP = `
             <p class="plan-desc text-gray-400 font-normal normal-case not-italic">Our highly popular plan. Ideal for keeping up with sports season.</p>
           </div>
           <div class="plan-divider"></div>
-          <ul class="plan-features">
+          <ul class="plan-features my-4 space-y-3">
             <li><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 20,000+ Live Channels</li>
             <li><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 60,000+ VOD Movies</li>
             <li><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 4K / Ultra HD Quality</li>
@@ -914,7 +914,7 @@ const LANDING_HTML_TOP = `
         </div>
 
         <!-- Plan 3: 12 Months (Pulsing Red Neon Highlighted - Best Value) -->
-        <div class="pricing-card popular w-full sm:w-[calc(50%-16px)] lg:w-[calc(33.333%-24px)] max-w-[340px] flex flex-col scale-105 transform bg-gradient-to-b from-gray-900 to-black z-10 border border-[#e50914]/50 shadow-[0_10px_30px_rgba(229,9,20,0.2)] relative lg:mt-0 mt-4 mx-auto" id="plan-12months">
+        <div class="pricing-card popular w-full flex flex-col justify-between bg-gradient-to-b from-[#180507] via-gray-900 to-black z-10 border-2 border-[#e50914] shadow-[0_10px_35px_rgba(229,9,20,0.35)] rounded-xl relative p-6 md:p-8 md:-translate-y-3" id="plan-12months">
           <div class="pricing-tag" style="background: #e50914; color: white; padding: 4px 12px; border-radius: 9999px; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); width: max-content; box-shadow: 0 0 15px rgba(229,9,20,0.5);">Launch Offer</div>
           <div class="plan-header">
             <h3 class="plan-name">12 Months</h3>
@@ -930,14 +930,14 @@ const LANDING_HTML_TOP = `
             <p class="plan-desc text-gray-400 font-normal normal-case not-italic">Ultimate premium package. Only 10€ more than 6 months!</p>
           </div>
           <div class="plan-divider"></div>
-          <ul class="plan-features">
+          <ul class="plan-features my-4 space-y-3">
             <li><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 20,000+ Live Channels</li>
             <li><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 60,000+ VOD Movies</li>
             <li><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 4K / Ultra HD Quality</li>
             <li class="premium-feature"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Anti-Freeze Stable Server</li>
             <li class="premium-feature"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 24/7 VIP Customer Support</li>
           </ul>
-          <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20want%20to%20order%20the%2012%20Months%20Premium%20Plan%20for%2049%E2%82%AC." target="_blank" rel="noopener noreferrer" class="plan-cta mt-auto bg-[#e50914] text-white shadow-[0_0_20px_rgba(229,9,20,0.6)] hover:shadow-[0_0_30px_rgba(229,9,20,0.8)] transition-shadow" id="btn-12months-order">Order 12 Months</a>
+          <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20want%20to%20order%20the%2012%20Months%20Premium%20Plan%20for%2049%E2%82%AC." target="_blank" rel="noopener noreferrer" class="plan-cta mt-auto bg-[#e50914] text-white shadow-[0_0_20px_rgba(229,9,20,0.6)] hover:shadow-[0_0_30px_rgba(229,9,20,0.8)] transition-shadow font-bold" id="btn-12months-order">Order 12 Months</a>
         </div>
       </div>
 
