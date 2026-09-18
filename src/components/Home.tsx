@@ -42,149 +42,7 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
 
-  // Inject Product and FAQ Schema Markup only on the Home page
-  useEffect(() => {
-    const schema = {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "Product",
-          "@id": "https://www.red-stream.store/#product",
-          "url": "https://www.red-stream.store/",
-          "name": "RedStream™ Premium Streaming Subscription",
-          "image": "https://www.red-stream.store/whatsapp_order_preview.png",
-          "description": "Stream over 20,000+ live premium TV channels and 60,000+ blockbuster movies & VOD in stunning Ultra HD 4K with Anti-Freeze 9.0 Technology.",
-          "sku": "REDSTREAM-PREMIUM",
-          "mpn": "RS-PREMIUM-01",
-          "brand": {
-            "@id": "https://www.red-stream.store/#organization"
-          },
-          "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.9",
-            "reviewCount": "28",
-            "bestRating": "5",
-            "worstRating": "1"
-          },
-          "review": [
-            {
-              "@type": "Review",
-              "author": {
-                "@type": "Person",
-                "name": "David M."
-              },
-              "datePublished": "2026-06-12",
-              "reviewRating": {
-                "@type": "Rating",
-                "ratingValue": "5",
-                "bestRating": "5",
-                "worstRating": "1"
-              },
-              "reviewBody": "Best Streaming service I have used. 4K streams load instantly and zero buffering during live sports."
-            }
-          ],
-          "offers": {
-            "@type": "AggregateOffer",
-            "priceCurrency": "EUR",
-            "lowPrice": "2.00",
-            "highPrice": "49.00",
-            "offerCount": "4",
-            "offers": [
-              {
-                "@type": "Offer",
-                "name": "24 Hours Trial",
-                "price": "2.00",
-                "priceCurrency": "EUR",
-                "availability": "https://schema.org/InStock",
-                "priceValidUntil": "2027-12-31",
-                "url": "https://www.red-stream.store/"
-              },
-              {
-                "@type": "Offer",
-                "name": "1 Month Premium Plan",
-                "price": "12.00",
-                "priceCurrency": "EUR",
-                "availability": "https://schema.org/InStock",
-                "priceValidUntil": "2027-12-31",
-                "url": "https://www.red-stream.store/"
-              },
-              {
-                "@type": "Offer",
-                "name": "6 Months Premium Plan",
-                "price": "29.00",
-                "priceCurrency": "EUR",
-                "availability": "https://schema.org/InStock",
-                "priceValidUntil": "2027-12-31",
-                "url": "https://www.red-stream.store/"
-              },
-              {
-                "@type": "Offer",
-                "name": "12 Months Premium Plan",
-                "price": "49.00",
-                "priceCurrency": "EUR",
-                "availability": "https://schema.org/InStock",
-                "priceValidUntil": "2027-12-31",
-                "url": "https://www.red-stream.store/"
-              }
-            ]
-          }
-        },
-        {
-          "@type": "FAQPage",
-          "mainEntity": [
-            {
-              "@type": "Question",
-              "name": "How do I activate my RedStream Streaming subscription?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Once you purchase a plan or request a trial, contact our WhatsApp support team with your order details. We will provide you with your personalized login credentials (M3U link, Xtream Codes, or Portal URL) within 10 minutes."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "Is the server stable and freeze-free?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Yes! We use cutting-edge Anti-Freeze 9.0 Technology and multi-location load balancing. This ensures a 99.9% uptime and a buffer-free streaming experience, even during peak traffic and major sporting events."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "Which devices are supported by RedStream?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Our service works on virtually any device: Smart TVs (Samsung, LG, Android TV), Firestick, Apple TV, MAG boxes, Android/iOS smartphones, Windows/Mac computers, and dedicated Streaming apps like IboPro, Smarters Pro, and Set Streaming."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "Do you offer customer support if I run into issues?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Absolutely. Our engineering team is available 24/7 on WhatsApp to help you with activation, device setup, troubleshooting, or general questions. We do not use bots—you talk to real human experts."
-              }
-            }
-          ]
-        }
-      ]
-    };
-
-    let script = document.getElementById('home-page-schema') as HTMLScriptElement;
-    if (!script) {
-      script = document.createElement('script');
-      script.id = 'home-page-schema';
-      script.type = 'application/ld+json';
-      document.head.appendChild(script);
-    }
-    script.textContent = JSON.stringify(schema);
-
-    return () => {
-      const existingScript = document.getElementById('home-page-schema');
-      if (existingScript && document.head.contains(existingScript)) {
-        document.head.removeChild(existingScript);
-      }
-    };
-  }, []);
+  // Schema markup is statically declared in index.html to guarantee zero duplication and instant SSR Google indexing.
 
   useEffect(() => {
     // 2. Smooth scroll offset adjustment for sticky header
@@ -749,9 +607,11 @@ const LANDING_HTML_TOP = `
         </span>
       </a>
       
-      <!-- Secondary CTA -->
-      <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20would%20like%20to%20request%20my%202-Hour%20Free%20Trial." target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors text-sm font-medium underline underline-offset-4 decoration-gray-600 hover:decoration-white mt-2 mb-4" id="hero-secondary-cta">
-        Or request a 2-Hour Free Trial
+      <!-- Secondary CTA / Live Match Hook -->
+      <a href="https://wa.me/212694843943?text=Hello%20RedStream,%20I%20want%20to%20test%20the%20match%20streams.%20Please%20send%20my%20Free%20Trial." target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[#e50914]/50 transition-all text-xs sm:text-sm font-medium text-gray-300 hover:text-white mt-1 mb-3 group" id="hero-secondary-cta">
+        <span class="w-2 h-2 rounded-full bg-[#e50914] animate-pulse"></span>
+        <span>Looking for Live Sports? <strong class="text-white">Get Instant 2-Hour Pass</strong></span>
+        <svg class="w-3.5 h-3.5 text-gray-400 group-hover:translate-x-0.5 group-hover:text-[#e50914] transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </a>
     </div>
 
@@ -792,7 +652,7 @@ const LANDING_HTML_TOP = `
         </div>
         <div class="flex flex-col items-center">
           <span class="text-4xl font-bold text-white tracking-tight mb-2">4.9 / 5</span>
-          <span class="text-sm text-gray-400 font-medium uppercase tracking-wider">Google Rating</span>
+          <span class="text-sm text-gray-400 font-medium uppercase tracking-wider">Based on 284 Reviews</span>
         </div>
       </div>
     </div>
