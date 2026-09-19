@@ -307,7 +307,7 @@ function BlogListRoute() {
     const convertedDynamic = dynamicPosts
       .map((dp: any) => ({
         slug: dp.slug,
-        lang: 'en' as Language, // default dynamic articles to English as they are generated for SEO
+        lang: (dp.lang || 'en') as Language,
         title: dp.title,
         date: dp.date || (dp.created_at ? new Date(dp.created_at).toISOString().split('T')[0] : new Date().toISOString().split('T')[0]),
         author: dp.author || 'RedStream Expert',
@@ -318,10 +318,15 @@ function BlogListRoute() {
         readingTime: Math.max(1, Math.ceil((dp.content || '').split(/\s+/).length / 200)),
       }));
 
+    // If viewing English, include English dynamic posts; for other languages, prioritize static matching or fallback seamlessly
+    const dynamicForLang = convertedDynamic.filter(p => p.lang === currentLang || (currentLang === 'en' && !p.lang));
     const dynamicSlugs = new Set(convertedDynamic.map(p => p.slug));
     const finalStaticPosts = rawStaticPosts.filter(p => !dynamicSlugs.has(p.slug));
 
-    return [...finalStaticPosts, ...convertedDynamic];
+    // If target language has its own dynamic posts, show them; otherwise show static posts + dynamic if language is English
+    return currentLang === 'en' 
+      ? [...finalStaticPosts, ...convertedDynamic]
+      : (dynamicForLang.length > 0 ? [...finalStaticPosts, ...dynamicForLang] : finalStaticPosts);
   }, [currentLang, dynamicPosts]);
 
   const onNavigate = (view: string, slug?: string) => {

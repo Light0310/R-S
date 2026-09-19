@@ -34,14 +34,56 @@ export default function BlogPostComponent({ post, lang, t, onBack }: BlogPostPro
       metaOgImage.setAttribute('property', 'og:image');
       document.head.appendChild(metaOgImage);
     }
-    const ogImageSrc = post.cover_image ? `${window.location.origin}/api/seo/images/${post.slug}.jpg` : `${window.location.origin}/redstream_blog_cover.svg`;
+    const ogImageSrc = post.cover_image && post.cover_image.startsWith('http')
+      ? post.cover_image
+      : post.cover_image && post.cover_image.startsWith('/')
+      ? `${window.location.origin}${post.cover_image}`
+      : post.cover_image
+      ? `${window.location.origin}/api/seo/images/${post.slug}.jpg`
+      : `${window.location.origin}/redstream_blog_cover.svg`;
     metaOgImage.setAttribute('content', ogImageSrc);
+
+    // Schema.org Article Structured Data Injection
+    const schemaId = 'blog-post-article-schema';
+    let scriptTag = document.getElementById(schemaId) as HTMLScriptElement | null;
+    if (!scriptTag) {
+      scriptTag = document.createElement('script');
+      scriptTag.id = schemaId;
+      scriptTag.type = 'application/ld+json';
+      document.head.appendChild(scriptTag);
+    }
+    scriptTag.text = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'TechArticle',
+      'headline': post.title,
+      'description': post.description || post.title,
+      'image': [ogImageSrc],
+      'datePublished': post.date || new Date().toISOString().split('T')[0],
+      'author': {
+        '@type': 'Person',
+        'name': post.author || 'RedStream Expert',
+      },
+      'publisher': {
+        '@type': 'Organization',
+        'name': 'RedStream IPTV',
+        'logo': {
+          '@type': 'ImageObject',
+          'url': `${window.location.origin}/redstream_blog_cover.svg`
+        }
+      },
+      'mainEntityOfPage': {
+        '@type': 'WebPage',
+        '@id': window.location.href
+      }
+    });
     
     // Cleanup on unmount
     return () => {
       document.title = 'RedStream™ | Premium Streaming Subscription - Fast & Stable Server';
       metaDescription?.setAttribute('content', 'Stream over 20,000+ live premium TV channels and 60,000+ blockbuster movies & VOD in stunning Ultra HD 4K.');
       metaOgImage?.setAttribute('content', `${window.location.origin}/whatsapp_order_preview.png`);
+      const existingScript = document.getElementById(schemaId);
+      if (existingScript) existingScript.remove();
     };
   }, [post]);
 
