@@ -146,9 +146,10 @@ export default function BlogList({ posts, lang, t, onNavigate }: BlogListProps) 
                   ? '/future_streaming_trends_2026.svg'
                   : '/redstream_blog_cover.svg';
 
-                // Mock stats based on reading time to make it look active
-                const views = post.readingTime * 1427;
-                const replies = post.readingTime * 34;
+                // Generate realistic, organic, pseudo-random stats based on the unique slug
+                const seed = post.slug.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+                const views = 1840 + (seed * 37) % 6890;
+                const replies = 14 + (seed * 7) % 89;
 
                 return (
                   <Link 
