@@ -101,7 +101,13 @@ export const initializeDatabase = async () => {
       'Top setup guides for Android TV live sports',
       'Watch live football without lagging best servers',
       'How to configure IPTV playlist on Firestick',
-      'Best high-speed streaming service for 4K movies'
+      'Best high-speed streaming service for 4K movies',
+      'Watch Premier League and Champions League in 4K zero buffering',
+      'Best IPTV players for Firestick downloader codes 2026',
+      'How to watch UFC PPV live streams without cable',
+      'TiviMate companion setup and buffering fix guide',
+      'Best 4K sports streaming alternatives to Sky and TNT Sports',
+      'Comment regarder la ligue des champions en 4k sans coupure'
     ];
 
     let seededCount = 0;
