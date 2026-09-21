@@ -36,9 +36,9 @@ export const homeTranslations: Record<Exclude<Language, 'en'>, Record<string, st
     '10-Min Setup & Activation': 'تفعيل وإعداد في 10 دقائق',
     'No waiting games. Purchase your desired subscription, ping our WhatsApp agent, and receive your personalized login within 10 minutes.': 
       'لا داعي للانتظار. اختر اشتراكك المناسب، تواصل مع وكيلنا عبر واتساب، واستلم بيانات تسجيل الدخول الخاصة بك في غضون 10 دقائق.',
-    '20K Live & 60K VOD': '20 ألف قناة مباشرة و 60 ألف فيلم ومسلسل',
-    'Full sports catalogs, US/UK/CA local channels, premium cinema, and the hottest Netflix, HBO Max, Disney+, and Amazon Prime releases.': 
-      'مجموعات رياضية كاملة، القنوات المحلية لـ أمريكا وبريطانيا وكندا، سينما ممتازة، وأحدث إصدارات Netflix و HBO Max و Disney+ و Amazon Prime.',
+    'Ultra HD & 4K HDR': 'جودة فائقة 4K و Ultra HD',
+    'Crystal-clear 4K resolution at 60fps with vivid HDR color and immersive surround audio across all your screens.': 
+      'بث فائق الدقة 4K بمعدل 60 إطار في الثانية مع ألوان HDR وصوت محيطي نقي على جميع أجهزتك.',
     '24/7 Support on WhatsApp': 'دعم 24/7 على واتساب',
     'Real human engineers ready to help you with activation, device troubleshooting, and guide installation anytime, day or night.': 
       'مهندسون حقيقيون مستعدون لمساعدتك في التفعيل وحل مشكلات الأجهزة وتثبيت الأدلة في أي وقت، ليلاً أو نهاراً.',
@@ -138,9 +138,9 @@ export const homeTranslations: Record<Exclude<Language, 'en'>, Record<string, st
     '10-Min Setup & Activation': 'Configuración y Activación en 10 Minutos',
     'No waiting games. Purchase your desired subscription, ping our WhatsApp agent, and receive your personalized login within 10 minutes.': 
       'Sin esperas. Elige tu suscripción, envía un mensaje a nuestro agente de WhatsApp y recibe tus credenciales en menos de 10 minutos.',
-    '20K Live & 60K VOD': '20K Canales Mapeados y 60K Películas',
-    'Full sports catalogs, US/UK/CA local channels, premium cinema, and the hottest Netflix, HBO Max, Disney+, and Amazon Prime releases.': 
-      'Catálogos deportivos completos, canales locales de EE. UU./Reino Unido/Canadá, cine premium y los estrenos más recientes de Netflix, HBO Max, Disney+ y Amazon Prime.',
+    'Ultra HD & 4K HDR': 'Calidad Ultra HD y 4K HDR',
+    'Crystal-clear 4K resolution at 60fps with vivid HDR color and immersive surround audio across all your screens.': 
+      'Transmisión nítida en 4K a 60 fps con colores HDR y sonido envolvente en todos tus dispositivos.',
     '24/7 Support on WhatsApp': 'Soporte 24/7 en WhatsApp',
     'Real human engineers ready to help you with activation, device troubleshooting, and guide installation anytime, day or night.': 
       'Ingenieros de soporte reales listos para ayudarte con la activación, resolución de problemas de dispositivos e instalación de guías en cualquier momento.',
@@ -240,9 +240,9 @@ export const homeTranslations: Record<Exclude<Language, 'en'>, Record<string, st
     '10-Min Setup & Activation': '10-Minuten Installatie & Activatie',
     'No waiting games. Purchase your desired subscription, ping our WhatsApp agent, and receive your personalized login within 10 minutes.': 
       'Geen wachttijden. Kies uw abonnement, stuur een bericht via WhatsApp en ontvang uw inloggegevens binnen 10 minuten.',
-    '20K Live & 60K VOD': '20K Zenders & 60K VOD',
-    'Full sports catalogs, US/UK/CA local channels, premium cinema, and the hottest Netflix, HBO Max, Disney+, and Amazon Prime releases.': 
-      'Volledig sportaanbod, lokale zenders uit VS/VK/CA, premium bioscoopkanalen en de nieuwste releases van Netflix, HBO Max, Disney+ en Prime.',
+    'Ultra HD & 4K HDR': 'Ultra HD & 4K HDR Kwaliteit',
+    'Crystal-clear 4K resolution at 60fps with vivid HDR color and immersive surround audio across all your screens.': 
+      'Kristalheldere 4K-resolutie op 60fps met HDR-kleuren en meeslepende audio op al uw schermen.',
     '24/7 Support on WhatsApp': '24/7 Support op WhatsApp',
     'Real human engineers ready to help you with activation, device troubleshooting, and guide installation anytime, day or night.': 
       'Echte technische specialisten staan 24 uur per dag voor u klaar om u te helpen met de activatie en installatie op elk apparaat.',
@@ -342,9 +342,9 @@ export const homeTranslations: Record<Exclude<Language, 'en'>, Record<string, st
     '10-Min Setup & Activation': 'Installation & Activation en 10 min',
     'No waiting games. Purchase your desired subscription, ping our WhatsApp agent, and receive your personalized login within 10 minutes.': 
       'Pas d’attente. Choisissez votre abonnement, contactez notre agent WhatsApp et recevez vos identifiants personnalisés en moins de 10 minutes.',
-    '20K Live & 60K VOD': '20K Direct & 60K VOD',
-    'Full sports catalogs, US/UK/CA local channels, premium cinema, and the hottest Netflix, HBO Max, Disney+, and Amazon Prime releases.': 
-      'Catalogues de sports complets, chaînes locales US/UK/CA, cinéma premium et les dernières nouveautés de Netflix, HBO Max, Disney+ et Prime.',
+    'Ultra HD & 4K HDR': 'Qualité Ultra HD & 4K HDR',
+    'Crystal-clear 4K resolution at 60fps with vivid HDR color and immersive surround audio across all your screens.': 
+      'Résolution 4K cristalline à 60 ips avec couleurs HDR vives et son surround immersif sur tous vos écrans.',
     '24/7 Support on WhatsApp': 'Support 24/7 sur WhatsApp',
     'Real human engineers ready to help you with activation, device troubleshooting, and guide installation anytime, day or night.': 
       'De vrais techniciens humains prêts à vous aider pour l’activation, le dépannage de vos appareils et l’installation à tout moment.',
@@ -444,9 +444,9 @@ export const homeTranslations: Record<Exclude<Language, 'en'>, Record<string, st
     '10-Min Setup & Activation': 'Настройка и активация за 10 минут',
     'No waiting games. Purchase your desired subscription, ping our WhatsApp agent, and receive your personalized login within 10 minutes.': 
       'Без долгого ожидания. Выберите тариф, напишите нам в WhatsApp и получите свои данные для входа в течение 10 минут.',
-    '20K Live & 60K VOD': '20K Каналов и 60K Фильмов',
-    'Full sports catalogs, US/UK/CA local channels, premium cinema, and the hottest Netflix, HBO Max, Disney+, and Amazon Prime releases.': 
-      'Полные спортивные пакеты, локальные каналы США/Великобритании/Канады, премиум-кинотеатры и новинки Netflix, HBO Max, Disney+ и Prime.',
+    'Ultra HD & 4K HDR': 'Качество Ultra HD и 4K HDR',
+    'Crystal-clear 4K resolution at 60fps with vivid HDR color and immersive surround audio across all your screens.': 
+      'Кристально четкое 4K-видео 60 кадров/с с поддержкой HDR и объемным звуком на всех ваших устройствах.',
     '24/7 Support on WhatsApp': 'Поддержка 24/7 в WhatsApp',
     'Real human engineers ready to help you with activation, device troubleshooting, and guide installation anytime, day or night.': 
       'Наши специалисты готовы помочь вам с активацией, настройкой устройств и установкой приложений в любое время суток.',
@@ -546,9 +546,9 @@ export const homeTranslations: Record<Exclude<Language, 'en'>, Record<string, st
     '10-Min Setup & Activation': '10-Minuten-Einrichtung & Aktivierung',
     'No waiting games. Purchase your desired subscription, ping our WhatsApp agent, and receive your personalized login within 10 minutes.': 
       'Keine Wartezeiten. Kaufen Sie Ihr Wunsch-Abo, schreiben Sie uns auf WhatsApp und Sie erhalten Ihre Login-Daten innerhalb von 10 Minuten.',
-    '20K Live & 60K VOD': '20K Live-Kanäle & 60K VOD',
-    'Full sports catalogs, US/UK/CA local channels, premium cinema, and the hottest Netflix, HBO Max, Disney+, and Amazon Prime releases.': 
-      'Komplette Sport-Kataloge, US/UK/CA lokale Sender, Premium-Kino und die neuesten Blockbuster von Netflix, HBO Max, Disney+ und Prime.',
+    'Ultra HD & 4K HDR': 'Ultra HD & 4K HDR Qualität',
+    'Crystal-clear 4K resolution at 60fps with vivid HDR color and immersive surround audio across all your screens.': 
+      'Kristallklare 4K-Auflösung mit 60 Bildern pro Sekunde, lebendigen HDR-Farben und Surround-Sound auf allen Geräten.',
     '24/7 Support on WhatsApp': '24/7 Support auf WhatsApp',
     'Real human engineers ready to help you with activation, device troubleshooting, and guide installation anytime, day or night.': 
       'Echte Techniker helfen Ihnen jederzeit bei der Aktivierung, Einrichtung Ihrer Geräte und Installation von Apps.',

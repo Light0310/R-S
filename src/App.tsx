@@ -67,7 +67,8 @@ function MainLayout() {
           
           {/* Brand Logo */}
           <Link to={currentLang === 'en' ? '/' : `/${currentLang}`} className="flex items-center gap-2 cursor-pointer select-none">
-            <svg className="w-7 h-7 filter drop-shadow(0 0 5px rgba(255,30,39,0.5))" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+            <svg className="w-7 h-7 filter drop-shadow(0 0 5px rgba(255,30,39,0.5))" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="RedStream Logo">
+              <title>RedStream Logo</title>
               <g transform="translate(16, 16) scale(0.93)">
                 <path d="M 120 140 L 340 140 A 75 75 0 0 1 415 215 A 75 75 0 0 1 340 290 L 280 290 L 400 380 L 330 380 L 225 300 L 150 380 L 105 380 L 205 300 L 245 250 L 340 250 A 35 35 0 0 0 375 215 A 35 35 0 0 0 340 180 L 160 180 Z" fill="#FF1E27" />
                 <polygon points="120,200 200,245 120,290" fill="#FFFFFF" />
@@ -225,7 +226,8 @@ function MainLayout() {
       <footer className="bg-[#0c0c0c] border-t border-white/5 py-8 text-center text-xs text-gray-500 font-medium mt-auto">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <svg className="w-5 h-5 filter drop-shadow(0 0 3px rgba(255,30,39,0.5))" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+            <svg className="w-5 h-5 filter drop-shadow(0 0 3px rgba(255,30,39,0.5))" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="RedStream IPTV">
+              <title>RedStream IPTV</title>
               <g transform="translate(16, 16) scale(0.93)">
                 <path d="M 120 140 L 340 140 A 75 75 0 0 1 415 215 A 75 75 0 0 1 340 290 L 280 290 L 400 380 L 330 380 L 225 300 L 150 380 L 105 380 L 205 300 L 245 250 L 340 250 A 35 35 0 0 0 375 215 A 35 35 0 0 0 340 180 L 160 180 Z" fill="#FF1E27" />
                 <polygon points="120,200 200,245 120,290" fill="#FFFFFF" />

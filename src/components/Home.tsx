@@ -431,7 +431,8 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
             }
           }}>
             {/* Modern Premium RedStream Logo SVG */}
-            <svg className="custom-logo-icon" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" style={{ width: '28px', height: '28px', filter: 'drop-shadow(0 0 5px var(--color-primary-glow))' }}>
+            <svg className="custom-logo-icon" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="RedStream Logo" style={{ width: '28px', height: '28px', filter: 'drop-shadow(0 0 5px var(--color-primary-glow))' }}>
+              <title>RedStream Logo</title>
               <g transform="translate(16, 16) scale(0.93)">
                 <path d="M 120 140 L 340 140 A 75 75 0 0 1 415 215 A 75 75 0 0 1 340 290 L 280 290 L 400 380 L 330 380 L 225 300 L 150 380 L 105 380 L 205 300 L 245 250 L 340 250 A 35 35 0 0 0 375 215 A 35 35 0 0 0 340 180 L 160 180 Z" fill="#FF1E27" />
                 <polygon points="120,200 200,245 120,290" fill="#FFFFFF" />
@@ -551,12 +552,15 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
         </div>
       </header>
 
-      {/* Hero Section & Rest of Landing Page Content */}
-      <div dangerouslySetInnerHTML={{ __html: getTranslatedLandingHTML(LANDING_HTML_TOP, currentLang) }} />
-      <DownloaderCodes />
+      {/* Main Landmark for Accessibility and SEO */}
+      <main id="main-content">
+        {/* Hero Section & Rest of Landing Page Content */}
+        <div dangerouslySetInnerHTML={{ __html: getTranslatedLandingHTML(LANDING_HTML_TOP, currentLang) }} />
+        <DownloaderCodes />
 
-      {/* Sleek dynamic FAQ Accordion Component */}
-      <FAQSection currentLang={currentLang} />
+        {/* Sleek dynamic FAQ Accordion Component */}
+        <FAQSection currentLang={currentLang} />
+      </main>
 
       {/* Footer and Bottom Floating Widgets */}
       <div dangerouslySetInnerHTML={{ __html: getTranslatedLandingHTML(LANDING_HTML_BOTTOM, currentLang)
@@ -586,7 +590,7 @@ const LANDING_HTML_TOP = `
     </h1>
     
     <p id="hero-subheading">
-      Stream over 20,000+ live premium TV channels and 60,000+ blockbuster movies & VOD in stunning Ultra HD 4K. Zero freezing, smart loading, and instant instant activation.
+      Stream over 20,000+ live premium TV channels and 60,000+ blockbuster movies & VOD in stunning Ultra HD 4K. Zero freezing, smart loading, and instant activation.
     </p>
 
     <!-- CTA Actions Container -->
@@ -628,9 +632,9 @@ const LANDING_HTML_TOP = `
 
       <!-- Payment Icons (Clean & Visible) -->
       <div class="flex items-center gap-4 mt-2 mb-8">
-        <svg style="height: 26px;" viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg" role="img"><path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"></path><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"></path><path d="M28.3 10.1H28c-.4 1-.7 1.5-1 3h1.9c-.3-1.5-.3-2.2-.6-3zm2.9 5.9h-1.7c-.1 0-.1 0-.2-.1l-.2-.9-.1-.2h-2.4c-.1 0-.2 0-.2.2l-.3.9c0 .1-.1.1-.1.1h-2.1l.2-.5L27 8.7c0-.5.3-.7.8-.7h1.5c.1 0 .2 0 .2.2l1.4 6.5c.1.4.2.7.2 1.1.1.1.1.1.1.2zm-13.4-.3l.4-1.8c.1 0 .2.1.2.1.7.3 1.4.5 2.1.4.2 0 .5-.1.7-.2.5-.2.5-.7.1-1.1-.2-.2-.5-.3-.8-.5-.4-.2-.8-.4-1.1-.7-1.2-1-.8-2.4-.1-3.1.6-.4.9-.8 1.7-.8 1.2 0 2.5 0 3.1.2h.1c-.1.6-.2 1.1-.4 1.7-.5-.2-1-.4-1.5-.4-.3 0-.6 0-.9.1-.2 0-.3.1-.4.2-.2.2-.2.5 0 .7l.5.4c.4.2.8.4 1.1.6.5.3 1 .8 1.1 1.4.2.9-.1 1.7-.9 2.3-.5.4-1.1.6-2.1.6-1.1 0-2.5-.2-3.1-.5zm5.4-5.3c-.3 0-.6.3-.7.6l-1.6 6.1c0 .1-.1.1-.2.1h-2.6c-.1 0-.2 0-.2-.2l2.7-8.7c0-.2.3-.3.5-.3h2.6c.1 0 .2.2.2.2l-1 2.2zm-7.6 6.4h-2.6c-.1 0-.2 0-.2-.2L7.3 8.3c0-.1-.1-.1-.2-.2-.2-.1-.7-.3-1.5-.5L5.7 7c.8-.1 1.6-.2 2.3-.2.3 0 .4.1.5.3l1.8 7.3z" fill="#1434CB"></path></svg>
-        <svg style="height: 26px;" viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg" role="img"><path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"></path><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"></path><circle fill="#EB001B" cx="15" cy="12" r="7"></circle><circle fill="#F79E1B" cx="23" cy="12" r="7"></circle><path fill="#FF5F00" d="M22 12c0-2.4-1.2-4.5-3-5.7-1.8 1.2-3 3.3-3 5.7s1.2 4.5 3 5.7c1.8-1.2 3-3.3 3-5.7z"></path></svg>
-        <svg style="height: 26px;" viewBox="0 0 38 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img"><path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"></path><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"></path><path fill="#003087" d="M23.9 8.3c.2-1 0-1.7-.6-2.3-.6-.4-1.6-.7-3.1-.7h-4.7c-.1 0-.2.1-.2.2l-2.7 17.3c0 .1.1.2.2.2h3.2c.1 0 .2-.1.2-.2l1.3-8.2c0-.1.1-.2.2-.2h1.5c4.6 0 6.9-2.3 4.7-6.1z"></path><path fill="#3086C8" d="M23.9 8.3c-1.1 5.4-4.8 6.1-8 6.1H15c-.1 0-.2.1-.2.2l-1.3 8.2c0 .1.1.2.2.2h3.2c.1 0 .2-.1.2-.2l.9-5.9c0-.1.1-.2.2-.2h1.5c3.8 0 6.3-1.6 7-4.6 1-4.1-1.6-4.5-2.8-4.2z"></path><path fill="#012169" d="M23.3 8.1c-.1-.1-.2-.1-.3-.1-.1 0-.2 0-.3-.1-.3-.1-.7-.1-1.1-.1h-3c-.1 0-.2.1-.2.2l-2.7 17.3c0 .1.1.2.2.2h3.2c.1 0 .2-.1.2-.2l.6-4c0-.1.1-.2.2-.2h1.5c3.2 0 5.4-1.3 6-3.8.7-3 .2-5.4-1.4-6.8-.7-.6-1.5-1.1-2.9-1.3z"></path></svg>
+        <svg style="height: 26px;" viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Visa Payment"><title>Visa</title><path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"></path><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"></path><path d="M28.3 10.1H28c-.4 1-.7 1.5-1 3h1.9c-.3-1.5-.3-2.2-.6-3zm2.9 5.9h-1.7c-.1 0-.1 0-.2-.1l-.2-.9-.1-.2h-2.4c-.1 0-.2 0-.2.2l-.3.9c0 .1-.1.1-.1.1h-2.1l.2-.5L27 8.7c0-.5.3-.7.8-.7h1.5c.1 0 .2 0 .2.2l1.4 6.5c.1.4.2.7.2 1.1.1.1.1.1.1.2zm-13.4-.3l.4-1.8c.1 0 .2.1.2.1.7.3 1.4.5 2.1.4.2 0 .5-.1.7-.2.5-.2.5-.7.1-1.1-.2-.2-.5-.3-.8-.5-.4-.2-.8-.4-1.1-.7-1.2-1-.8-2.4-.1-3.1.6-.4.9-.8 1.7-.8 1.2 0 2.5 0 3.1.2h.1c-.1.6-.2 1.1-.4 1.7-.5-.2-1-.4-1.5-.4-.3 0-.6 0-.9.1-.2 0-.3.1-.4.2-.2.2-.2.5 0 .7l.5.4c.4.2.8.4 1.1.6.5.3 1 .8 1.1 1.4.2.9-.1 1.7-.9 2.3-.5.4-1.1.6-2.1.6-1.1 0-2.5-.2-3.1-.5zm5.4-5.3c-.3 0-.6.3-.7.6l-1.6 6.1c0 .1-.1.1-.2.1h-2.6c-.1 0-.2 0-.2-.2l2.7-8.7c0-.2.3-.3.5-.3h2.6c.1 0 .2.2.2.2l-1 2.2zm-7.6 6.4h-2.6c-.1 0-.2 0-.2-.2L7.3 8.3c0-.1-.1-.1-.2-.2-.2-.1-.7-.3-1.5-.5L5.7 7c.8-.1 1.6-.2 2.3-.2.3 0 .4.1.5.3l1.8 7.3z" fill="#1434CB"></path></svg>
+        <svg style="height: 26px;" viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mastercard Payment"><title>Mastercard</title><path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"></path><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"></path><circle fill="#EB001B" cx="15" cy="12" r="7"></circle><circle fill="#F79E1B" cx="23" cy="12" r="7"></circle><path fill="#FF5F00" d="M22 12c0-2.4-1.2-4.5-3-5.7-1.8 1.2-3 3.3-3 5.7s1.2 4.5 3 5.7c1.8-1.2 3-3.3 3-5.7z"></path></svg>
+        <svg style="height: 26px;" viewBox="0 0 38 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="PayPal Payment"><title>PayPal</title><path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"></path><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"></path><path fill="#003087" d="M23.9 8.3c.2-1 0-1.7-.6-2.3-.6-.4-1.6-.7-3.1-.7h-4.7c-.1 0-.2.1-.2.2l-2.7 17.3c0 .1.1.2.2.2h3.2c.1 0 .2-.1.2-.2l1.3-8.2c0-.1.1-.2.2-.2h1.5c4.6 0 6.9-2.3 4.7-6.1z"></path><path fill="#3086C8" d="M23.9 8.3c-1.1 5.4-4.8 6.1-8 6.1H15c-.1 0-.2.1-.2.2l-1.3 8.2c0 .1.1.2.2.2h3.2c.1 0 .2-.1.2-.2l.9-5.9c0-.1.1-.2.2-.2h1.5c3.8 0 6.3-1.6 7-4.6 1-4.1-1.6-4.5-2.8-4.2z"></path><path fill="#012169" d="M23.3 8.1c-.1-.1-.2-.1-.3-.1-.1 0-.2 0-.3-.1-.3-.1-.7-.1-1.1-.1h-3c-.1 0-.2.1-.2.2l-2.7 17.3c0 .1.1.2.2.2h3.2c.1 0 .2-.1.2-.2l.6-4c0-.1.1-.2.2-.2h1.5c3.2 0 5.4-1.3 6-3.8.7-3 .2-5.4-1.4-6.8-.7-.6-1.5-1.1-2.9-1.3z"></path></svg>
       </div>
     </div>
   </section>
@@ -693,18 +697,13 @@ const LANDING_HTML_TOP = `
         <div class="bg-gradient-to-b from-gray-900 to-black border border-gray-800 shadow-xl rounded-2xl p-8 flex flex-col items-center text-center transition-all duration-300 hover:-translate-y-2 hover:border-[#e50914]/40 hover:shadow-[0_15px_30px_rgba(229,9,20,0.1)] group">
           <div class="w-14 h-14 bg-[#e50914] rounded-xl flex items-center justify-center text-white mb-6 shadow-lg shadow-[#e50914]/30 group-hover:scale-110 transition-transform duration-300">
             <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/>
-              <line x1="7" y1="2" x2="7" y2="22"/>
-              <line x1="17" y1="2" x2="17" y2="22"/>
-              <line x1="2" y1="12" x2="22" y2="12"/>
-              <line x1="2" y1="7" x2="7" y2="7"/>
-              <line x1="2" y1="17" x2="7" y2="17"/>
-              <line x1="17" y1="17" x2="22" y2="17"/>
-              <line x1="17" y1="7" x2="22" y2="7"/>
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+              <line x1="8" y1="21" x2="16" y2="21"/>
+              <line x1="12" y1="17" x2="12" y2="21"/>
             </svg>
           </div>
-          <h3 class="text-white font-bold text-lg uppercase tracking-wide mb-3">20K Live & 60K VOD</h3>
-          <p class="text-gray-400 text-sm leading-relaxed">Full sports catalogs, local channels, premium cinema, and the hottest streaming releases in one place.</p>
+          <h3 class="text-white font-bold text-lg uppercase tracking-wide mb-3">Ultra HD & 4K HDR</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">Crystal-clear 4K resolution at 60fps with vivid HDR color and immersive surround audio across all your screens.</p>
         </div>
 
         <!-- Benefit 4 -->
@@ -1306,7 +1305,7 @@ const LANDING_HTML_TOP = `
             <!-- 21. Damsel -->
             <div class="showcase-slide">
               <span class="showcase-badge">FANTASY HIT</span>
-              <img src="/1000148216-streaming-france.webp" alt="Stream Damsel on Streaming France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148196-streaming-france.webp" alt="Stream Damsel on Streaming France - Premium Cinema Streaming" loading="lazy">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">Damsel</h3>
                 <div class="showcase-info">
@@ -1422,7 +1421,7 @@ const LANDING_HTML_BOTTOM = `
       <div class="payment-methods-grid" id="payment-badge-container">
         <!-- PayPal Badge -->
         <div class="payment-badge" id="payment-paypal">
-          <svg class="badge-paypal" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <svg class="badge-paypal" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="PayPal"><title>PayPal</title>
             <path d="M7.076 21.337L9.57 5.518c.09-.571.583-.984 1.161-.984h6.052c2.81 0 4.192 1.348 3.864 3.424-.413 2.61-2.023 4.167-4.475 4.167h-2.148l-.946 5.992c-.042.27-.275.465-.548.465H9.563c-.116 0-.214-.075-.246-.187L7.076 21.337z"/>
             <path opacity="0.6" d="M4.076 18.337L6.57 2.518c.09-.571.583-.984 1.161-.984h6.052c2.81 0 4.192 1.348 3.864 3.424-.413 2.61-2.023 4.167-4.475 4.167h-2.148l-.946 5.992c-.042.27-.275.465-.548.465H6.563c-.116 0-.214-.075-.246-.187L4.076 18.337z"/>
           </svg>
@@ -1431,7 +1430,7 @@ const LANDING_HTML_BOTTOM = `
 
         <!-- Stripe Badge -->
         <div class="payment-badge" id="payment-stripe">
-          <svg class="badge-stripe" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <svg class="badge-stripe" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Stripe"><title>Stripe</title>
             <path d="M13.93 10.12c0-.62-.51-1.01-1.39-1.01-.81 0-1.63.26-2.41.68l-.45-2.27c.89-.39 2.05-.68 3.26-.68 2.37 0 3.73 1.16 3.73 3.19v5.27c0 .99.19 1.63.45 2.07h-2.61c-.13-.26-.26-.64-.32-.99-.68.68-1.71 1.13-2.87 1.13-1.89 0-3.15-1.06-3.15-2.73 0-2.31 2.37-3.19 5.31-3.19v-.47zm-2.41 3.51c0 .54.41.87.97.87.75 0 1.44-.45 1.44-1.25V12.1h-.97c-1.02 0-1.44.4-1.44 1.12z"/>
           </svg>
           <span>Stripe</span>
@@ -1439,7 +1438,7 @@ const LANDING_HTML_BOTTOM = `
 
         <!-- Crypto Badge -->
         <div class="payment-badge" id="payment-crypto">
-          <svg class="badge-crypto" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <svg class="badge-crypto" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Crypto BTC and USDT"><title>Crypto</title>
             <path d="M23.6 12.5c-.7-2.6-2.4-4.5-4.9-5.3l1.1-4.2-2.5-.6-1 4.1c-.7-.2-1.3-.3-2-.5l1.1-4.2-2.5-.6-1.1 4.2c-.5-.1-1.1-.2-1.6-.4l-3.5-.9-.7 2.7s1.9.4 1.8.5c1 .3 1.2 1 1.2 1.5l-1.2 4.9c.1 0 .2.1.3.1-.1 0-.2-.1-.3-.1l-1.7 6.8c-.1.3-.4.8-1.1.6 0 0-1.8-.4-1.8-.4l-1.3 3 3.3.8c.6.2 1.2.3 1.8.5l-1.1 4.3 2.5.6 1.1-4.2c.7.2 1.3.3 1.9.5l-1.1 4.2 2.5.6 1.1-4.2c4.3.8 7.5-.1 8.5-3.4.8-2.6-.1-4.2-2-5.1 1.3-.4 2.3-1.4 2.6-3.4zm-4.7 7.4c-.8 3.1-4.2 1.4-5.4 1.1l1.1-4.5c1.2.3 5.1.8 4.3 3.4zm1-6.9c-.7 2.8-3.5 1.4-4.5 1.1l1-4.1c1 .3 4.2.8 3.5 3zm0 0"/>
           </svg>
           <span>Crypto (BTC/USDT)</span>
@@ -1447,7 +1446,7 @@ const LANDING_HTML_BOTTOM = `
 
         <!-- Western Union Badge -->
         <div class="payment-badge" id="payment-wu">
-          <svg class="badge-wu" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <svg class="badge-wu" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Western Union"><title>Western Union</title>
             <rect width="24" height="24" rx="4" fill="#ffcc00"/>
             <text x="12" y="16" font-family="'Outfit', sans-serif" font-weight="800" font-size="12" fill="#000000" text-anchor="middle">WU</text>
           </svg>
@@ -1456,7 +1455,7 @@ const LANDING_HTML_BOTTOM = `
 
         <!-- Ria Badge -->
         <div class="payment-badge" id="payment-ria">
-          <svg class="badge-ria" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <svg class="badge-ria" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ria Money Transfer"><title>Ria Money Transfer</title>
             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z"/>
           </svg>
           <span>Ria Money Transfer</span>

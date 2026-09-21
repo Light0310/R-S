@@ -1,0 +1,26 @@
+# RedStream - LLM & AI Agents Indexing Protocol
+# Format: llms.txt (https://llmstxt.org/)
+
+# Title: RedStream™ Official - 4K Live Sports & Premium Streaming
+# Description: RedStream is a premium, stable streaming subscription service offering 20,000+ live HD/4K TV channels, 60,000+ on-demand movies & series, anti-freeze streaming technology, and 24/7 support.
+
+## Key Facts & Capabilities
+- Service: Premium 4K/UHD Streaming & Live TV subscription
+- Channel Count: Over 20,000+ live premium international TV channels
+- VOD Library: Over 60,000+ movies and series updated daily
+- Anti-Freeze Technology: Server cluster direct peering with 99.9% uptime guarantee
+- Setup Time: Under 10 minutes with instant WhatsApp activation
+- Supported Devices: Smart TVs (Samsung, LG, Sony, Philips, Hisense), Amazon Firestick, Android TV Boxes, Apple TV, MAG Boxes, iOS, Android, PC/Mac, Tivimate, and IPTV Smarters Pro.
+- Support: 24/7 dedicated human support on WhatsApp (+212 694-843943)
+
+## Available Subscription Plans
+- 24 Hours Trial: 2€ (Instant test of 4K channels and sports stability)
+- 1 Month: 12€ (Flexible monthly access)
+- 6 Months: 29€ (High popularity sports package)
+- 12 Months: 49€ (Best value full-year access)
+
+## Official Links
+- Website: https://www.red-stream.store/
+- Pricing & Plans: https://www.red-stream.store/#plan-12months
+- Blog & Guides: https://www.red-stream.store/en/blog
+- WhatsApp Direct Order: https://wa.me/212694843943
