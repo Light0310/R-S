@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { Globe, ChevronDown } from 'lucide-react';
 import { Language } from '../types';
-import { getTranslatedLandingHTML } from './HomeTranslations';
-import FAQSection from './FAQSection';
 import DownloaderCodes from './DownloaderCodes';
 import { useGeoLocation } from '../hooks/useGeoLocation';
+
+const FAQSection = lazy(() => import('./FAQSection'));
 
 const languageNames: Record<Language, { native: string; flag: string; label: string }> = {
   en: { native: 'English', flag: '🇬🇧', label: 'EN' },
@@ -41,6 +41,20 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
   useGeoLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
+  const [translatedTop, setTranslatedTop] = useState(LANDING_HTML_TOP);
+  const [translatedBottom, setTranslatedBottom] = useState(LANDING_HTML_BOTTOM);
+
+  useEffect(() => {
+    if (currentLang === 'en') {
+      setTranslatedTop(LANDING_HTML_TOP);
+      setTranslatedBottom(LANDING_HTML_BOTTOM);
+      return;
+    }
+    import('./HomeTranslations').then(({ getTranslatedLandingHTML }) => {
+      setTranslatedTop(getTranslatedLandingHTML(LANDING_HTML_TOP, currentLang));
+      setTranslatedBottom(getTranslatedLandingHTML(LANDING_HTML_BOTTOM, currentLang));
+    });
+  }, [currentLang]);
 
   // Schema markup is statically declared in index.html to guarantee zero duplication and instant SSR Google indexing.
 
@@ -555,15 +569,17 @@ export default function Home({ currentLang = 'en', onChangeLanguage, onNavigate 
       {/* Main Landmark for Accessibility and SEO */}
       <main id="main-content">
         {/* Hero Section & Rest of Landing Page Content */}
-        <div dangerouslySetInnerHTML={{ __html: getTranslatedLandingHTML(LANDING_HTML_TOP, currentLang) }} />
+        <div dangerouslySetInnerHTML={{ __html: translatedTop }} />
         <DownloaderCodes />
 
         {/* Sleek dynamic FAQ Accordion Component */}
-        <FAQSection currentLang={currentLang} />
+        <Suspense fallback={<div className="py-12 text-center text-gray-500 min-h-[300px]">Loading FAQ...</div>}>
+          <FAQSection currentLang={currentLang} />
+        </Suspense>
       </main>
 
       {/* Footer and Bottom Floating Widgets */}
-      <div dangerouslySetInnerHTML={{ __html: getTranslatedLandingHTML(LANDING_HTML_BOTTOM, currentLang)
+      <div dangerouslySetInnerHTML={{ __html: translatedBottom
         .replace('href="/privacy.html"', `href="/privacy.html"`)
         .replace('href="/en/blog"', `href="/${currentLang}/blog"`) 
       }} />
@@ -1045,7 +1061,7 @@ const LANDING_HTML_TOP = `
             <!-- 1. Past Lives -->
             <div class="showcase-slide">
               <span class="showcase-badge">TOP RATED</span>
-              <img src="/1000148213-streaming-france.webp" alt="Stream Past Lives on Streaming France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148213-streaming-france.webp" alt="Stream Past Lives on Streaming France - Premium Cinema Streaming" loading="lazy" width="180" height="270" decoding="async">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">Past Lives</h3>
                 <div class="showcase-info">
@@ -1058,7 +1074,7 @@ const LANDING_HTML_TOP = `
             <!-- 2. Road House -->
             <div class="showcase-slide">
               <span class="showcase-badge">ACTION HIT</span>
-              <img src="/1000148217-streaming-france.webp" alt="Stream Road House on Streaming France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148217-streaming-france.webp" alt="Stream Road House on Streaming France - Premium Cinema Streaming" loading="lazy" width="180" height="270" decoding="async">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">Road House</h3>
                 <div class="showcase-info">
@@ -1071,7 +1087,7 @@ const LANDING_HTML_TOP = `
             <!-- 3. Saltburn -->
             <div class="showcase-slide">
               <span class="showcase-badge">MUST WATCH</span>
-              <img src="/1000148233-streaming-france.webp" alt="Stream Saltburn on Streaming France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148233-streaming-france.webp" alt="Stream Saltburn on Streaming France - Premium Cinema Streaming" loading="lazy" width="180" height="270" decoding="async">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">Saltburn</h3>
                 <div class="showcase-info">
@@ -1084,7 +1100,7 @@ const LANDING_HTML_TOP = `
             <!-- 4. Killers of the Flower Moon -->
             <div class="showcase-slide">
               <span class="showcase-badge">OSCAR NOMINEE</span>
-              <img src="/1000148230-streaming-france.webp" alt="Stream Killers of the Flower Moon on Streaming France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148230-streaming-france.webp" alt="Stream Killers of the Flower Moon on Streaming France - Premium Cinema Streaming" loading="lazy" width="180" height="270" decoding="async">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">Killers of the Flower Moon</h3>
                 <div class="showcase-info">
@@ -1097,7 +1113,7 @@ const LANDING_HTML_TOP = `
             <!-- 5. Inception -->
             <div class="showcase-slide">
               <span class="showcase-badge">CLASSIC</span>
-              <img src="/1000148232-streaming-france.webp" alt="Stream Inception on Streaming France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148232-streaming-france.webp" alt="Stream Inception on Streaming France - Premium Cinema Streaming" loading="lazy" width="180" height="270" decoding="async">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">Inception</h3>
                 <div class="showcase-info">
@@ -1110,7 +1126,7 @@ const LANDING_HTML_TOP = `
             <!-- 6. Shogun -->
             <div class="showcase-slide">
               <span class="showcase-badge">CRITICS CHOICE</span>
-              <img src="/1000148219-streaming-france.webp" alt="Stream Shogun on Streaming France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148219-streaming-france.webp" alt="Stream Shogun on Streaming France - Premium Cinema Streaming" loading="lazy" width="180" height="270" decoding="async">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">Shogun</h3>
                 <div class="showcase-info">
@@ -1123,7 +1139,7 @@ const LANDING_HTML_TOP = `
             <!-- 7. Poor Things -->
             <div class="showcase-slide">
               <span class="showcase-badge">AWARD WINNER</span>
-              <img src="/1000148223-streaming-france.webp" alt="Stream Poor Things on Streaming France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148223-streaming-france.webp" alt="Stream Poor Things on Streaming France - Premium Cinema Streaming" loading="lazy" width="180" height="270" decoding="async">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">Poor Things</h3>
                 <div class="showcase-info">
@@ -1136,7 +1152,7 @@ const LANDING_HTML_TOP = `
             <!-- 8. 3 Body Problem -->
             <div class="showcase-slide">
               <span class="showcase-badge">SCI-FI EPIC</span>
-              <img src="/1000148222-streaming-france.webp" alt="Stream 3 Body Problem on Streaming France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148222-streaming-france.webp" alt="Stream 3 Body Problem on Streaming France - Premium Cinema Streaming" loading="lazy" width="180" height="270" decoding="async">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">3 Body Problem</h3>
                 <div class="showcase-info">
@@ -1149,7 +1165,7 @@ const LANDING_HTML_TOP = `
             <!-- 9. Breaking Bad -->
             <div class="showcase-slide">
               <span class="showcase-badge">ALL-TIME BEST</span>
-              <img src="/1000148214-streaming-france.webp" alt="Stream Breaking Bad on Streaming France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148214-streaming-france.webp" alt="Stream Breaking Bad on Streaming France - Premium Cinema Streaming" loading="lazy" width="180" height="270" decoding="async">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">Breaking Bad</h3>
                 <div class="showcase-info">
@@ -1162,7 +1178,7 @@ const LANDING_HTML_TOP = `
             <!-- 10. Ghostbusters: Frozen Empire -->
             <div class="showcase-slide">
               <span class="showcase-badge">FAMILY HIT</span>
-              <img src="/1000148218-streaming-france.webp" alt="Stream Ghostbusters: Frozen Empire on Streaming France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148218-streaming-france.webp" alt="Stream Ghostbusters: Frozen Empire on Streaming France - Premium Cinema Streaming" loading="lazy" width="180" height="270" decoding="async">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">Ghostbusters: Frozen Empire</h3>
                 <div class="showcase-info">
@@ -1175,7 +1191,7 @@ const LANDING_HTML_TOP = `
             <!-- 11. The Holdovers -->
             <div class="showcase-slide">
               <span class="showcase-badge">COMEDY HIT</span>
-              <img src="/1000148228-streaming-france.webp" alt="Stream The Holdovers on Streaming France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148228-streaming-france.webp" alt="Stream The Holdovers on Streaming France - Premium Cinema Streaming" loading="lazy" width="180" height="270" decoding="async">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">The Holdovers</h3>
                 <div class="showcase-info">
@@ -1188,7 +1204,7 @@ const LANDING_HTML_TOP = `
             <!-- 12. La Sociedad de la Nieve -->
             <div class="showcase-slide">
               <span class="showcase-badge">TOP STREAM</span>
-              <img src="/1000148231-streaming-france.webp" alt="Stream La Sociedad de la Nieve on Streaming France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148231-streaming-france.webp" alt="Stream La Sociedad de la Nieve on Streaming France - Premium Cinema Streaming" loading="lazy" width="180" height="270" decoding="async">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">La Sociedad de la Nieve</h3>
                 <div class="showcase-info">
@@ -1201,7 +1217,7 @@ const LANDING_HTML_TOP = `
             <!-- 13. Masters of the Air -->
             <div class="showcase-slide">
               <span class="showcase-badge">FULL SERIES</span>
-              <img src="/1000148225-streaming-france.webp" alt="Stream Masters of the Air on Streaming France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148225-streaming-france.webp" alt="Stream Masters of the Air on Streaming France - Premium Cinema Streaming" loading="lazy" width="180" height="270" decoding="async">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">Masters of the Air</h3>
                 <div class="showcase-info">
@@ -1214,7 +1230,7 @@ const LANDING_HTML_TOP = `
             <!-- 14. Shaitaan -->
             <div class="showcase-slide">
               <span class="showcase-badge">TRENDING</span>
-              <img src="/1000148226-streaming-france.webp" alt="Stream Shaitaan on Streaming France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148226-streaming-france.webp" alt="Stream Shaitaan on Streaming France - Premium Cinema Streaming" loading="lazy" width="180" height="270" decoding="async">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">Shaitaan</h3>
                 <div class="showcase-info">
@@ -1227,7 +1243,7 @@ const LANDING_HTML_TOP = `
             <!-- 15. 20 Days in Mariupol -->
             <div class="showcase-slide">
               <span class="showcase-badge">DOCUMENTARY</span>
-              <img src="/1000148229-streaming-france.webp" alt="Stream 20 Days in Mariupol on Streaming France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148229-streaming-france.webp" alt="Stream 20 Days in Mariupol on Streaming France - Premium Cinema Streaming" loading="lazy" width="180" height="270" decoding="async">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">20 Days in Mariupol</h3>
                 <div class="showcase-info">
@@ -1240,7 +1256,7 @@ const LANDING_HTML_TOP = `
             <!-- 16. Avatar: The Last Airbender -->
             <div class="showcase-slide">
               <span class="showcase-badge">NETFLIX HIT</span>
-              <img src="/1000148227-streaming-france.webp" alt="Stream Avatar: The Last Airbender on Streaming France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148227-streaming-france.webp" alt="Stream Avatar: The Last Airbender on Streaming France - Premium Cinema Streaming" loading="lazy" width="180" height="270" decoding="async">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">The Last Airbender</h3>
                 <div class="showcase-info">
@@ -1253,7 +1269,7 @@ const LANDING_HTML_TOP = `
             <!-- 17. Succession -->
             <div class="showcase-slide">
               <span class="showcase-badge">HBO ORIGINAL</span>
-              <img src="/1000148216-streaming-france.webp" alt="Stream Succession on Streaming France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148216-streaming-france.webp" alt="Stream Succession on Streaming France - Premium Cinema Streaming" loading="lazy" width="180" height="270" decoding="async">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">Succession</h3>
                 <div class="showcase-info">
@@ -1266,7 +1282,7 @@ const LANDING_HTML_TOP = `
             <!-- 18. The Last of Us -->
             <div class="showcase-slide">
               <span class="showcase-badge">POPULAR</span>
-              <img src="/1000148215-streaming-france.webp" alt="Stream The Last of Us on Streaming France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148215-streaming-france.webp" alt="Stream The Last of Us on Streaming France - Premium Cinema Streaming" loading="lazy" width="180" height="270" decoding="async">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">The Last of Us</h3>
                 <div class="showcase-info">
@@ -1279,7 +1295,7 @@ const LANDING_HTML_TOP = `
             <!-- 19. The Bear -->
             <div class="showcase-slide">
               <span class="showcase-badge">CRITICS CHOICE</span>
-              <img src="/1000148224-streaming-france.webp" alt="Stream The Bear on Streaming France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148224-streaming-france.webp" alt="Stream The Bear on Streaming France - Premium Cinema Streaming" loading="lazy" width="180" height="270" decoding="async">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">The Bear</h3>
                 <div class="showcase-info">
@@ -1292,7 +1308,7 @@ const LANDING_HTML_TOP = `
             <!-- 20. Severance -->
             <div class="showcase-slide">
               <span class="showcase-badge">MIND-BENDING</span>
-              <img src="/1000148220-streaming-france.webp" alt="Stream Severance on Streaming France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148220-streaming-france.webp" alt="Stream Severance on Streaming France - Premium Cinema Streaming" loading="lazy" width="180" height="270" decoding="async">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">Severance</h3>
                 <div class="showcase-info">
@@ -1305,7 +1321,7 @@ const LANDING_HTML_TOP = `
             <!-- 21. Damsel -->
             <div class="showcase-slide">
               <span class="showcase-badge">FANTASY HIT</span>
-              <img src="/1000148196-streaming-france.webp" alt="Stream Damsel on Streaming France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148196-streaming-france.webp" alt="Stream Damsel on Streaming France - Premium Cinema Streaming" loading="lazy" width="180" height="270" decoding="async">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">Damsel</h3>
                 <div class="showcase-info">
@@ -1318,7 +1334,7 @@ const LANDING_HTML_TOP = `
             <!-- 22. The Gentlemen -->
             <div class="showcase-slide">
               <span class="showcase-badge">GUY RITCHIE</span>
-              <img src="/1000148221-streaming-france.webp" alt="Stream The Gentlemen on Streaming France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148221-streaming-france.webp" alt="Stream The Gentlemen on Streaming France - Premium Cinema Streaming" loading="lazy" width="180" height="270" decoding="async">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">The Gentlemen</h3>
                 <div class="showcase-info">
@@ -1331,7 +1347,7 @@ const LANDING_HTML_TOP = `
             <!-- 23. The Shawshank Redemption -->
             <div class="showcase-slide">
               <span class="showcase-badge">IMDb #1</span>
-              <img src="/1000148211-streaming-france.webp" alt="Stream The Shawshank Redemption on Streaming France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148211-streaming-france.webp" alt="Stream The Shawshank Redemption on Streaming France - Premium Cinema Streaming" loading="lazy" width="180" height="270" decoding="async">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">The Shawshank Redemption</h3>
                 <div class="showcase-info">
@@ -1344,7 +1360,7 @@ const LANDING_HTML_TOP = `
             <!-- 24. Fight Club -->
             <div class="showcase-slide">
               <span class="showcase-badge">CULT CLASSIC</span>
-              <img src="/1000148209-streaming-france.webp" alt="Stream Fight Club on Streaming France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148209-streaming-france.webp" alt="Stream Fight Club on Streaming France - Premium Cinema Streaming" loading="lazy" width="180" height="270" decoding="async">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">Fight Club</h3>
                 <div class="showcase-info">
@@ -1357,7 +1373,7 @@ const LANDING_HTML_TOP = `
             <!-- 25. Joker -->
             <div class="showcase-slide">
               <span class="showcase-badge">MASTERPIECE</span>
-              <img src="/1000148212-streaming-france.webp" alt="Stream Joker on Streaming France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148212-streaming-france.webp" alt="Stream Joker on Streaming France - Premium Cinema Streaming" loading="lazy" width="180" height="270" decoding="async">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">Joker</h3>
                 <div class="showcase-info">
@@ -1370,7 +1386,7 @@ const LANDING_HTML_TOP = `
             <!-- 26. The Dark Knight -->
             <div class="showcase-slide">
               <span class="showcase-badge">BEST HERO</span>
-              <img src="/1000148210-streaming-france.webp" alt="Stream The Dark Knight on Streaming France - Premium Cinema Streaming" loading="lazy">
+              <img src="/1000148210-streaming-france.webp" alt="Stream The Dark Knight on Streaming France - Premium Cinema Streaming" loading="lazy" width="180" height="270" decoding="async">
               <div class="showcase-overlay">
                 <h3 class="showcase-title">The Dark Knight</h3>
                 <div class="showcase-info">

@@ -5,7 +5,6 @@
 
 import { useState, useEffect, useMemo, lazy, Suspense } from 'react';
 import { Routes, Route, Navigate, useLocation, useNavigate, useParams, Outlet, Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'motion/react';
 import { Globe, ChevronDown, CheckCircle2, Loader2 } from 'lucide-react';
 import { Language } from './types';
 import { translations } from './translations';
@@ -147,42 +146,36 @@ function MainLayout() {
                 <ChevronDown size={12} className={`text-gray-400 transition-transform ${langDropdownOpen ? 'rotate-180' : ''}`} />
               </button>
 
-              <AnimatePresence>
-                {langDropdownOpen && (
-                  <>
-                    <div 
-                       className="fixed inset-0 z-30" 
-                       onClick={() => setLangDropdownOpen(false)} 
-                     />
-                    <motion.div
-                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                      transition={{ duration: 0.15 }}
-                      className="absolute right-0 rtl:right-auto rtl:left-0 mt-2 w-40 rounded-xl border border-white/10 bg-[#141414] p-1 shadow-2xl z-40 overflow-hidden"
-                    >
-                      {Object.entries(languageNames).map(([key, value]) => (
-                        <Link
-                          key={key}
-                          to={location.pathname === '/' && key !== 'en' ? `/${key}/home` : location.pathname.replace(new RegExp(`^/(${validLanguages.join('|')})`), `/${key}`)}
-                          onClick={() => setLangDropdownOpen(false)}
-                          className={`w-full text-start flex items-center justify-between px-3 py-2 text-xs rounded-lg transition-colors cursor-pointer ${
-                            currentLang === key
-                              ? 'bg-[#FF1E27]/10 text-[#FF1E27] font-bold'
-                              : 'text-gray-300 hover:bg-white/5 hover:text-white'
-                          }`}
-                        >
-                          <span className="flex items-center gap-2">
-                            <span>{value.flag}</span>
-                            <span>{value.native}</span>
-                          </span>
-                          {currentLang === key && <CheckCircle2 size={13} className="text-[#FF1E27]" />}
-                        </Link>
-                      ))}
-                    </motion.div>
-                  </>
-                )}
-              </AnimatePresence>
+              {langDropdownOpen && (
+                <>
+                  <div 
+                     className="fixed inset-0 z-30" 
+                     onClick={() => setLangDropdownOpen(false)} 
+                   />
+                  <div
+                    className="absolute right-0 rtl:right-auto rtl:left-0 mt-2 w-40 rounded-xl border border-white/10 bg-[#141414] p-1 shadow-2xl z-40 overflow-hidden"
+                  >
+                    {Object.entries(languageNames).map(([key, value]) => (
+                      <Link
+                        key={key}
+                        to={location.pathname === '/' && key !== 'en' ? `/${key}/home` : location.pathname.replace(new RegExp(`^/(${validLanguages.join('|')})`), `/${key}`)}
+                        onClick={() => setLangDropdownOpen(false)}
+                        className={`w-full text-start flex items-center justify-between px-3 py-2 text-xs rounded-lg transition-colors cursor-pointer ${
+                          currentLang === key
+                            ? 'bg-[#FF1E27]/10 text-[#FF1E27] font-bold'
+                            : 'text-gray-300 hover:bg-white/5 hover:text-white'
+                        }`}
+                      >
+                        <span className="flex items-center gap-2">
+                          <span>{value.flag}</span>
+                          <span>{value.native}</span>
+                        </span>
+                        {currentLang === key && <CheckCircle2 size={13} className="text-[#FF1E27]" />}
+                      </Link>
+                    ))}
+                  </div>
+                </>
+              )}
             </div>
 
             {/* Trial CTA Link */}

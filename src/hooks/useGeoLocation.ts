@@ -2,10 +2,11 @@ import { useEffect } from 'react';
 
 export function useGeoLocation() {
   useEffect(() => {
-    async function fetchCountry() {
+    // Delay geolocation check until after critical render & hydration are fully settled
+    const timer = setTimeout(async () => {
       try {
         const response = await fetch('https://get.geojs.io/v1/ip/geo.json');
-        if (!response.ok) throw new Error('Network response was not ok');
+        if (!response.ok) return;
         const data = await response.json();
         
         const geoEl = document.getElementById('geo-hidden-text');
@@ -13,11 +14,10 @@ export function useGeoLocation() {
           geoEl.innerText = `The Best IPTV in ${data.country}`;
         }
       } catch (error) {
-        // Silently fail if geolocation is blocked by adblocker or network
-        console.warn('Geolocation fetch failed, defaulting to general text.');
+        // Silently fail if blocked by network or adblocker
       }
-    }
-    
-    fetchCountry();
+    }, 2500);
+
+    return () => clearTimeout(timer);
   }, []);
 }
