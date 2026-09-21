@@ -202,6 +202,17 @@ Sitemap: ${baseUrl}/sitemap.xml
     res.send(content);
   });
 
+  // Serve llms.txt protocol for AI agents & LLMs (https://llmstxt.org/)
+  app.get('/llms.txt', (req, res) => {
+    const llmsPath = path.join(process.cwd(), 'public', 'llms.txt');
+    if (fs.existsSync(llmsPath)) {
+      res.setHeader('Content-Type', 'text/markdown; charset=utf-8');
+      res.setHeader('Cache-Control', 'public, max-age=86400');
+      return res.sendFile(llmsPath);
+    }
+    res.status(404).send('Not found');
+  });
+
   // Simple ping endpoint to keep Render awake
   app.get('/api/ping', (req, res) => {
     res.status(200).send('pong');
