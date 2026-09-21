@@ -3,20 +3,21 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, lazy, Suspense } from 'react';
 import { Routes, Route, Navigate, useLocation, useNavigate, useParams, Outlet, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { Globe, ChevronDown, CheckCircle2, Loader2 } from 'lucide-react';
 import { Language } from './types';
-import { loadBlogPosts } from './blog';
 import { translations } from './translations';
 
-// Components
+// Core Component (Eager for fastest FCP/LCP on landing page)
 import Home from './components/Home';
-import BlogList from './components/BlogList';
-import BlogPostComponent from './components/BlogPost';
-import SecretSeoAdmin from './pages/SecretSeoAdmin';
-import HtmlSitemap from './pages/HtmlSitemap';
+
+// Lazy-loaded routes for minimal initial JS bundle
+const SecretSeoAdmin = lazy(() => import('./pages/SecretSeoAdmin'));
+const HtmlSitemap = lazy(() => import('./pages/HtmlSitemap'));
+const BlogListRoute = lazy(() => import('./pages/BlogRoutes').then(m => ({ default: m.BlogListRoute })));
+const BlogPostRoute = lazy(() => import('./pages/BlogRoutes').then(m => ({ default: m.BlogPostRoute })));
 
 const languageNames: Record<Language, { native: string; flag: string; label: string }> = {
   en: { native: 'English', flag: '🇬🇧', label: 'EN' },
@@ -261,149 +262,6 @@ function MainLayout() {
   );
 }
 
-let globalDynamicPostsCache: any[] | null = null;
-let globalDynamicPostsPromise: Promise<any> | null = null;
-
-export const prefetchDynamicPosts = (forceRefresh = false) => {
-  if (globalDynamicPostsPromise && !forceRefresh) return globalDynamicPostsPromise;
-  
-  const endpoint = '/api/seo/blog-posts';
-
-  globalDynamicPostsPromise = fetch(endpoint, { credentials: 'include' })
-    .then(r => {
-      if (!r.ok) throw new Error('Network response was not ok');
-      return r.json();
-    })
-    .then(data => {
-      globalDynamicPostsCache = data.posts || [];
-      return globalDynamicPostsCache;
-    })
-    .catch(err => {
-      console.error('[Prefetch] Error loading dynamic posts:', err);
-      globalDynamicPostsPromise = null;
-      return [];
-    });
-    
-  return globalDynamicPostsPromise;
-};
-
-function BlogListRoute() {
-  const { lang } = useParams<{ lang: string }>();
-  const currentLang = (validLanguages.includes(lang as Language) ? lang : 'en') as Language;
-  const t = useMemo(() => translations[currentLang], [currentLang]);
-  const navigate = useNavigate();
-  const [dynamicPosts, setDynamicPosts] = useState<any[]>([]);
-
-  useEffect(() => {
-    if (globalDynamicPostsCache) {
-      setDynamicPosts(globalDynamicPostsCache);
-    }
-    prefetchDynamicPosts(true).then(posts => {
-      setDynamicPosts(posts);
-    });
-  }, []);
-
-  const combinedPosts = useMemo(() => {
-    const rawStaticPosts = loadBlogPosts().filter((post) => post.lang === currentLang);
-
-    const convertedDynamic = dynamicPosts
-      .map((dp: any) => ({
-        slug: dp.slug,
-        lang: (dp.lang || 'en') as Language,
-        title: dp.title,
-        date: dp.date || (dp.created_at ? new Date(dp.created_at).toISOString().split('T')[0] : new Date().toISOString().split('T')[0]),
-        author: dp.author || 'RedStream Expert',
-        tags: dp.tags || [],
-        description: dp.description || '',
-        content: dp.content,
-        cover_image: dp.cover_image,
-        readingTime: Math.max(1, Math.ceil((dp.content || '').split(/\s+/).length / 200)),
-      }));
-
-    // If viewing English, include English dynamic posts; for other languages, prioritize static matching or fallback seamlessly
-    const dynamicForLang = convertedDynamic.filter(p => p.lang === currentLang || (currentLang === 'en' && !p.lang));
-    const dynamicSlugs = new Set(convertedDynamic.map(p => p.slug));
-    const finalStaticPosts = rawStaticPosts.filter(p => !dynamicSlugs.has(p.slug));
-
-    // If target language has its own dynamic posts, show them; otherwise show static posts + dynamic if language is English
-    return currentLang === 'en' 
-      ? [...finalStaticPosts, ...convertedDynamic]
-      : (dynamicForLang.length > 0 ? [...finalStaticPosts, ...dynamicForLang] : finalStaticPosts);
-  }, [currentLang, dynamicPosts]);
-
-  const onNavigate = (view: string, slug?: string) => {
-    if (view === 'post' && slug) {
-      navigate(`/${currentLang}/blog/${slug}`);
-    } else {
-      navigate(`/${currentLang}/${view}`);
-    }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  return <BlogList posts={combinedPosts} lang={currentLang} t={t} onNavigate={onNavigate} />;
-}
-
-function BlogPostRoute() {
-  const { lang, slug } = useParams<{ lang: string, slug: string }>();
-  const currentLang = (validLanguages.includes(lang as Language) ? lang : 'en') as Language;
-  const t = useMemo(() => translations[currentLang], [currentLang]);
-  const navigate = useNavigate();
-  const [dynamicPost, setDynamicPost] = useState<any | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchSingleDynamicPost = async () => {
-      setLoading(true);
-      try {
-        const endpoint = `/api/seo/blog-posts/${slug}`;
-        const response = await fetch(endpoint, { credentials: 'include' });
-        if (response.ok) {
-          const data = await response.json();
-          if (data.success && data.post) {
-            setDynamicPost({
-              slug: data.post.slug,
-              lang: 'en' as Language,
-              title: data.post.title,
-              date: new Date(data.post.created_at).toISOString().split('T')[0],
-              author: 'RedStream Admin',
-              tags: data.post.tags || [],
-              description: data.post.description || '',
-              content: data.post.content,
-              cover_image: data.post.cover_image,
-              readingTime: Math.max(1, Math.ceil((data.post.content || '').split(/\s+/).length / 200)),
-            });
-          }
-        }
-      } catch (err) {
-        console.error('[BlogPost] Error fetching dynamic post:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchSingleDynamicPost();
-  }, [slug, currentLang]);
-
-  const activePost = useMemo(() => {
-    const staticPost = loadBlogPosts().find((p) => p.slug === slug && p.lang === currentLang);
-    return dynamicPost || staticPost;
-  }, [slug, currentLang, dynamicPost]);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center text-white">
-        <Loader2 className="w-8 h-8 text-[#FF1E27] animate-spin" />
-      </div>
-    );
-  }
-
-  if (!activePost) {
-    return <Navigate to={`/${currentLang}/blog`} replace />;
-  }
-
-  return <BlogPostComponent post={activePost} lang={currentLang} t={t} onBack={() => navigate(`/${currentLang}/blog`)} />;
-}
-
 function HomeRoute() {
   const { lang } = useParams<{ lang: string }>();
   const currentLang = (validLanguages.includes(lang as Language) ? lang : 'en') as Language;
@@ -496,7 +354,11 @@ export default function App() {
     <div className="bg-[#0a0a0a] min-h-screen text-white font-sans selection:bg-[#FF1E27] selection:text-white transition-colors duration-200 overflow-x-hidden w-full max-w-[100vw]">
       <Routes>
         {/* Specific explicit route without the main layout wrapper */}
-        <Route path="/admin" element={<SecretSeoAdmin />} />
+        <Route path="/admin" element={
+          <Suspense fallback={<div className="min-h-screen bg-[#0a0a0a]" />}>
+            <SecretSeoAdmin />
+          </Suspense>
+        } />
         <Route path="/secret-seo-admin" element={<Navigate to="/admin" replace />} />
         
         {/* Root Route without redirect */}
@@ -512,8 +374,16 @@ export default function App() {
           
           {/* Main Layout wraps other views like blog */}
           <Route element={<MainLayout />}>
-             <Route path="blog" element={<BlogListRoute />} />
-             <Route path="blog/:slug" element={<BlogPostRoute />} />
+             <Route path="blog" element={
+               <Suspense fallback={<div className="min-h-screen bg-[#0a0a0a]" />}>
+                 <BlogListRoute />
+               </Suspense>
+             } />
+             <Route path="blog/:slug" element={
+               <Suspense fallback={<div className="min-h-screen bg-[#0a0a0a]" />}>
+                 <BlogPostRoute />
+               </Suspense>
+             } />
              {/* Redirect any other path inside /:lang to /:lang/home */}
              <Route path="*" element={<CatchAllRedirect />} />
           </Route>
@@ -521,7 +391,11 @@ export default function App() {
         
         {/* HTML Sitemap Route */}
         <Route element={<MainLayout />}>
-          <Route path="/sitemap" element={<HtmlSitemap />} />
+          <Route path="/sitemap" element={
+            <Suspense fallback={<div className="min-h-screen bg-[#0a0a0a]" />}>
+              <HtmlSitemap />
+            </Suspense>
+          } />
         </Route>
 
         {/* Catch-all redirect mapped to root */}

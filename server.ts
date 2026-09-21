@@ -1,4 +1,5 @@
 import express from 'express';
+import compression from 'compression';
 import cors from 'cors';
 import path from 'path';
 import fs from 'fs';
@@ -16,6 +17,9 @@ async function startServer() {
 
   const app = express();
   const PORT = 3000;
+
+  // High performance response compression (Gzip / Deflate)
+  app.use(compression());
 
   // SEO Strict Redirection Middleware (Force HTTPS and WWW)
   app.use((req, res, next) => {
