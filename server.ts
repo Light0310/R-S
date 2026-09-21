@@ -236,7 +236,72 @@ Sitemap: ${baseUrl}/sitemap.xml
     }));
     
     // Fallback for SPA routing with edge caching
-    app.get('*', (req, res) => {
+    let cachedBaseIndexHtml: string | null = null;
+    let cachedSeoLinksHtml: string | null = null;
+    let lastSeoCacheTime = 0;
+
+    const getBaseIndexHtml = (): string => {
+      if (!cachedBaseIndexHtml) {
+        try {
+          cachedBaseIndexHtml = fs.readFileSync(path.join(distPath, 'index.html'), 'utf8');
+        } catch (e) {
+          console.error('Error reading index.html', e);
+        }
+      }
+      return cachedBaseIndexHtml || '';
+    };
+
+    const getSeoLinks = async (): Promise<string> => {
+      const now = Date.now();
+      if (cachedSeoLinksHtml && (now - lastSeoCacheTime < 10 * 60 * 1000)) {
+        return cachedSeoLinksHtml;
+      }
+      try {
+        const baseUrl = 'https://www.red-stream.store';
+        const languages = ['en', 'es', 'fr', 'de', 'nl', 'ar', 'ru'];
+        let allLinks = '';
+        
+        languages.forEach(lang => {
+          if (lang !== 'en') allLinks += `<a href="/${lang}/home">Home ${lang}</a>`;
+          allLinks += `<a href="/${lang}/blog">Blog ${lang}</a>`;
+        });
+
+        const blogDir = path.join(process.cwd(), 'src', 'content', 'blog');
+        if (fs.existsSync(blogDir)) {
+          const langs = fs.readdirSync(blogDir);
+          for (const lang of langs) {
+            const langPath = path.join(blogDir, lang);
+            if (fs.statSync(langPath).isDirectory()) {
+              const files = fs.readdirSync(langPath);
+              for (const file of files) {
+                if (file.endsWith('.md')) {
+                  const slug = file.replace('.md', '');
+                  allLinks += `<a href="/${lang}/blog/${slug}">${slug}</a>`;
+                }
+              }
+            }
+          }
+        }
+
+        if (process.env.DATABASE_URL) {
+          const postsRes = await pool.query(`
+            SELECT slug FROM blog_posts WHERE status = 'published'
+          `);
+          postsRes.rows.forEach((post: any) => {
+            allLinks += `<a href="/en/blog/${post.slug}">${post.slug}</a>`;
+          });
+        }
+
+        cachedSeoLinksHtml = `<div id="sitemap-links" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; white-space: nowrap; border: 0; opacity: 0.01;">${allLinks}</div>`;
+        lastSeoCacheTime = now;
+      } catch(e) {
+        console.error('Error generating sitemap HTML links', e);
+        cachedSeoLinksHtml = '<!-- SEO ERROR -->';
+      }
+      return cachedSeoLinksHtml;
+    };
+
+    app.get('*', async (req, res) => {
       res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=86400, stale-while-revalidate=2592000');
       
       const baseUrl = 'https://www.red-stream.store';
@@ -248,75 +313,22 @@ Sitemap: ${baseUrl}/sitemap.xml
       }
       const canonicalUrl = `${baseUrl}${normalizedPath}`;
       
-      fs.readFile(path.join(distPath, 'index.html'), 'utf8', async (err, data) => {
-        if (err) {
-          return res.sendFile(path.join(distPath, 'index.html'));
-        }
+      const data = getBaseIndexHtml();
+      if (!data) {
+        return res.sendFile(path.join(distPath, 'index.html'));
+      }
 
-        // Dynamically generate SEO links for the current page
-        let seoLinksHtml = `<nav aria-label="SEO Navigation" style="display: flex; gap: 1rem; padding: 2rem;">
-          <a href="/">Home</a>
-          <a href="/en/blog">Blog</a>
-          <a href="/sitemap">HTML Sitemap</a>
-        </nav>`;
-
-        // ALWAYS inject ALL links on ALL pages to completely eliminate "Orphan Pages"
-        try {
-          const baseUrl = 'https://www.red-stream.store';
-          const languages = ['en', 'es', 'fr', 'de', 'nl', 'ar', 'ru'];
-          let allLinks = '';
-          
-          // Core structural
-          languages.forEach(lang => {
-            if (lang !== 'en') allLinks += `<a href="/${lang}/home">Home ${lang}</a>`;
-            allLinks += `<a href="/${lang}/blog">Blog ${lang}</a>`;
-          });
-
-          // Static blog posts
-          const blogDir = path.join(process.cwd(), 'src', 'content', 'blog');
-          if (fs.existsSync(blogDir)) {
-            const langs = fs.readdirSync(blogDir);
-            for (const lang of langs) {
-              const langPath = path.join(blogDir, lang);
-              if (fs.statSync(langPath).isDirectory()) {
-                const files = fs.readdirSync(langPath);
-                for (const file of files) {
-                  if (file.endsWith('.md')) {
-                    const slug = file.replace('.md', '');
-                    allLinks += `<a href="/${lang}/blog/${slug}">${slug}</a>`;
-                  }
-                }
-              }
-            }
-          }
-
-          // Dynamic blog posts
-          if (process.env.DATABASE_URL) {
-            
-            
-            const postsRes = await pool.query(`
-              SELECT slug FROM blog_posts WHERE status = 'published'
-            `);
-            postsRes.rows.forEach((post: any) => {
-              allLinks += `<a href="/en/blog/${post.slug}">${post.slug}</a>`;
-            });
-          }
-
-          seoLinksHtml += `<div id="sitemap-links" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; white-space: nowrap; border: 0; opacity: 0.01;">${allLinks}</div>`;
-        } catch(e) {
-          console.error('Error generating sitemap HTML links', e);
-          seoLinksHtml += '<!-- SEO ERROR -->';
-        }
-        
-        // Dynamically inject the correct canonical URL and og:url into the static HTML 
-        // to prevent Ahrefs from seeing all pages pointing to '/'
-        let modifiedHtml = data.replace(
-          /<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/gi,
-          `<link rel="canonical" href="${canonicalUrl}" />`
-        ).replace(
-          /<meta\s+property="og:url"\s+content="[^"]*"\s*\/?>/gi,
-          `<meta property="og:url" content="${canonicalUrl}" />`
-        );
+      const seoLinksHtml = await getSeoLinks();
+      
+      // Dynamically inject the correct canonical URL and og:url into the static HTML 
+      // to prevent Ahrefs from seeing all pages pointing to '/'
+      let modifiedHtml = data.replace(
+        /<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/gi,
+        `<link rel="canonical" href="${canonicalUrl}" />`
+      ).replace(
+        /<meta\s+property="og:url"\s+content="[^"]*"\s*\/?>/gi,
+        `<meta property="og:url" content="${canonicalUrl}" />`
+      );
         
         // --- SERVER-SIDE META INJECTION START ---
         // If it's a blog post, extract metadata from markdown or DB and inject it
@@ -431,7 +443,6 @@ Sitemap: ${baseUrl}/sitemap.xml
         modifiedHtml = modifiedHtml.replace('</main>', '</main>' + seoLinksHtml);
         
         res.send(modifiedHtml);
-      });
     });
   }
 
