@@ -18,6 +18,8 @@ const HtmlSitemap = lazy(() => import('./pages/HtmlSitemap'));
 const BlogListRoute = lazy(() => import('./pages/BlogRoutes').then(m => ({ default: m.BlogListRoute })));
 const BlogPostRoute = lazy(() => import('./pages/BlogRoutes').then(m => ({ default: m.BlogPostRoute })));
 const GeoLandingPage = lazy(() => import('./components/GeoLandingPage'));
+const FloatingActionHub = lazy(() => import('./components/FloatingActionHub'));
+const SocialProofWidget = lazy(() => import('./components/SocialProofWidget'));
 
 const languageNames: Record<Language, { native: string; flag: string; label: string }> = {
   en: { native: 'English', flag: '🇬🇧', label: 'EN' },
@@ -339,6 +341,12 @@ function LangManager({ children }: { children: React.ReactNode }) {
       <div className="flex-1 flex flex-col">
         {children}
       </div>
+
+      {/* Global Conversion Boosters (Non-intrusive & Deduplicated) */}
+      <Suspense fallback={null}>
+        <SocialProofWidget />
+        <FloatingActionHub currentLang={currentLang} />
+      </Suspense>
     </div>
   );
 }
