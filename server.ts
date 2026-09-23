@@ -93,6 +93,16 @@ async function startServer() {
         });
       });
 
+      // 1.1 Regional Geo Landing Pages (High-Conversion Country Portals)
+      const geoCountries = ['france', 'uk', 'belgique', 'suisse', 'espana', 'germany', 'netherlands'];
+      geoCountries.forEach((country) => {
+        urls.push({
+          loc: `${baseUrl}/iptv-${country}`,
+          changefreq: 'daily',
+          priority: '0.9',
+        });
+      });
+
       // 2. Scan and append all static translation blog posts dynamically from the content filesystem
       const blogDir = path.join(process.cwd(), 'src', 'content', 'blog');
       if (fs.existsSync(blogDir)) {

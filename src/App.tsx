@@ -17,6 +17,7 @@ const SecretSeoAdmin = lazy(() => import('./pages/SecretSeoAdmin'));
 const HtmlSitemap = lazy(() => import('./pages/HtmlSitemap'));
 const BlogListRoute = lazy(() => import('./pages/BlogRoutes').then(m => ({ default: m.BlogListRoute })));
 const BlogPostRoute = lazy(() => import('./pages/BlogRoutes').then(m => ({ default: m.BlogPostRoute })));
+const GeoLandingPage = lazy(() => import('./components/GeoLandingPage'));
 
 const languageNames: Record<Language, { native: string; flag: string; label: string }> = {
   en: { native: 'English', flag: '🇬🇧', label: 'EN' },
@@ -382,6 +383,15 @@ export default function App() {
           </Route>
         </Route>
         
+        {/* Specific Geo Landing Pages (e.g. /iptv-france, /iptv-uk, etc.) */}
+        <Route element={<MainLayout />}>
+          <Route path="/iptv-:country" element={
+            <Suspense fallback={<div className="min-h-screen bg-[#0a0a0a]" />}>
+              <GeoLandingPage />
+            </Suspense>
+          } />
+        </Route>
+
         {/* HTML Sitemap Route */}
         <Route element={<MainLayout />}>
           <Route path="/sitemap" element={

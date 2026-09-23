@@ -51,6 +51,17 @@ export default function HtmlSitemap() {
                 </li>
               ))}
             </ul>
+
+            <h2 className="text-2xl font-bold mt-8 mb-4 text-[#FF1E27] border-b border-white/10 pb-2">Country Portals</h2>
+            <ul className="space-y-2 text-gray-300">
+              <li><Link to="/iptv-france" className="hover:text-white transition-colors">🇫🇷 IPTV France 4K</Link></li>
+              <li><Link to="/iptv-uk" className="hover:text-white transition-colors">🇬🇧 IPTV United Kingdom 4K</Link></li>
+              <li><Link to="/iptv-belgique" className="hover:text-white transition-colors">🇧🇪 IPTV Belgique 4K</Link></li>
+              <li><Link to="/iptv-suisse" className="hover:text-white transition-colors">🇨🇭 IPTV Suisse 4K</Link></li>
+              <li><Link to="/iptv-espana" className="hover:text-white transition-colors">🇪🇸 IPTV España 4K</Link></li>
+              <li><Link to="/iptv-germany" className="hover:text-white transition-colors">🇩🇪 IPTV Deutschland 4K</Link></li>
+              <li><Link to="/iptv-netherlands" className="hover:text-white transition-colors">🇳🇱 IPTV Nederland 4K</Link></li>
+            </ul>
           </div>
 
           {/* Blog Posts */}
