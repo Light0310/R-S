@@ -2,6 +2,8 @@
 
 > RedStream is a premium 4K streaming service providing over 20,000 live international TV channels, 60,000 VOD movies and series, 99.9% server uptime, anti-freeze technology, and 24/7 customer support.
 
+- [Full Technical Specification & Documentation](https://www.red-stream.store/llms-full.txt): Complete technical guide, device configurations, network benchmarks, and plans for AI agents.
+
 ## Main Navigation & Pages
 
 - [Home](https://www.red-stream.store/): Official website for RedStream Premium 4K Streaming.
@@ -10,6 +12,9 @@
 - [Frequently Asked Questions](https://www.red-stream.store/#faq): Common questions regarding activation, channel lists, and anti-freeze technology.
 - [HTML Sitemap](https://www.red-stream.store/sitemap): Comprehensive directory of all website pages and multilingual content.
 - [Blog & Guides](https://www.red-stream.store/en/blog): Installation tutorials, streaming setups, and troubleshooting guides.
+- [TiviMate Firestick Setup Guide](https://www.red-stream.store/en/blog/tivimate-premium-firestick-setup-anti-buffering-guide): Step-by-step TiviMate setup on Firestick for zero buffering.
+- [French Setup Guide](https://www.red-stream.store/fr/blog/comment-configurer-tivimate-iptv-smarters-pro-firestick): Configuration TiviMate & IPTV Smarters Pro en français.
+- [Arabic Setup Guide](https://www.red-stream.store/ar/blog/dalil-tashghil-iptv-4k-bedoun-taqtee-2026): دليل تشغيل واشتراك القنوات باللغة العربية.
 - [WhatsApp Support & Order](https://wa.me/212694843943): 24/7 direct human assistance and instant trial activation.
 
 ## Streaming Features & Specifications

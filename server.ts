@@ -187,13 +187,38 @@ async function startServer() {
     }
   });
 
-  // Dynamic robots.txt that links Googlebot directly to the XML sitemap
+  // Dynamic robots.txt that links Googlebot directly to the XML sitemap & AI Agents
   app.get('/robots.txt', (req, res) => {
-    const host = req.get('X-Forwarded-Host') || req.get('host') || 'redstream-iptv.com';
+    const host = req.get('X-Forwarded-Host') || req.get('host') || 'www.red-stream.store';
     const protocol = req.get('X-Forwarded-Proto') || req.protocol || 'https';
     const baseUrl = `${protocol}://${host}`;
 
     const content = `User-agent: *
+Allow: /
+
+# Generative Engine Optimization (GEO) AI Crawlers
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Meta-ExternalAgent
 Allow: /
 
 Sitemap: ${baseUrl}/sitemap.xml
@@ -209,6 +234,16 @@ Sitemap: ${baseUrl}/sitemap.xml
       res.setHeader('Content-Type', 'text/markdown; charset=utf-8');
       res.setHeader('Cache-Control', 'public, max-age=86400');
       return res.sendFile(llmsPath);
+    }
+    res.status(404).send('Not found');
+  });
+
+  app.get('/llms-full.txt', (req, res) => {
+    const fullPath = path.join(process.cwd(), 'public', 'llms-full.txt');
+    if (fs.existsSync(fullPath)) {
+      res.setHeader('Content-Type', 'text/markdown; charset=utf-8');
+      res.setHeader('Cache-Control', 'public, max-age=86400');
+      return res.sendFile(fullPath);
     }
     res.status(404).send('Not found');
   });
